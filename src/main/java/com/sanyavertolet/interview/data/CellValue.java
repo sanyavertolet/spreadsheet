@@ -47,6 +47,6 @@ public class CellValue {
     }
 
     public String asString() {
-        return value;
+        return value != null ? value : "";
     }
 }

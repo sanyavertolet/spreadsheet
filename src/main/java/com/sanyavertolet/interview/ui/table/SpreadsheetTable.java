@@ -1,6 +1,7 @@
 package com.sanyavertolet.interview.ui.table;
 
 import javax.swing.*;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 public class SpreadsheetTable extends JTable {
@@ -9,6 +10,7 @@ public class SpreadsheetTable extends JTable {
         TableCellRenderer renderer = new BoarderCellRenderer();
         setDefaultRenderer(Object.class, renderer);
 
-        setShowVerticalLines(false);
+        TableCellEditor editor = new CustomCellEditor();
+        setDefaultEditor(Object.class, editor);
     }
 }

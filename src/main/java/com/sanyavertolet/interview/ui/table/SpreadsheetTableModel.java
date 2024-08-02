@@ -36,7 +36,7 @@ public class SpreadsheetTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int row, int col) {
-        return data[row][col].getText();
+        return data[row][col];
     }
 
     @Override
@@ -46,7 +46,8 @@ public class SpreadsheetTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        data[row][col].setText(value.toString());
+        Cell cell = (Cell) value;
+        data[row][col].setText(cell.getText());
         fireTableCellUpdated(row, col);
     }
 }

@@ -9,6 +9,7 @@ public class Cell {
 
     public Cell(String text, CellValueProcessor cellValueProcessor) {
         this.text = text;
+        this.value = new CellValue(CellValue.CellValueType.STRING, "");
         this.valueProcessor = cellValueProcessor;
     }
 
@@ -19,5 +20,9 @@ public class Cell {
     public void setText(String text) {
         this.text = text;
         value = valueProcessor.process(text);
+    }
+
+    public CellValue getValue() {
+        return value;
     }
 }
