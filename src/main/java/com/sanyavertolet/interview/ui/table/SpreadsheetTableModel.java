@@ -4,7 +4,7 @@ import com.sanyavertolet.interview.parser.Parser;
 import com.sanyavertolet.interview.data.Cell;
 import com.sanyavertolet.interview.parser.TreeParser;
 import com.sanyavertolet.interview.valueprocessor.CellValueProcessor;
-import com.sanyavertolet.interview.valueprocessor.DummyCellValueProcessor;
+import com.sanyavertolet.interview.valueprocessor.SimpleCellValueProcessor;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -16,7 +16,7 @@ public class SpreadsheetTableModel extends AbstractTableModel {
     public SpreadsheetTableModel(int rowCount, int columnCount) {
         data = new Cell[rowCount][columnCount];
         parser = new TreeParser();
-        valueProcessor = new DummyCellValueProcessor();
+        valueProcessor = new SimpleCellValueProcessor();
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
                 data[i][j] = new Cell("", valueProcessor);

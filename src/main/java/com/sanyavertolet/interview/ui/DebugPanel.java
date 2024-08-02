@@ -6,10 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DebugPanel extends JPanel {
-    private JLabel coordinatesLabel;
-    private JLabel contentLabel;
-    private JLabel typeLabel;
-    private JTextArea treeTextArea;
+    private final JLabel coordinatesLabel;
+    private final JLabel contentLabel;
+    private final JLabel typeLabel;
+    private final JTextArea treeTextArea;
     private Cell selectedCell;
 
     public DebugPanel() {
@@ -36,7 +36,7 @@ public class DebugPanel extends JPanel {
         if (selectedCell != null) {
             coordinatesLabel.setText("Coordinates: (" + row + ", " + col + ")");
             contentLabel.setText("Content: " + selectedCell.getValue().asString());
-            typeLabel.setText("Type: " + selectedCell.getClass().getSimpleName());
+            typeLabel.setText("Type: " + selectedCell.getValue().getType());
 
 //            if (selectedCell instanceof ExpressionCell) {
 //                treeTextArea.setText("Expression Tree: \n" + getPrettyPrintedTree((ExpressionCell) selectedCell));

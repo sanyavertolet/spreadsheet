@@ -10,6 +10,7 @@ public class CellValue {
         BOOLEAN,
         STRING,
         ERROR,
+        EXPRESSION
         ;
     }
 
