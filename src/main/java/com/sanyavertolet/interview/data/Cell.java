@@ -1,16 +1,10 @@
 package com.sanyavertolet.interview.data;
 
-import com.sanyavertolet.interview.valueprocessor.CellValueProcessor;
+public abstract class Cell {
+    protected String text;
 
-public class Cell {
-    private String text;
-    private CellValue value;
-    private final CellValueProcessor valueProcessor;
-
-    public Cell(String text, CellValueProcessor cellValueProcessor) {
+    public Cell(String text) {
         this.text = text;
-        this.value = new CellValue(CellValue.CellValueType.STRING, "");
-        this.valueProcessor = cellValueProcessor;
     }
 
     public String getText() {
@@ -19,10 +13,7 @@ public class Cell {
 
     public void setText(String text) {
         this.text = text;
-        value = valueProcessor.process(text);
     }
 
-    public CellValue getValue() {
-        return value;
-    }
+    abstract public String getValueAsString();
 }

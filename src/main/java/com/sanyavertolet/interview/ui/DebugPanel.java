@@ -1,6 +1,7 @@
 package com.sanyavertolet.interview.ui;
 
 import com.sanyavertolet.interview.data.Cell;
+import com.sanyavertolet.interview.data.ExpressionCell;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,14 +36,14 @@ public class DebugPanel extends JPanel {
     private void updateDebugInfo(int row, int col) {
         if (selectedCell != null) {
             coordinatesLabel.setText("Coordinates: (" + row + ", " + col + ")");
-            contentLabel.setText("Content: " + selectedCell.getValue().asString());
-            typeLabel.setText("Type: " + selectedCell.getValue().getType());
+            contentLabel.setText("Content: " + selectedCell.getValueAsString());
+            typeLabel.setText("Type: " + selectedCell.getClass().getSimpleName());
 
-//            if (selectedCell instanceof ExpressionCell) {
-//                treeTextArea.setText("Expression Tree: \n" + getPrettyPrintedTree((ExpressionCell) selectedCell));
-//            } else {
-//                treeTextArea.setText("Expression Tree: \n");
-//            }
+            if (selectedCell instanceof ExpressionCell) {
+                treeTextArea.setText("Expression Tree: \n" + ((ExpressionCell) selectedCell).getPrettyPrintedExpressionTree());
+            } else {
+                treeTextArea.setText("Expression Tree: \n");
+            }
         } else {
             coordinatesLabel.setText("Coordinates: ");
             contentLabel.setText("Content: ");

@@ -1,25 +1,24 @@
 package com.sanyavertolet.interview.ui.table;
 
+import com.sanyavertolet.interview.data.TextCell;
 import com.sanyavertolet.interview.parser.Parser;
 import com.sanyavertolet.interview.data.Cell;
 import com.sanyavertolet.interview.parser.TreeParser;
-import com.sanyavertolet.interview.valueprocessor.CellValueProcessor;
-import com.sanyavertolet.interview.valueprocessor.SimpleCellValueProcessor;
+import com.sanyavertolet.interview.cellfactory.CellFactory;
+import com.sanyavertolet.interview.cellfactory.CellFactoryImpl;
 
 import javax.swing.table.AbstractTableModel;
 
 public class SpreadsheetTableModel extends AbstractTableModel {
-    private Cell[][] data;
-    private final Parser parser;
-    private final CellValueProcessor valueProcessor;
+    private final Cell[][] data;
+    private final CellFactory cellFactory;
 
     public SpreadsheetTableModel(int rowCount, int columnCount) {
         data = new Cell[rowCount][columnCount];
-        parser = new TreeParser();
-        valueProcessor = new SimpleCellValueProcessor();
+        cellFactory = new CellFactoryImpl();
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
-                data[i][j] = new Cell("", valueProcessor);
+                data[i][j] = new TextCell("");
             }
         }
     }
@@ -47,7 +46,7 @@ public class SpreadsheetTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object value, int row, int col) {
         Cell cell = (Cell) value;
-        data[row][col].setText(cell.getText());
+        data[row][col] = cellFactory.create(cell.getText());
         fireTableCellUpdated(row, col);
     }
 }

@@ -20,7 +20,7 @@ public class BoarderCellRenderer extends DefaultTableCellRenderer {
         if (isSelected) {
             setText(cell.getText());
         } else {
-            setText(cell.getValue().asString());
+            setText(cell.getValueAsString());
         }
 
         return c;
