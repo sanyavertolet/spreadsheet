@@ -1,11 +1,9 @@
 package com.sanyavertolet.interview.ui.table;
 
+import com.sanyavertolet.interview.cellfactory.SimpleCellFactory;
 import com.sanyavertolet.interview.data.TextCell;
-import com.sanyavertolet.interview.parser.Parser;
 import com.sanyavertolet.interview.data.Cell;
-import com.sanyavertolet.interview.parser.TreeParser;
 import com.sanyavertolet.interview.cellfactory.CellFactory;
-import com.sanyavertolet.interview.cellfactory.CellFactoryImpl;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -15,7 +13,7 @@ public class SpreadsheetTableModel extends AbstractTableModel {
 
     public SpreadsheetTableModel(int rowCount, int columnCount) {
         data = new Cell[rowCount][columnCount];
-        cellFactory = new CellFactoryImpl();
+        cellFactory = new SimpleCellFactory();
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
                 data[i][j] = new TextCell("");

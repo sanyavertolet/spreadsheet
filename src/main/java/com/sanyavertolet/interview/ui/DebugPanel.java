@@ -35,7 +35,7 @@ public class DebugPanel extends JPanel {
 
     private void updateDebugInfo(int row, int col) {
         if (selectedCell != null) {
-            coordinatesLabel.setText("Coordinates: (" + row + ", " + col + ")");
+            coordinatesLabel.setText("Coordinates: " + colIndexToLetter(col) + (row + 1));
             contentLabel.setText("Content: " + selectedCell.getValueAsString());
             typeLabel.setText("Type: " + selectedCell.getClass().getSimpleName());
 
@@ -50,5 +50,15 @@ public class DebugPanel extends JPanel {
             typeLabel.setText("Type: ");
             treeTextArea.setText("Expression Tree: \n");
         }
+    }
+    
+    private String colIndexToLetter(int col) {
+        StringBuilder sb = new StringBuilder();
+        while (col > 0) {
+            sb.append((char) ('A' + col % 26));
+            col /= 26;
+        }
+        String result = sb.reverse().toString();
+        return result.isEmpty() ? "A" : result;
     }
 }

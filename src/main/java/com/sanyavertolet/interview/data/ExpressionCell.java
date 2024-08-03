@@ -1,13 +1,16 @@
 package com.sanyavertolet.interview.data;
 
+import com.sanyavertolet.interview.parser.ExpressionParser;
 import com.sanyavertolet.interview.parser.TreeNode;
 
 public class ExpressionCell extends Cell {
     private Double value;
     private TreeNode parsedExpression;
+    private final ExpressionParser parser;
 
-    public ExpressionCell(String text) {
+    public ExpressionCell(String text, ExpressionParser parser) {
         super(text);
+        this.parser = parser;
         // todo: parse tree
     }
 
@@ -17,7 +20,7 @@ public class ExpressionCell extends Cell {
 
     @Override
     public String getValueAsString() {
-        return value.toString();
+        return parsedExpression == null ? "ERR" : value.toString();
     }
 
     public String getPrettyPrintedExpressionTree() {
