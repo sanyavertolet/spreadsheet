@@ -1,4 +1,4 @@
-package com.sanyavertolet.interview.data;
+package com.sanyavertolet.interview.cells;
 
 public abstract class Cell {
     protected String text;

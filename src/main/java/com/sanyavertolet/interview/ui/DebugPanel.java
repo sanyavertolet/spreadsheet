@@ -1,7 +1,7 @@
 package com.sanyavertolet.interview.ui;
 
-import com.sanyavertolet.interview.data.Cell;
-import com.sanyavertolet.interview.data.ExpressionCell;
+import com.sanyavertolet.interview.cells.Cell;
+import com.sanyavertolet.interview.cells.ExpressionCell;
 
 import javax.swing.*;
 import java.awt.*;

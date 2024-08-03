@@ -1,23 +1,23 @@
-package com.sanyavertolet.interview.data;
+package com.sanyavertolet.interview.cells;
 
-public class DoubleCell extends Cell {
-    private final Double value;
+public class IntegerCell extends Cell {
+    private final Integer value;
 
-    public DoubleCell(String text) {
+    public IntegerCell(String text) {
         super(text);
         try {
-            value = Double.valueOf(text);
+            value = Integer.valueOf(text);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Invalid double value: " + text);
         }
     }
 
-    public DoubleCell(String text, Double value) {
+    public IntegerCell(String text, Integer value) {
         super(text);
         this.value = value;
     }
 
-    public Double getValue() {
+    public Integer getValue() {
         return value;
     }
 

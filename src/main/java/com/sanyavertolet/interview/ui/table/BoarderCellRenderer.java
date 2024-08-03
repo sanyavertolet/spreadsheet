@@ -1,6 +1,6 @@
 package com.sanyavertolet.interview.ui.table;
 
-import com.sanyavertolet.interview.data.Cell;
+import com.sanyavertolet.interview.cells.Cell;
 
 import javax.swing.*;
 import javax.swing.border.Border;

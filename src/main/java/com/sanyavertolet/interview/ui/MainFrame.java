@@ -1,6 +1,6 @@
 package com.sanyavertolet.interview.ui;
 
-import com.sanyavertolet.interview.data.Cell;
+import com.sanyavertolet.interview.cells.Cell;
 import com.sanyavertolet.interview.ui.table.SpreadsheetTable;
 
 import javax.swing.*;

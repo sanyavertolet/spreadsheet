@@ -1,6 +1,6 @@
-package com.sanyavertolet.interview.cellfactory;
+package com.sanyavertolet.interview.cells.cellfactory;
 
-import com.sanyavertolet.interview.data.*;
+import com.sanyavertolet.interview.cells.*;
 import com.sanyavertolet.interview.parser.ExpressionParser;
 import com.sanyavertolet.interview.parser.TreeExpressionParser;
 

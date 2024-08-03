@@ -1,9 +1,9 @@
 package com.sanyavertolet.interview.ui.table;
 
-import com.sanyavertolet.interview.cellfactory.SimpleCellFactory;
-import com.sanyavertolet.interview.data.TextCell;
-import com.sanyavertolet.interview.data.Cell;
-import com.sanyavertolet.interview.cellfactory.CellFactory;
+import com.sanyavertolet.interview.cells.cellfactory.SimpleCellFactory;
+import com.sanyavertolet.interview.cells.TextCell;
+import com.sanyavertolet.interview.cells.Cell;
+import com.sanyavertolet.interview.cells.cellfactory.CellFactory;
 
 import javax.swing.table.AbstractTableModel;
 

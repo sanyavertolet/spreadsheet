@@ -1,4 +1,4 @@
-package com.sanyavertolet.interview.data;
+package com.sanyavertolet.interview.cells;
 
 import com.sanyavertolet.interview.parser.ExpressionParser;
 import com.sanyavertolet.interview.parser.TreeNode;

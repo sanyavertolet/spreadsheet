@@ -1,4 +1,4 @@
-package com.sanyavertolet.interview.data;
+package com.sanyavertolet.interview.cells;
 
 public class BooleanCell extends Cell {
     private final Boolean value;

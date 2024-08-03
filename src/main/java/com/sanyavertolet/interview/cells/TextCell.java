@@ -1,4 +1,4 @@
-package com.sanyavertolet.interview.data;
+package com.sanyavertolet.interview.cells;
 
 public class TextCell extends Cell {
     public TextCell(String text) {
