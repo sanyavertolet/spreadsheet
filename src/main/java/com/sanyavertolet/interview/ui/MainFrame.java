@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-    private SpreadsheetTable table;
-    private DebugPanel debugPanel;
+    private final SpreadsheetTable table;
+    private final DebugPanel debugPanel;
 
     public MainFrame() {
         setTitle("Spreadsheets");
@@ -18,7 +18,14 @@ public class MainFrame extends JFrame {
         setJMenuBar(new MenuBar());
 
         table = new SpreadsheetTable();
-        add(new JScrollPane(table), BorderLayout.CENTER);
+
+        JScrollPane scrollPane = new JScrollPane(
+                table,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED
+        );
+
+        add(scrollPane, BorderLayout.CENTER);
 
         debugPanel = new DebugPanel();
         add(debugPanel, BorderLayout.SOUTH);

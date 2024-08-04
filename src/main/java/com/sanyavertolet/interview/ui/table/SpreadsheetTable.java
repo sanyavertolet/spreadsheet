@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class SpreadsheetTable extends JTable {
     public SpreadsheetTable() {
-        super(new SpreadsheetTableModel(20, 10));
+        super(new SpreadsheetTableModel(50, 50));
         TableCellRenderer renderer = new CustomCellRenderer();
         setDefaultRenderer(Object.class, renderer);
 
@@ -15,6 +15,8 @@ public class SpreadsheetTable extends JTable {
         setDefaultEditor(Object.class, editor);
 
         setCellSelectionEnabled(true);
+
+        setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         setGridColor(Color.LIGHT_GRAY);
         setShowGrid(true);
