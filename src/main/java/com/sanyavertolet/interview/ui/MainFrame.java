@@ -39,7 +39,7 @@ public class MainFrame extends JFrame {
     private void updateDebugInfo() {
         int row = table.getSelectedRow();
         int column = table.getSelectedColumn();
-        if (row != -1 && column != -1) {
+        if (row != -1 && column > 0) {
             Cell cell = (Cell) table.getValueAt(row, column);
             debugPanel.setSelectedCell(cell, row, column);
         } else {

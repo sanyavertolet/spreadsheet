@@ -20,11 +20,12 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
         setBackground(table.getBackground());
         setForeground(table.getForeground());
 
-        Cell cell = (Cell) value;
-        if (isSelected) {
-            setText(cell.getText());
-        } else {
-            setText(cell.getValueAsString());
+        if (value instanceof Cell cell) {
+            if (isSelected) {
+                setText(cell.getText());
+            } else {
+                setText(cell.getValueAsString());
+            }
         }
 
         return c;

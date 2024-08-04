@@ -35,7 +35,7 @@ public class DebugPanel extends JPanel {
 
     private void updateDebugInfo(int row, int col) {
         if (selectedCell != null) {
-            coordinatesLabel.setText("Coordinates: " + colIndexToLetter(col) + (row + 1));
+            coordinatesLabel.setText("Coordinates: " + colIndexToLetter(col - 1) + (row + 1));
             contentLabel.setText("Content: " + selectedCell.getValueAsString());
             typeLabel.setText("Type: " + selectedCell.getClass().getSimpleName());
 

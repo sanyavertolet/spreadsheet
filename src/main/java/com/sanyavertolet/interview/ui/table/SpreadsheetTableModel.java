@@ -28,12 +28,12 @@ public class SpreadsheetTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return data.length > 0 ? data[0].length : 0;
+        return data.length > 0 ? data[0].length + 1 : 0;
     }
 
     @Override
     public Object getValueAt(int row, int col) {
-        return data[row][col];
+        return col == 0 ? row + 1 : data[row][col];
     }
 
     @Override
@@ -46,5 +46,10 @@ public class SpreadsheetTableModel extends AbstractTableModel {
         Cell cell = (Cell) value;
         data[row][col] = cellFactory.create(cell.getText());
         fireTableCellUpdated(row, col);
+    }
+
+    @Override
+    public String getColumnName(int col) {
+        return col != 0 ? super.getColumnName(col - 1) : "";
     }
 }
