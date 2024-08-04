@@ -24,7 +24,6 @@ public class MainFrame extends JFrame {
         add(debugPanel, BorderLayout.SOUTH);
 
         table.getSelectionModel().addListSelectionListener(event -> updateDebugInfo());
-
         table.getColumnModel().getSelectionModel().addListSelectionListener(event -> updateDebugInfo());
 
         setVisible(true);
