@@ -1,4 +1,4 @@
-package com.sanyavertolet.interview.expressions;
+package com.sanyavertolet.interview.math.expressions;
 
 public class CellReferenceExpression extends Expression {
     private final String cellReference;
@@ -8,7 +8,7 @@ public class CellReferenceExpression extends Expression {
     }
 
     @Override
-    public Double evaluate() {
-        return 0.0;
+    public void recalculate() {
+        value = 0.0;
     }
 }

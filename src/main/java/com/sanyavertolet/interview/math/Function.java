@@ -1,7 +1,7 @@
-package com.sanyavertolet.interview;
+package com.sanyavertolet.interview.math;
 
 import com.sanyavertolet.interview.exceptions.EvaluationException;
-import com.sanyavertolet.interview.expressions.Expression;
+import com.sanyavertolet.interview.math.expressions.Expression;
 
 import java.util.List;
 

@@ -1,9 +1,10 @@
 package com.sanyavertolet.interview.parser;
 
-import com.sanyavertolet.interview.Function;
+import com.sanyavertolet.interview.math.Function;
+import com.sanyavertolet.interview.math.Operator;
 import com.sanyavertolet.interview.exceptions.FunctionArgumentException;
 import com.sanyavertolet.interview.exceptions.ParsingException;
-import com.sanyavertolet.interview.expressions.*;
+import com.sanyavertolet.interview.math.expressions.*;
 import com.sanyavertolet.interview.parser.tokenizer.SimpleTokenizer;
 import com.sanyavertolet.interview.parser.tokenizer.Token;
 import com.sanyavertolet.interview.parser.tokenizer.Tokenizer;

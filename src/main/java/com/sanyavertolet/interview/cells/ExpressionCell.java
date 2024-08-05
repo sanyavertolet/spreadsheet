@@ -1,9 +1,7 @@
 package com.sanyavertolet.interview.cells;
 
 import com.sanyavertolet.interview.exceptions.EvaluationException;
-import com.sanyavertolet.interview.expressions.Expression;
-import com.sanyavertolet.interview.parser.ExpressionParser;
-import com.sanyavertolet.interview.parser.TreeNode;
+import com.sanyavertolet.interview.math.expressions.Expression;
 
 public class ExpressionCell extends Cell {
     private Double value;

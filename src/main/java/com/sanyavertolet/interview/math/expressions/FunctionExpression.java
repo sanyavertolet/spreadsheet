@@ -1,6 +1,6 @@
-package com.sanyavertolet.interview.expressions;
+package com.sanyavertolet.interview.math.expressions;
 
-import com.sanyavertolet.interview.Function;
+import com.sanyavertolet.interview.math.Function;
 import com.sanyavertolet.interview.exceptions.EvaluationException;
 import com.sanyavertolet.interview.exceptions.FunctionArgumentException;
 
@@ -24,7 +24,7 @@ public class FunctionExpression extends Expression {
     }
 
     @Override
-    public Double evaluate() throws EvaluationException {
-        return function.evaluate(arguments);
+    public void recalculate() throws EvaluationException {
+        value = function.evaluate(arguments);
     }
 }

@@ -1,4 +1,4 @@
-package com.sanyavertolet.interview.parser;
+package com.sanyavertolet.interview.math;
 
 public enum Operator {
     PLUS,
@@ -30,6 +30,22 @@ public enum Operator {
             case MULTIPLY, DIVIDE -> 3;
             case POWER -> 4;
             default -> throw new IllegalStateException("Operator has no priority: " + this);
+        };
+    }
+
+    public Double evaluate(Double left, Double right) {
+        return switch (this) {
+            case PLUS -> left + right;
+            case MINUS -> left - right;
+            case MULTIPLY -> left * right;
+            case DIVIDE -> {
+                if (left.equals(0.0)) {
+                    throw new ArithmeticException("Division by zero");
+                }
+                yield left / right;
+            }
+            case POWER -> Math.pow(left, right);
+            default -> throw new IllegalStateException("Operator cannot be evaluated: " + this);
         };
     }
 
