@@ -132,4 +132,10 @@ public class SimpleTokenizerTest {
         String expression = "=PI() .3";
         Assertions.assertThrows(ParsingException.class, () -> simpleTokenizer.tokenize(expression));
     }
+
+    @Test
+    void emptyExpressionTokenizerTest() throws ParsingException {
+        String expression = "=";
+        Assertions.assertIterableEquals(List.of(), simpleTokenizer.tokenize(expression));
+    }
 }

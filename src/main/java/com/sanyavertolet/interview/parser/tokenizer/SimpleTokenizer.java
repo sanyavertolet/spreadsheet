@@ -65,7 +65,7 @@ public class SimpleTokenizer implements Tokenizer {
         if (!hasMoreTokens()) {
             return new Token(Token.Type.NUMBER, currentSym.toString());
         }
-        while(hasMoreTokens() && (Character.isDigit(currentSym) || currentSym == '.')) {
+        while(hasMoreTokens() && (Character.isDigit(currentSym) || currentSym.equals('.'))) {
             token.append(currentSym);
             advance();
         }

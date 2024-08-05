@@ -1,17 +1,29 @@
 package com.sanyavertolet.interview.cells;
 
+import com.sanyavertolet.interview.exceptions.EvaluationException;
+import com.sanyavertolet.interview.expressions.Expression;
 import com.sanyavertolet.interview.parser.ExpressionParser;
 import com.sanyavertolet.interview.parser.TreeNode;
 
 public class ExpressionCell extends Cell {
     private Double value;
-    private TreeNode parsedExpression;
-    private final ExpressionParser parser;
+    private final Expression expression;
 
-    public ExpressionCell(String text, ExpressionParser parser) {
+    public ExpressionCell(String text, Expression expression) {
         super(text);
-        this.parser = parser;
-        // todo: parse tree
+        this.expression = expression;
+        try {
+            value = expression.evaluate();
+        } catch (EvaluationException ignored) { }
+    }
+
+    public Double recalculate() {
+        try {
+            value = expression.evaluate();
+        } catch (EvaluationException exception) {
+            value = null;
+        }
+        return value;
     }
 
     public Double getValue() {
@@ -20,11 +32,10 @@ public class ExpressionCell extends Cell {
 
     @Override
     public String getValueAsString() {
-        return parsedExpression == null ? "ERR" : value.toString();
+        return value == null ? "ERR" : value.toString();
     }
 
     public String getPrettyPrintedExpressionTree() {
-        // todo: implement tree pretty-print
         return "TBD";
     }
 }

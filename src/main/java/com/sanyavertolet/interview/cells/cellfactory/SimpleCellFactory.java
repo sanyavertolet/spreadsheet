@@ -1,14 +1,15 @@
 package com.sanyavertolet.interview.cells.cellfactory;
 
 import com.sanyavertolet.interview.cells.*;
+import com.sanyavertolet.interview.exceptions.ParsingException;
 import com.sanyavertolet.interview.parser.ExpressionParser;
-import com.sanyavertolet.interview.parser.TreeExpressionParser;
+import com.sanyavertolet.interview.parser.ShuntingYardParser;
 
 public class SimpleCellFactory implements CellFactory {
     private final ExpressionParser expressionParser;
 
     public SimpleCellFactory() {
-        expressionParser = new TreeExpressionParser();
+        expressionParser = new ShuntingYardParser();
     }
 
     public SimpleCellFactory(ExpressionParser expressionParser) {
@@ -32,7 +33,11 @@ public class SimpleCellFactory implements CellFactory {
         }
 
         if (cellText.startsWith("=")) {
-            return new ExpressionCell(cellText, expressionParser);
+            try {
+                return new ExpressionCell(cellText, expressionParser.parse(cellText));
+            } catch (ParsingException exception) {
+                return new TextCell(cellText);
+            }
         }
 
         return new TextCell(cellText);
