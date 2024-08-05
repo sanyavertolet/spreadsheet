@@ -1,5 +1,8 @@
 package com.sanyavertolet.interview.parser;
 
+import com.sanyavertolet.interview.cells.cellmanager.CellAccessor;
+import com.sanyavertolet.interview.exceptions.CellReferenceException;
+import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.Function;
 import com.sanyavertolet.interview.math.Operator;
 import com.sanyavertolet.interview.exceptions.FunctionArgumentException;
@@ -13,6 +16,11 @@ import java.util.*;
 
 public class ShuntingYardParser implements ExpressionParser {
     private final Tokenizer tokenizer = new SimpleTokenizer();
+    private final CellAccessor cellAccessor;
+
+    public ShuntingYardParser(CellAccessor cellAccessor) {
+        this.cellAccessor = cellAccessor;
+    }
 
     @Override
     public Expression parse(String expression) throws ParsingException {
@@ -61,7 +69,7 @@ public class ShuntingYardParser implements ExpressionParser {
         return new BinaryExpression(expressions.pop(), right, operator);
     }
 
-    private Expression parse(List<Token> tokens) throws ParsingException, FunctionArgumentException {
+    private Expression parse(List<Token> tokens) throws ParsingException, FunctionArgumentException, CellReferenceException {
         Stack<Expression> expressions = new Stack<>();
         Stack<Operator> operators = new Stack<>();
         List<Expression> arguments = new ArrayList<>();
@@ -74,7 +82,8 @@ public class ShuntingYardParser implements ExpressionParser {
                     if (isFunction(getNextToken(i, tokens))) {
                         expressions.add(new FunctionExpression(Function.named(token.value())));
                     } else {
-                        expressions.add(new CellReferenceExpression(token.value()));
+                        CellReference cellReference = CellReference.of(token.value());
+                        expressions.add(new CellReferenceExpression(cellReference, cellAccessor));
                     }
                 }
                 case OPERATOR -> {

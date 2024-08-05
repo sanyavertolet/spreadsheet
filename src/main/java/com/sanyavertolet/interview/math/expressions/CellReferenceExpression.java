@@ -1,14 +1,25 @@
 package com.sanyavertolet.interview.math.expressions;
 
-public class CellReferenceExpression extends Expression {
-    private final String cellReference;
+import com.sanyavertolet.interview.cells.cellmanager.CellAccessor;
+import com.sanyavertolet.interview.exceptions.CellAccessException;
+import com.sanyavertolet.interview.exceptions.EvaluationException;
+import com.sanyavertolet.interview.math.CellReference;
 
-    public CellReferenceExpression(String cellReference) {
+public class CellReferenceExpression extends Expression {
+    private final CellReference cellReference;
+    private final CellAccessor cellAccessor;
+
+    public CellReferenceExpression(CellReference cellReference, CellAccessor cellAccessor) {
         this.cellReference = cellReference;
+        this.cellAccessor = cellAccessor;
     }
 
     @Override
-    public void recalculate() {
-        value = 0.0;
+    public void recalculate() throws EvaluationException {
+        try {
+            value = cellAccessor.getDoubleCellValue(cellReference);
+        } catch (CellAccessException exception) {
+            throw new EvaluationException(exception.getMessage());
+        }
     }
 }

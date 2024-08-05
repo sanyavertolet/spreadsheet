@@ -2,6 +2,7 @@ package com.sanyavertolet.interview.ui;
 
 import com.sanyavertolet.interview.cells.Cell;
 import com.sanyavertolet.interview.cells.ExpressionCell;
+import com.sanyavertolet.interview.math.CellReference;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ public class DebugPanel extends JPanel {
     private Cell selectedCell;
 
     public DebugPanel() {
-        setLayout(new GridLayout(4, 1)); // 4 rows, 1 column
+        setLayout(new GridLayout(4, 1));
 
         coordinatesLabel = new JLabel("Coordinates: ");
         contentLabel = new JLabel("Content: ");
@@ -28,14 +29,14 @@ public class DebugPanel extends JPanel {
         add(new JScrollPane(treeTextArea));
     }
 
-    public void setSelectedCell(Cell selectedCell, int row, int col) {
+    public void setSelectedCell(CellReference cellReference, Cell selectedCell) {
         this.selectedCell = selectedCell;
-        updateDebugInfo(row, col);
+        updateDebugInfo(cellReference);
     }
 
-    private void updateDebugInfo(int row, int col) {
+    private void updateDebugInfo(CellReference cellReference) {
         if (selectedCell != null) {
-            coordinatesLabel.setText("Coordinates: " + colIndexToLetter(col - 1) + (row + 1));
+            coordinatesLabel.setText("Coordinates: " + cellReference.identifier());
             contentLabel.setText("Content: " + selectedCell.getValueAsString());
             typeLabel.setText("Type: " + selectedCell.getClass().getSimpleName());
 
@@ -50,15 +51,5 @@ public class DebugPanel extends JPanel {
             typeLabel.setText("Type: ");
             treeTextArea.setText("Expression Tree: \n");
         }
-    }
-    
-    private String colIndexToLetter(int col) {
-        StringBuilder sb = new StringBuilder();
-        while (col > 0) {
-            sb.append((char) ('A' + col % 26));
-            col /= 26;
-        }
-        String result = sb.reverse().toString();
-        return result.isEmpty() ? "A" : result;
     }
 }

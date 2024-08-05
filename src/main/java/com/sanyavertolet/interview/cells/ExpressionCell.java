@@ -4,32 +4,33 @@ import com.sanyavertolet.interview.exceptions.EvaluationException;
 import com.sanyavertolet.interview.math.expressions.Expression;
 
 public class ExpressionCell extends Cell {
-    private Double value;
     private final Expression expression;
 
     public ExpressionCell(String text, Expression expression) {
         super(text);
         this.expression = expression;
         try {
-            value = expression.evaluate();
+            expression.evaluate();
         } catch (EvaluationException ignored) { }
     }
 
-    public Double recalculate() {
+    public void recalculate() {
         try {
-            value = expression.evaluate();
-        } catch (EvaluationException exception) {
-            value = null;
-        }
-        return value;
+            expression.recalculate();
+        } catch (EvaluationException ignored) { }
     }
 
     public Double getValue() {
-        return value;
+        try {
+            return expression.evaluate();
+        } catch (EvaluationException exception) {
+            return null;
+        }
     }
 
     @Override
     public String getValueAsString() {
+        Double value = getValue();
         return value == null ? "ERR" : value.toString();
     }
 

@@ -1,6 +1,9 @@
 package com.sanyavertolet.interview.ui;
 
 import com.sanyavertolet.interview.cells.Cell;
+import com.sanyavertolet.interview.exceptions.CellAccessException;
+import com.sanyavertolet.interview.exceptions.CellReferenceException;
+import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.ui.table.SpreadsheetTable;
 
 import javax.swing.*;
@@ -37,13 +40,16 @@ public class MainFrame extends JFrame {
     }
 
     private void updateDebugInfo() {
-        int row = table.getSelectedRow();
-        int column = table.getSelectedColumn();
-        if (row != -1 && column > 0) {
-            Cell cell = (Cell) table.getValueAt(row, column);
-            debugPanel.setSelectedCell(cell, row, column);
-        } else {
-            debugPanel.setSelectedCell(null, -1, -1);
+        try {
+            CellReference cellReference = table.getSelectedCell();
+            if (cellReference != null) {
+                Cell cell = table.getValueAt(cellReference);
+                debugPanel.setSelectedCell(cellReference, cell);
+            } else {
+                debugPanel.setSelectedCell(null, null);
+            }
+        } catch (CellReferenceException | CellAccessException ignored) {
+
         }
     }
 }

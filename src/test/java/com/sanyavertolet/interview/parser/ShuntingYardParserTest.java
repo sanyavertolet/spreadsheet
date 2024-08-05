@@ -1,13 +1,35 @@
 package com.sanyavertolet.interview.parser;
 
+import com.sanyavertolet.interview.cells.cellmanager.CellAccessor;
+import com.sanyavertolet.interview.exceptions.CellAccessException;
+import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.exceptions.EvaluationException;
 import com.sanyavertolet.interview.exceptions.ParsingException;
+import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.expressions.Expression;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ShuntingYardParserTest {
-    private final ShuntingYardParser parser = new ShuntingYardParser();
+    private final CellReference cellReference = CellReference.of("A1");
+    private final Double a1CellValue = 2.0;
+    private final CellAccessor cellAccessor = new CellAccessor() {
+        @Override
+        public Double getDoubleCellValue(CellReference reference) throws CellAccessException {
+            if (cellReference.equals(reference)) {
+                return a1CellValue;
+            }
+            throw new CellAccessException("Cannot access cell reference");
+        }
+
+        @Override
+        public boolean hasCell(CellReference reference) {
+            return reference.equals(cellReference);
+        }
+    };
+    private final ShuntingYardParser parser = new ShuntingYardParser(cellAccessor);
+
+    public ShuntingYardParserTest() throws CellReferenceException { }
 
     @Test
     void dummyExpressionTest() throws ParsingException, EvaluationException {
@@ -95,6 +117,16 @@ public class ShuntingYardParserTest {
         Expression expression = parser.parse(expressionText);
 
         Double expectedValue = (Math.pow(2, 3) + 4) * Math.PI;
+        Double actualValue = expression.evaluate();
+        Assertions.assertEquals(expectedValue, actualValue);
+    }
+
+    @Test
+    void cellReferenceExpressionTest() throws ParsingException, EvaluationException {
+        String expressionText = "=A1 * 2";
+        Expression expression = parser.parse(expressionText);
+
+        Double expectedValue = a1CellValue * 2.0;
         Double actualValue = expression.evaluate();
         Assertions.assertEquals(expectedValue, actualValue);
     }
@@ -205,5 +237,13 @@ public class ShuntingYardParserTest {
     void missingFunctionParenthesesTest() {
         String expressionText = "=POW 2, 3)";
         Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+    }
+
+    @Test
+    void missingCellTest() throws ParsingException {
+        String expressionText = "=F2";
+        Expression expression = parser.parse(expressionText);
+
+        Assertions.assertThrows(EvaluationException.class, expression::evaluate);
     }
 }

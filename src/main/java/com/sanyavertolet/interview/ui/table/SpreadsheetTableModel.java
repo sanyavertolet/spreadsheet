@@ -1,39 +1,31 @@
 package com.sanyavertolet.interview.ui.table;
 
-import com.sanyavertolet.interview.cells.cellfactory.SimpleCellFactory;
-import com.sanyavertolet.interview.cells.TextCell;
+import com.sanyavertolet.interview.cells.cellmanager.CellManager;
 import com.sanyavertolet.interview.cells.Cell;
-import com.sanyavertolet.interview.cells.cellfactory.CellFactory;
+import com.sanyavertolet.interview.cells.cellmanager.SimpleCellManager;
 
 import javax.swing.table.AbstractTableModel;
 
 public class SpreadsheetTableModel extends AbstractTableModel {
-    private final Cell[][] data;
-    private final CellFactory cellFactory;
+    private final CellManager cellManager;
 
     public SpreadsheetTableModel(int rowCount, int columnCount) {
-        data = new Cell[rowCount][columnCount];
-        cellFactory = new SimpleCellFactory();
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < columnCount; j++) {
-                data[i][j] = new TextCell("");
-            }
-        }
+        cellManager = new SimpleCellManager(rowCount, columnCount);
     }
 
     @Override
     public int getRowCount() {
-        return data.length;
+        return cellManager.getRowCount();
     }
 
     @Override
     public int getColumnCount() {
-        return data.length > 0 ? data[0].length + 1 : 0;
+        return cellManager.getColumnCount();
     }
 
     @Override
     public Object getValueAt(int row, int col) {
-        return col == 0 ? row + 1 : data[row][col];
+        return col == 0 ? row + 1 : cellManager.getCell(row, col);
     }
 
     @Override
@@ -44,7 +36,7 @@ public class SpreadsheetTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object value, int row, int col) {
         Cell cell = (Cell) value;
-        data[row][col] = cellFactory.create(cell.getText());
+        cellManager.setCell(row, col, cell.getText());
         fireTableCellUpdated(row, col);
     }
 
