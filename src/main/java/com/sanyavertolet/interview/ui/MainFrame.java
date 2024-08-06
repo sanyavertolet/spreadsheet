@@ -35,8 +35,6 @@ public class MainFrame extends JFrame {
 
         table.getSelectionModel().addListSelectionListener(event -> updateDebugInfo());
         table.getColumnModel().getSelectionModel().addListSelectionListener(event -> updateDebugInfo());
-
-        setVisible(true);
     }
 
     private void updateDebugInfo() {
