@@ -7,4 +7,9 @@ public class NumberExpression extends Expression {
 
     @Override
     public void recalculate() { }
+
+    @Override
+    public String prettyPrint(int shift) {
+        return ".".repeat(shift) + value + "\n";
+    }
 }

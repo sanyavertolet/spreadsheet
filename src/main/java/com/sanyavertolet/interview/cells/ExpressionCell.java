@@ -35,6 +35,6 @@ public class ExpressionCell extends Cell {
     }
 
     public String getPrettyPrintedExpressionTree() {
-        return "TBD";
+        return expression.prettyPrint(0);
     }
 }

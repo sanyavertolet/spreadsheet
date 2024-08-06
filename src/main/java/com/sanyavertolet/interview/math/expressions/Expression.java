@@ -13,4 +13,6 @@ public abstract class Expression {
     }
 
     public abstract void recalculate() throws EvaluationException;
+
+    public abstract String prettyPrint(int shift);
 }

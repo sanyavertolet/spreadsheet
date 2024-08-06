@@ -4,19 +4,14 @@ import com.sanyavertolet.interview.math.Function;
 import com.sanyavertolet.interview.exceptions.EvaluationException;
 import com.sanyavertolet.interview.exceptions.FunctionArgumentException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionExpression extends Expression {
-    private List<Expression> arguments;
+    private final List<Expression> arguments;
     Function function;
 
-    public FunctionExpression(Function function) {
+    public FunctionExpression(Function function, List<Expression> arguments) throws FunctionArgumentException {
         this.function = function;
-        this.arguments = new ArrayList<>();
-    }
-
-    public void setArguments(List<Expression> arguments) throws FunctionArgumentException {
         if (arguments.size() != function.getArgumentsSize()) {
             throw new FunctionArgumentException("Insufficient number of arguments for function " + function);
         }
@@ -26,5 +21,15 @@ public class FunctionExpression extends Expression {
     @Override
     public void recalculate() throws EvaluationException {
         value = function.evaluate(arguments);
+    }
+
+    @Override
+    public String prettyPrint(int shift) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(".".repeat(shift)).append(function.name()).append("\n");
+        for (Expression argument : arguments) {
+            builder.append(argument.prettyPrint(shift + 2));
+        }
+        return builder.toString();
     }
 }

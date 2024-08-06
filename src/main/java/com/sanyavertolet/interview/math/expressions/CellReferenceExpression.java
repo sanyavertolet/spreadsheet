@@ -22,4 +22,9 @@ public class CellReferenceExpression extends Expression {
             throw new EvaluationException(exception.getMessage());
         }
     }
+
+    @Override
+    public String prettyPrint(int shift) {
+        return ".".repeat(shift) + cellReference.identifier() + "<" + value + ">" + "\n";
+    }
 }
