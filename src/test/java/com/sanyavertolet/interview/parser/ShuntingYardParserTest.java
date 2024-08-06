@@ -11,20 +11,24 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ShuntingYardParserTest {
-    private final CellReference cellReference = CellReference.of("A1");
+    private final CellReference a1CellReference = CellReference.of("A1");
+    private final CellReference b2CellReference = CellReference.of("B2");
     private final Double a1CellValue = 2.0;
+    private final Double b2CellValue = -40.0;
     private final CellAccessor cellAccessor = new CellAccessor() {
         @Override
         public Double getDoubleCellValue(CellReference reference) throws CellAccessException {
-            if (cellReference.equals(reference)) {
+            if (a1CellReference.equals(reference)) {
                 return a1CellValue;
+            } else if (b2CellReference.equals(reference)) {
+                return b2CellValue;
             }
             throw new CellAccessException("Cannot access cell reference");
         }
 
         @Override
         public boolean hasCell(CellReference reference) {
-            return reference.equals(cellReference);
+            return reference.equals(a1CellReference);
         }
     };
     private final ShuntingYardParser parser = new ShuntingYardParser(cellAccessor);
@@ -127,6 +131,16 @@ public class ShuntingYardParserTest {
         Expression expression = parser.parse(expressionText);
 
         Double expectedValue = a1CellValue * 2.0;
+        Double actualValue = expression.evaluate();
+        Assertions.assertEquals(expectedValue, actualValue);
+    }
+
+    @Test
+    void exampleExpressionTest() throws ParsingException, EvaluationException {
+        String expressionText = "=pow(-2, A1 - 3) * (42 + B2)";
+        Expression expression = parser.parse(expressionText);
+
+        Double expectedValue = Math.pow(-2, a1CellValue - 3) * (42 + b2CellValue);
         Double actualValue = expression.evaluate();
         Assertions.assertEquals(expectedValue, actualValue);
     }

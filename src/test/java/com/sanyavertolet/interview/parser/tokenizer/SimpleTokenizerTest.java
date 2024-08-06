@@ -122,6 +122,30 @@ public class SimpleTokenizerTest {
     }
 
     @Test
+    void exampleExpressionTokenizerTest() throws ParsingException {
+        String expression = "=pow(-2, A1 - 3) * (42 + B2)";
+        List<Token> expectedTokens = List.of(
+                new Token(Token.Type.REFERENCE, "pow"),
+                new Token(Token.Type.OPEN_PARENTHESIS, "("),
+                new Token(Token.Type.OPERATOR, "-"),
+                new Token(Token.Type.NUMBER, "2"),
+                new Token(Token.Type.COMMA, ","),
+                new Token(Token.Type.REFERENCE, "A1"),
+                new Token(Token.Type.OPERATOR, "-"),
+                new Token(Token.Type.NUMBER, "3"),
+                new Token(Token.Type.CLOSE_PARENTHESIS, ")"),
+                new Token(Token.Type.OPERATOR, "*"),
+                new Token(Token.Type.OPEN_PARENTHESIS, "("),
+                new Token(Token.Type.NUMBER, "42"),
+                new Token(Token.Type.OPERATOR, "+"),
+                new Token(Token.Type.REFERENCE, "B2"),
+                new Token(Token.Type.CLOSE_PARENTHESIS, ")")
+        );
+        List<Token> actualTokens = simpleTokenizer.tokenize(expression);
+        Assertions.assertIterableEquals(expectedTokens, actualTokens);
+    }
+
+    @Test
     void unknownOperationTokenizerTest() {
         String expression = "=2 & 3";
         Assertions.assertThrows(ParsingException.class, () -> simpleTokenizer.tokenize(expression));
