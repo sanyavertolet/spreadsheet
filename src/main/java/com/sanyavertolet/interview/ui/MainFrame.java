@@ -1,5 +1,6 @@
 package com.sanyavertolet.interview.ui;
 
+import com.sanyavertolet.interview.Configuration;
 import com.sanyavertolet.interview.cells.Cell;
 import com.sanyavertolet.interview.exceptions.CellAccessException;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
@@ -13,7 +14,7 @@ public class MainFrame extends JFrame {
     private final SpreadsheetTable table;
     private final DebugPanel debugPanel;
 
-    public MainFrame() {
+    public MainFrame(Configuration configuration) {
         setTitle("Spreadsheets");
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,14 +28,22 @@ public class MainFrame extends JFrame {
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED
         );
-
-        add(scrollPane, BorderLayout.CENTER);
-
         debugPanel = new DebugPanel();
-        add(debugPanel, BorderLayout.SOUTH);
+        if (configuration.isDebug()) {
+            scrollPane.setMinimumSize(new Dimension(50, 50));
+            debugPanel.setMinimumSize(new Dimension(50, 50));
 
-        table.getSelectionModel().addListSelectionListener(event -> updateDebugInfo());
-        table.getColumnModel().getSelectionModel().addListSelectionListener(event -> updateDebugInfo());
+            JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollPane, debugPanel);
+            splitPane.setResizeWeight(0.8);
+            splitPane.setOneTouchExpandable(true);
+
+            add(splitPane, BorderLayout.CENTER);
+
+            table.getSelectionModel().addListSelectionListener(event -> updateDebugInfo());
+            table.getColumnModel().getSelectionModel().addListSelectionListener(event -> updateDebugInfo());
+        } else {
+            add(scrollPane, BorderLayout.CENTER);
+        }
     }
 
     private void updateDebugInfo() {
