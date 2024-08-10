@@ -64,7 +64,7 @@ public class NonFunctionOperator extends Operator {
         };
     }
 
-    public Double evaluate(Double left, Double right) {
+    public Double calculate(Double left, Double right) {
         return switch (type) {
             case PLUS -> left + right;
             case MINUS -> left - right;

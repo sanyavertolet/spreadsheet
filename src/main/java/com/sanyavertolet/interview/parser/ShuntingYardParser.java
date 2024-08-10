@@ -1,6 +1,5 @@
 package com.sanyavertolet.interview.parser;
 
-import com.sanyavertolet.interview.data.manager.DataAccessor;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.exceptions.ExpressionParsingException;
 import com.sanyavertolet.interview.math.CellReference;
@@ -18,11 +17,6 @@ import java.util.*;
 
 public class ShuntingYardParser implements ExpressionParser {
     private final Tokenizer tokenizer = new SimpleTokenizer();
-    private final DataAccessor dataAccessor;
-
-    public ShuntingYardParser(DataAccessor dataAccessor) {
-        this.dataAccessor = dataAccessor;
-    }
 
     @Override
     public Expression parse(String expression) throws ExpressionParsingException {
@@ -103,7 +97,7 @@ public class ShuntingYardParser implements ExpressionParser {
                         }
                     } else {
                         CellReference cellReference = CellReference.of(token.value());
-                        expressions.add(new CellReferenceExpression(cellReference, dataAccessor));
+                        expressions.add(new CellReferenceExpression(cellReference));
                     }
                 }
                 case OPERATOR -> {
@@ -144,7 +138,7 @@ public class ShuntingYardParser implements ExpressionParser {
                     if (!operators.isEmpty() && operators.peek() instanceof FunctionOperator functionOperator) {
                         operators.pop();
                         arguments.add(0, expressions.pop());
-                        expressions.add(new FunctionExpression(functionOperator.function(), arguments));
+                        expressions.add(new FunctionExpression(functionOperator.getFunction(), arguments));
                         arguments = new ArrayList<>();
                     }
                     if (!arguments.isEmpty()) {

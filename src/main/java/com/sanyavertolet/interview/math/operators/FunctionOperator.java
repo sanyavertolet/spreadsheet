@@ -9,7 +9,7 @@ public class FunctionOperator extends Operator {
         function = Function.named(symbol);
     }
 
-    public Function function() {
+    public Function getFunction() {
         return function;
     }
 }

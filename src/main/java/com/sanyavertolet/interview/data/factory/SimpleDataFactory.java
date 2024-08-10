@@ -3,14 +3,18 @@ package com.sanyavertolet.interview.data.factory;
 import com.sanyavertolet.interview.data.*;
 import com.sanyavertolet.interview.data.manager.DataAccessor;
 import com.sanyavertolet.interview.exceptions.ExpressionParsingException;
+import com.sanyavertolet.interview.math.expressions.evaluator.ExpressionEvaluator;
+import com.sanyavertolet.interview.math.expressions.evaluator.SimpleExpressionEvaluator;
 import com.sanyavertolet.interview.parser.ExpressionParser;
 import com.sanyavertolet.interview.parser.ShuntingYardParser;
 
 public class SimpleDataFactory implements DataFactory {
     private final ExpressionParser expressionParser;
+    private final ExpressionEvaluator expressionEvaluator;
 
     public SimpleDataFactory(DataAccessor dataAccessor) {
-        expressionParser = new ShuntingYardParser(dataAccessor);
+        this.expressionParser = new ShuntingYardParser();
+        this.expressionEvaluator = new SimpleExpressionEvaluator(dataAccessor);
     }
 
     @Override
@@ -27,7 +31,7 @@ public class SimpleDataFactory implements DataFactory {
 
         if (cellText.startsWith("=")) {
             try {
-                return new ExpressionData(cellText, expressionParser.parse(cellText));
+                return new ExpressionData(cellText, expressionParser.parse(cellText), expressionEvaluator);
             } catch (ExpressionParsingException exception) {
                 return new TextData(cellText);
             }

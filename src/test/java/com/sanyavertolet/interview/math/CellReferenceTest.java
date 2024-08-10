@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class CellReferenceTest {
-
     @Test
     void simpleCellReferenceTest() throws CellReferenceException {
         String expectedIdentifier = "A1";

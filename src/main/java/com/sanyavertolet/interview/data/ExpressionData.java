@@ -6,6 +6,7 @@ import com.sanyavertolet.interview.math.expressions.BinaryExpression;
 import com.sanyavertolet.interview.math.expressions.CellReferenceExpression;
 import com.sanyavertolet.interview.math.expressions.Expression;
 import com.sanyavertolet.interview.math.expressions.FunctionExpression;
+import com.sanyavertolet.interview.math.expressions.evaluator.ExpressionEvaluator;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,26 +14,29 @@ import java.util.Stack;
 
 public class ExpressionData extends Data {
     private final Expression expression;
+    private final ExpressionEvaluator expressionEvaluator;
+    private Double value;
 
-    public ExpressionData(String text, Expression expression) {
+    public ExpressionData(String text, Expression expression, ExpressionEvaluator expressionEvaluator) {
         super(text);
         this.expression = expression;
+        this.expressionEvaluator = expressionEvaluator;
         try {
-            expression.evaluate();
-        } catch (ExpressionEvaluationException ignored) { }
-    }
-
-    public void recalculate() {
-        try {
-            expression.recalculate();
-        } catch (ExpressionEvaluationException ignored) { }
+            value = expressionEvaluator.evaluate(expression);
+        } catch (ExpressionEvaluationException e) {
+            value = null;
+        }
     }
 
     public Double getValue() {
+        return value;
+    }
+
+    public void updateValue() {
         try {
-            return expression.evaluate();
-        } catch (ExpressionEvaluationException exception) {
-            return null;
+            value = expressionEvaluator.evaluate(expression);
+        } catch (ExpressionEvaluationException e) {
+            value = null;
         }
     }
 

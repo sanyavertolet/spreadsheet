@@ -1,148 +1,158 @@
 package com.sanyavertolet.interview.parser;
 
-import com.sanyavertolet.interview.data.manager.DataAccessor;
-import com.sanyavertolet.interview.exceptions.DataAccessException;
-import com.sanyavertolet.interview.exceptions.CellReferenceException;
-import com.sanyavertolet.interview.exceptions.ExpressionEvaluationException;
-import com.sanyavertolet.interview.exceptions.ExpressionParsingException;
-import com.sanyavertolet.interview.math.CellReference;
-import com.sanyavertolet.interview.math.expressions.Expression;
+import com.sanyavertolet.interview.TestUtils;
+import com.sanyavertolet.interview.exceptions.*;
+import com.sanyavertolet.interview.math.expressions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static com.sanyavertolet.interview.Expressions.BinaryExpressions.*;
+import static com.sanyavertolet.interview.Expressions.Cells.a1;
+import static com.sanyavertolet.interview.Expressions.Cells.b2;
+import static com.sanyavertolet.interview.Expressions.Functions.*;
+import static com.sanyavertolet.interview.Expressions.Numbers.*;
+
 public class ShuntingYardParserTest {
-    private final CellReference a1CellReference = CellReference.of("A1");
-    private final CellReference b2CellReference = CellReference.of("B2");
-    private final Double a1CellValue = 2.0;
-    private final Double b2CellValue = -40.0;
-    private final DataAccessor dataAccessor = new DataAccessor() {
-        @Override
-        public Double getDoubleCellValue(CellReference reference) throws DataAccessException {
-            if (a1CellReference.equals(reference)) {
-                return a1CellValue;
-            } else if (b2CellReference.equals(reference)) {
-                return b2CellValue;
-            }
-            throw new DataAccessException("Cannot access cell reference");
-        }
-
-        @Override
-        public boolean hasCell(CellReference reference) {
-            return reference.equals(a1CellReference);
-        }
-    };
-    private final ShuntingYardParser parser = new ShuntingYardParser(dataAccessor);
-
-    public ShuntingYardParserTest() throws CellReferenceException { }
+    private final ShuntingYardParser parser = new ShuntingYardParser();
 
     @Test
-    void dummyExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
+    void dummyExpressionTest() throws ExpressionParsingException {
         String expressionText = "=1 + 2";
-        Expression expression = parser.parse(expressionText);
 
-        Double expectedValue = 3.0;
-        Double actualValue = expression.evaluate();
-        Assertions.assertEquals(expectedValue, actualValue);
+        Expression expectedExpression = plus(one, two);
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
-    void parameterlessFunctionExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
+    void parameterlessFunctionExpressionTest() throws ExpressionParsingException, FunctionArgumentException {
         String expressionText = "=PI() + E()";
-        Expression expression = parser.parse(expressionText);
 
-        Double expectedValue = Math.PI + Math.E;
-        Double actualValue = expression.evaluate();
-        Assertions.assertEquals(expectedValue, actualValue);
+        Expression expectedExpression = plus(pi(), e());
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
-    void parameterizedFunctionExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
+    void parameterizedFunctionExpressionTest() throws ExpressionParsingException, FunctionArgumentException {
         String expressionText = "=POW(2.0, 2.0)";
-        Expression expression = parser.parse(expressionText);
 
-        Double expectedValue = Math.pow(2.0, 2.0);
-        Double actualValue = expression.evaluate();
-        Assertions.assertEquals(expectedValue, actualValue);
+        Expression expectedExpression = powF(two, two);
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
-    void complexExpressionFunctionExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
+    void complexExpressionFunctionExpressionTest() throws ExpressionParsingException, FunctionArgumentException {
         String expressionText = "=2 ^ 5 + (3 * E()) / (4 - 7)";
-        Expression expression = parser.parse(expressionText);
 
-        Double expectedValue = Math.pow(2.0, 5.0) + (3 * Math.E) / (4 - 7);
-        Double actualValue = expression.evaluate();
-        Assertions.assertEquals(expectedValue, actualValue);
+        Expression expectedExpression = plus(
+                powOp(two, five),
+                div(
+                        mul(three, e()),
+                        minus(four, seven)
+                )
+        );
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
-    void nestedFunctionExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
+    void nestedFunctionExpressionTest() throws ExpressionParsingException, FunctionArgumentException {
         String expressionText = "=POW(PI(), 2)";
-        Expression expression = parser.parse(expressionText);
 
-        Double expectedValue = Math.pow(Math.PI, 2);
-        Double actualValue = expression.evaluate();
-        Assertions.assertEquals(expectedValue, actualValue);
+        Expression expectedExpression = powF(pi(), two);
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
-    void negativeNumberExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
+    void negativeNumberExpressionTest() throws ExpressionParsingException {
         String expressionText = "=-5 + 10";
-        Expression expression = parser.parse(expressionText);
 
-        Double expectedValue = 5.0;
-        Double actualValue = expression.evaluate();
-        Assertions.assertEquals(expectedValue, actualValue);
+        Expression expectedExpression = plus(minus(five), ten);
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
-    void multipleOperationsExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
+    void multipleOperationsExpressionTest() throws ExpressionParsingException {
         String expressionText = "=2 + 3 * 4 - 5 / 2";
-        Expression expression = parser.parse(expressionText);
 
-        Double expectedValue = 2 + 3 * 4 - 5 / 2.0;
-        Double actualValue = expression.evaluate();
-        Assertions.assertEquals(expectedValue, actualValue);
+        Expression expectedExpression = minus(
+                plus(
+                        two,
+                        mul(three, four)
+                ),
+                div(five, two)
+        );
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
-    void nestedParenthesesExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
+    void nestedParenthesesExpressionTest() throws ExpressionParsingException {
         String expressionText = "=((2 + 3) * (4 - 1)) / 5";
-        Expression expression = parser.parse(expressionText);
 
-        Double expectedValue = ((2 + 3) * (4 - 1)) / 5.0;
-        Double actualValue = expression.evaluate();
-        Assertions.assertEquals(expectedValue, actualValue);
+        Expression expectedExpression = div(
+                mul(
+                        plus(two, three),
+                        minus(four, one)
+                ),
+                five
+        );
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
-    void mixedFunctionAndOperationExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
+    void mixedFunctionAndOperationExpressionTest() throws ExpressionParsingException, FunctionArgumentException {
         String expressionText = "=(POW(2, 3) + 4) * PI()";
-        Expression expression = parser.parse(expressionText);
 
-        Double expectedValue = (Math.pow(2, 3) + 4) * Math.PI;
-        Double actualValue = expression.evaluate();
-        Assertions.assertEquals(expectedValue, actualValue);
+        Expression expectedExpression = mul(
+                plus(
+                        powF(two, three),
+                        four
+                ),
+                pi()
+        );
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
-    void cellReferenceExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
+    void cellReferenceExpressionTest() throws ExpressionParsingException, CellReferenceException {
         String expressionText = "=A1 * 2";
-        Expression expression = parser.parse(expressionText);
 
-        Double expectedValue = a1CellValue * 2.0;
-        Double actualValue = expression.evaluate();
-        Assertions.assertEquals(expectedValue, actualValue);
+        Expression expectedExpression = mul(a1(), two);
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
-    void exampleExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
+    void exampleExpressionTest() throws ExpressionParsingException, FunctionArgumentException, CellReferenceException {
         String expressionText = "=pow(-2, A1 - 3) * (42 + B2)";
-        Expression expression = parser.parse(expressionText);
 
-        Double expectedValue = Math.pow(-2, a1CellValue - 3) * (42 + b2CellValue);
-        Double actualValue = expression.evaluate();
-        Assertions.assertEquals(expectedValue, actualValue);
+        Expression expectedExpression = mul(
+                powF(
+                        minus(two),
+                        minus(a1(), three)
+                ),
+                plus(fortyTwo, b2())
+        );
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -251,13 +261,5 @@ public class ShuntingYardParserTest {
     void missingFunctionParenthesesTest() {
         String expressionText = "=POW 2, 3)";
         Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
-    }
-
-    @Test
-    void missingCellTest() throws ExpressionParsingException {
-        String expressionText = "=F2";
-        Expression expression = parser.parse(expressionText);
-
-        Assertions.assertThrows(ExpressionEvaluationException.class, expression::evaluate);
     }
 }
