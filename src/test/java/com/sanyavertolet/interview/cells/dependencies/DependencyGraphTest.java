@@ -1,5 +1,6 @@
 package com.sanyavertolet.interview.cells.dependencies;
 
+import com.sanyavertolet.interview.TestUtils;
 import com.sanyavertolet.interview.exceptions.CellDependencyException;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
@@ -91,5 +92,18 @@ public class DependencyGraphTest {
         Assertions.assertEquals(c1, updateList.get(1));
         Assertions.assertEquals(a2, updateList.get(2));
         Assertions.assertEquals(c3, updateList.get(3));
+        Assertions.assertThrows(CellDependencyException.class, () -> dependencyGraph.getUpdateList(a1));
+    }
+
+    @Test
+    void squareDependenciesTest() throws CellDependencyException {
+        dependencyGraph.addDependency(a1, b1);
+        dependencyGraph.addDependency(a1, c1);
+        dependencyGraph.addDependency(b1, a2);
+        dependencyGraph.addDependency(c1, a2);
+
+        List<CellReference> updateList = dependencyGraph.getUpdateList(a1);
+        TestUtils.assertHappensBefore(b1, a2, updateList);
+        TestUtils.assertHappensBefore(c1, a2, updateList);
     }
 }
