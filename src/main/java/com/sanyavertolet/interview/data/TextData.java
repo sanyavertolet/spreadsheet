@@ -1,7 +1,7 @@
-package com.sanyavertolet.interview.cells;
+package com.sanyavertolet.interview.data;
 
-public class TextCell extends Cell {
-    public TextCell(String text) {
+public class TextData extends Data {
+    public TextData(String text) {
         super(text);
     }
 

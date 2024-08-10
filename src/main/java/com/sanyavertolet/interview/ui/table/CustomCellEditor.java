@@ -1,12 +1,12 @@
 package com.sanyavertolet.interview.ui.table;
 
-import com.sanyavertolet.interview.cells.Cell;
+import com.sanyavertolet.interview.data.Data;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class CustomCellEditor extends DefaultCellEditor {
-    private Cell cell;
+    private Data data;
 
     public CustomCellEditor() {
         super(new JTextField());
@@ -14,15 +14,15 @@ public class CustomCellEditor extends DefaultCellEditor {
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        this.cell = (Cell) value;
+        this.data = (Data) value;
         JTextField textField = (JTextField) super.getTableCellEditorComponent(table, value, isSelected, row, column);
-        textField.setText(cell.getText());
+        textField.setText(data.getText());
         return textField;
     }
 
     public Object getCellEditorValue() {
         JTextField textField = (JTextField) getComponent();
-        cell.setText(textField.getText());
-        return cell;
+        data.setText(textField.getText());
+        return data;
     }
 }

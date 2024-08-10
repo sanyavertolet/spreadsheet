@@ -1,9 +1,9 @@
-package com.sanyavertolet.interview.cells;
+package com.sanyavertolet.interview.data;
 
-public class BooleanCell extends Cell {
+public class BooleanData extends Data {
     private final Boolean value;
 
-    public BooleanCell(String text) {
+    public BooleanData(String text) {
         super(text);
         if (text.trim().equalsIgnoreCase("true")) {
             this.value = true;
@@ -14,7 +14,7 @@ public class BooleanCell extends Cell {
         }
     }
 
-    public BooleanCell(String text, Boolean value) {
+    public BooleanData(String text, Boolean value) {
         super(text);
         this.value = value;
     }

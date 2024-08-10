@@ -1,6 +1,6 @@
 package com.sanyavertolet.interview.parser.tokenizer;
 
-import com.sanyavertolet.interview.exceptions.ParsingException;
+import com.sanyavertolet.interview.exceptions.ExpressionParsingException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class SimpleTokenizer implements Tokenizer {
         return position < expression.length();
     }
 
-    Token getNextToken() throws ParsingException {
+    Token getNextToken() throws ExpressionParsingException {
         while(hasMoreTokens() && expression.charAt(position) == ' ') {
             advance();
         }
@@ -55,7 +55,7 @@ public class SimpleTokenizer implements Tokenizer {
                 } else if (Character.isLetter(currentSym)) {
                     return getReferenceToken();
                 } else {
-                    throw new ParsingException("Syntax error at position: " + position);
+                    throw new ExpressionParsingException("Syntax error at position: " + position);
                 }
         }
     }
@@ -85,7 +85,7 @@ public class SimpleTokenizer implements Tokenizer {
     }
 
     @Override
-    public List<Token> tokenize(String input) throws ParsingException {
+    public List<Token> tokenize(String input) throws ExpressionParsingException {
         expression = input;
         position = 0;
         advance();

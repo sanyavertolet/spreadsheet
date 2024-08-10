@@ -1,9 +1,9 @@
-package com.sanyavertolet.interview.cells;
+package com.sanyavertolet.interview.data;
 
-public abstract class Cell {
+public abstract class Data {
     protected String text;
 
-    public Cell(String text) {
+    public Data(String text) {
         this.text = text;
     }
 

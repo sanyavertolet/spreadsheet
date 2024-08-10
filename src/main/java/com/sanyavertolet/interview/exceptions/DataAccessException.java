@@ -1,13 +1,13 @@
 package com.sanyavertolet.interview.exceptions;
 
-public class ParsingException extends Exception {
+public class DataAccessException extends Exception {
     @SuppressWarnings("unused")
-    public ParsingException(String message) {
+    public DataAccessException(String message) {
         super(message);
     }
 
     @SuppressWarnings("unused")
-    public ParsingException(String message, Throwable cause) {
+    public DataAccessException(String message, Throwable cause) {
         super(message, cause);
     }
 }

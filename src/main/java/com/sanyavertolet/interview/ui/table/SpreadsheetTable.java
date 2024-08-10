@@ -1,7 +1,7 @@
 package com.sanyavertolet.interview.ui.table;
 
-import com.sanyavertolet.interview.cells.Cell;
-import com.sanyavertolet.interview.exceptions.CellAccessException;
+import com.sanyavertolet.interview.data.Data;
+import com.sanyavertolet.interview.exceptions.DataAccessException;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 
@@ -42,11 +42,11 @@ public class SpreadsheetTable extends JTable {
         return CellReference.of(getSelectedRow(), getSelectedColumn());
     }
 
-    public Cell getValueAt(CellReference cellReference) throws CellAccessException {
+    public Data getValueAt(CellReference cellReference) throws DataAccessException {
         Object data = getValueAt(cellReference.row(), cellReference.column());
-        if (data instanceof Cell cell) {
+        if (data instanceof Data cell) {
             return cell;
         }
-        throw new CellAccessException("Cannot access cell " + cellReference.identifier() + " due to its type.");
+        throw new DataAccessException("Cannot access cell " + cellReference.identifier() + " due to its type.");
     }
 }

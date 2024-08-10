@@ -1,13 +1,13 @@
 package com.sanyavertolet.interview.exceptions;
 
-public class CellAccessException extends Exception {
+public class DataDependencyException extends Exception {
     @SuppressWarnings("unused")
-    public CellAccessException(String message) {
+    public DataDependencyException(String message) {
         super(message);
     }
 
     @SuppressWarnings("unused")
-    public CellAccessException(String message, Throwable cause) {
+    public DataDependencyException(String message, Throwable cause) {
         super(message, cause);
     }
 }

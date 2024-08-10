@@ -1,6 +1,6 @@
 package com.sanyavertolet.interview.parser.tokenizer;
 
-import com.sanyavertolet.interview.exceptions.ParsingException;
+import com.sanyavertolet.interview.exceptions.ExpressionParsingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ public class SimpleTokenizerTest {
     private final SimpleTokenizer simpleTokenizer = new SimpleTokenizer();
 
     @Test
-    void dummyTokenizerTest() throws ParsingException {
+    void dummyTokenizerTest() throws ExpressionParsingException {
         String expression = "=2 + 2";
         List<Token> expectedTokens = List.of(
                 new Token(Token.Type.NUMBER, "2"),
@@ -22,7 +22,7 @@ public class SimpleTokenizerTest {
     }
 
     @Test
-    void parenthesisTokenizerTest() throws ParsingException {
+    void parenthesisTokenizerTest() throws ExpressionParsingException {
         String expression = "=3.0 * (4 - 3.0) / (2 ^ 2)";
         List<Token> expectedTokens = List.of(
                 new Token(Token.Type.NUMBER, "3.0"),
@@ -44,7 +44,7 @@ public class SimpleTokenizerTest {
     }
 
     @Test
-    void referenceTokenizerTest() throws ParsingException {
+    void referenceTokenizerTest() throws ExpressionParsingException {
         String expression = "=pow(2, 5) + C2";
         List<Token> expectedTokens = List.of(
                 new Token(Token.Type.REFERENCE, "pow"),
@@ -61,7 +61,7 @@ public class SimpleTokenizerTest {
     }
 
     @Test
-    void multipleOperatorsTokenizerTest() throws ParsingException {
+    void multipleOperatorsTokenizerTest() throws ExpressionParsingException {
         String expression = "=1 + 2 - 3 * 4 / 5";
         List<Token> expectedTokens = List.of(
                 new Token(Token.Type.NUMBER, "1"),
@@ -79,7 +79,7 @@ public class SimpleTokenizerTest {
     }
 
     @Test
-    void negativeNumberTokenizerTest() throws ParsingException {
+    void negativeNumberTokenizerTest() throws ExpressionParsingException {
         String expression = "=-2 + 3";
         List<Token> expectedTokens = List.of(
                 new Token(Token.Type.OPERATOR, "-"),
@@ -92,7 +92,7 @@ public class SimpleTokenizerTest {
     }
 
     @Test
-    void complexExpressionTokenizerTest() throws ParsingException {
+    void complexExpressionTokenizerTest() throws ExpressionParsingException {
         String expression = "=pow(-2, 5) + (3 * E()) / (A1 - 7)";
         List<Token> expectedTokens = List.of(
                 new Token(Token.Type.REFERENCE, "pow"),
@@ -122,7 +122,7 @@ public class SimpleTokenizerTest {
     }
 
     @Test
-    void exampleExpressionTokenizerTest() throws ParsingException {
+    void exampleExpressionTokenizerTest() throws ExpressionParsingException {
         String expression = "=pow(-2, A1 - 3) * (42 + B2)";
         List<Token> expectedTokens = List.of(
                 new Token(Token.Type.REFERENCE, "pow"),
@@ -148,17 +148,17 @@ public class SimpleTokenizerTest {
     @Test
     void unknownOperationTokenizerTest() {
         String expression = "=2 & 3";
-        Assertions.assertThrows(ParsingException.class, () -> simpleTokenizer.tokenize(expression));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> simpleTokenizer.tokenize(expression));
     }
 
     @Test
     void invalidExpressionTokenizerTest() {
         String expression = "=PI() .3";
-        Assertions.assertThrows(ParsingException.class, () -> simpleTokenizer.tokenize(expression));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> simpleTokenizer.tokenize(expression));
     }
 
     @Test
-    void emptyExpressionTokenizerTest() throws ParsingException {
+    void emptyExpressionTokenizerTest() throws ExpressionParsingException {
         String expression = "=";
         Assertions.assertIterableEquals(List.of(), simpleTokenizer.tokenize(expression));
     }

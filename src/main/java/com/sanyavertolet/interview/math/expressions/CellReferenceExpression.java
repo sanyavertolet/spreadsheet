@@ -1,30 +1,34 @@
 package com.sanyavertolet.interview.math.expressions;
 
-import com.sanyavertolet.interview.cells.cellmanager.CellAccessor;
-import com.sanyavertolet.interview.exceptions.CellAccessException;
-import com.sanyavertolet.interview.exceptions.EvaluationException;
+import com.sanyavertolet.interview.data.manager.DataAccessor;
+import com.sanyavertolet.interview.exceptions.DataAccessException;
+import com.sanyavertolet.interview.exceptions.ExpressionEvaluationException;
 import com.sanyavertolet.interview.math.CellReference;
 
 public class CellReferenceExpression extends Expression {
     private final CellReference cellReference;
-    private final CellAccessor cellAccessor;
+    private final DataAccessor dataAccessor;
 
-    public CellReferenceExpression(CellReference cellReference, CellAccessor cellAccessor) {
+    public CellReferenceExpression(CellReference cellReference, DataAccessor dataAccessor) {
         this.cellReference = cellReference;
-        this.cellAccessor = cellAccessor;
+        this.dataAccessor = dataAccessor;
     }
 
     @Override
-    public void recalculate() throws EvaluationException {
+    public void recalculate() throws ExpressionEvaluationException {
         try {
-            value = cellAccessor.getDoubleCellValue(cellReference);
-        } catch (CellAccessException exception) {
-            throw new EvaluationException(exception.getMessage());
+            value = dataAccessor.getDoubleCellValue(cellReference);
+        } catch (DataAccessException exception) {
+            throw new ExpressionEvaluationException(exception.getMessage());
         }
     }
 
     @Override
     public String prettyPrint(int shift) {
         return ".".repeat(shift) + cellReference.identifier() + "<" + value + ">" + "\n";
+    }
+
+    public CellReference getCellReference() {
+        return cellReference;
     }
 }

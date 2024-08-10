@@ -1,6 +1,6 @@
-package com.sanyavertolet.interview.cells.dependencies;
+package com.sanyavertolet.interview.data.dependencies;
 
-import com.sanyavertolet.interview.exceptions.CellDependencyException;
+import com.sanyavertolet.interview.exceptions.DataDependencyException;
 import com.sanyavertolet.interview.math.CellReference;
 
 import java.util.*;
@@ -10,9 +10,9 @@ public class SimpleDependencyGraph implements DependencyGraph {
     private final Map<CellReference, Set<CellReference>> dependants = new HashMap<>();
 
     @Override
-    public void addDependency(CellReference dependsOn, CellReference dependantCell) throws CellDependencyException {
+    public void addDependency(CellReference dependsOn, CellReference dependantCell) throws DataDependencyException {
         if (dependantCell.identifier().equals(dependsOn.identifier())) {
-            throw new CellDependencyException("Cell cannot depend on itself: " + dependantCell.identifier());
+            throw new DataDependencyException("Cell cannot depend on itself: " + dependantCell.identifier());
         }
         dependencies.computeIfAbsent(dependsOn, k -> new HashSet<>()).add(dependantCell);
         dependants.computeIfAbsent(dependsOn, k -> new HashSet<>()).add(dependantCell);
@@ -24,7 +24,7 @@ public class SimpleDependencyGraph implements DependencyGraph {
     }
 
     @Override
-    public List<CellReference> getUpdateList(CellReference cellReference) throws CellDependencyException {
+    public List<CellReference> getUpdateList(CellReference cellReference) throws DataDependencyException {
         List<CellReference> sorted = new ArrayList<>();
         Set<CellReference> visited = new HashSet<>();
         Set<CellReference> visiting = new HashSet<>();
@@ -45,12 +45,12 @@ public class SimpleDependencyGraph implements DependencyGraph {
     }
 
 
-    private void topologicalSort(CellReference current, Set<CellReference> visited, Set<CellReference> visiting, List<CellReference> sorted) throws CellDependencyException {
+    private void topologicalSort(CellReference current, Set<CellReference> visited, Set<CellReference> visiting, List<CellReference> sorted) throws DataDependencyException {
         if (visited.contains(current)) {
             return;
         }
         if (visiting.contains(current)) {
-            throw new CellDependencyException("Cycle detected");
+            throw new DataDependencyException("Cycle detected");
         }
 
         visiting.add(current);

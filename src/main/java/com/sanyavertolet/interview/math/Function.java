@@ -1,6 +1,6 @@
 package com.sanyavertolet.interview.math;
 
-import com.sanyavertolet.interview.exceptions.EvaluationException;
+import com.sanyavertolet.interview.exceptions.ExpressionEvaluationException;
 import com.sanyavertolet.interview.math.expressions.Expression;
 
 import java.util.List;
@@ -42,15 +42,15 @@ public enum Function {
         return argumentsSize;
     }
 
-    public Double evaluate(List<Expression> arguments) throws EvaluationException {
+    public Double evaluate(List<Expression> arguments) throws ExpressionEvaluationException {
         if (arguments.size() != argumentsSize) {
-            throw new EvaluationException(name() + " should have exactly " + argumentsSize + " arguments");
+            throw new ExpressionEvaluationException(name() + " should have exactly " + argumentsSize + " arguments");
         }
         return evaluator.invoke(arguments);
     }
 
     private interface Evaluator {
-        Double invoke(List<Expression> args) throws EvaluationException;
+        Double invoke(List<Expression> args) throws ExpressionEvaluationException;
     }
 
     public static Function named(String name) {

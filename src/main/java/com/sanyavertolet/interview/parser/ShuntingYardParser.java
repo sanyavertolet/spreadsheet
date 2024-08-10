@@ -1,11 +1,11 @@
 package com.sanyavertolet.interview.parser;
 
-import com.sanyavertolet.interview.cells.cellmanager.CellAccessor;
+import com.sanyavertolet.interview.data.manager.DataAccessor;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
+import com.sanyavertolet.interview.exceptions.ExpressionParsingException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.Function;
 import com.sanyavertolet.interview.exceptions.FunctionArgumentException;
-import com.sanyavertolet.interview.exceptions.ParsingException;
 import com.sanyavertolet.interview.math.expressions.*;
 import com.sanyavertolet.interview.math.operators.FunctionOperator;
 import com.sanyavertolet.interview.math.operators.NonFunctionOperator;
@@ -18,22 +18,22 @@ import java.util.*;
 
 public class ShuntingYardParser implements ExpressionParser {
     private final Tokenizer tokenizer = new SimpleTokenizer();
-    private final CellAccessor cellAccessor;
+    private final DataAccessor dataAccessor;
 
-    public ShuntingYardParser(CellAccessor cellAccessor) {
-        this.cellAccessor = cellAccessor;
+    public ShuntingYardParser(DataAccessor dataAccessor) {
+        this.dataAccessor = dataAccessor;
     }
 
     @Override
-    public Expression parse(String expression) throws ParsingException {
+    public Expression parse(String expression) throws ExpressionParsingException {
         List<Token> tokens = tokenizer.tokenize(expression);
 
         try {
             return parse(tokens);
-        } catch (ParsingException exception) {
+        } catch (ExpressionParsingException exception) {
             throw exception;
         } catch (Exception exception) {
-            throw new ParsingException(exception.getMessage(), exception);
+            throw new ExpressionParsingException(exception.getMessage(), exception);
         }
     }
 
@@ -64,13 +64,13 @@ public class ShuntingYardParser implements ExpressionParser {
         return index + 1 < tokens.size() ? tokens.get(index + 1) : null;
     }
 
-    private Expression getBinaryExpression(Stack<Expression> expressions, Stack<Operator> operators) throws ParsingException {
+    private Expression getBinaryExpression(Stack<Expression> expressions, Stack<Operator> operators) throws ExpressionParsingException {
         Expression right = expressions.pop();
         Operator operator = operators.pop();
         if (operator instanceof NonFunctionOperator nonFunctionOperator) {
             return new BinaryExpression(expressions.pop(), right, nonFunctionOperator);
         }
-        throw new ParsingException("Found insufficient operator: " + operator.symbol());
+        throw new ExpressionParsingException("Found insufficient operator: " + operator.symbol());
     }
 
     private Expression getBinaryExpression(Stack<Expression> expressions, NonFunctionOperator operator) {
@@ -85,7 +85,7 @@ public class ShuntingYardParser implements ExpressionParser {
         return tokens.get(functionTokenIndex + 2).type() == Token.Type.CLOSE_PARENTHESIS;
     }
 
-    private Expression parse(List<Token> tokens) throws ParsingException, FunctionArgumentException, CellReferenceException {
+    private Expression parse(List<Token> tokens) throws ExpressionParsingException, FunctionArgumentException, CellReferenceException {
         Stack<Expression> expressions = new Stack<>();
         Stack<Operator> operators = new Stack<>();
 
@@ -103,7 +103,7 @@ public class ShuntingYardParser implements ExpressionParser {
                         }
                     } else {
                         CellReference cellReference = CellReference.of(token.value());
-                        expressions.add(new CellReferenceExpression(cellReference, cellAccessor));
+                        expressions.add(new CellReferenceExpression(cellReference, dataAccessor));
                     }
                 }
                 case OPERATOR -> {
@@ -127,7 +127,7 @@ public class ShuntingYardParser implements ExpressionParser {
                     List<Expression> arguments = new ArrayList<>();
                     while (operators.peek() instanceof NonFunctionOperator operator && operator.type() != NonFunctionOperator.Type.OPEN_PARENTHESIS) {
                         if (operators.isEmpty()) {
-                            throw new ParsingException("Closing parenthesis not found.");
+                            throw new ExpressionParsingException("Closing parenthesis not found.");
                         }
                         operators.pop();
                         if (operator.type() == NonFunctionOperator.Type.COMMA) {
@@ -137,7 +137,7 @@ public class ShuntingYardParser implements ExpressionParser {
                         }
                     }
                     if (operators.isEmpty() || operators.peek() instanceof NonFunctionOperator operator && operator.type() != NonFunctionOperator.Type.OPEN_PARENTHESIS) {
-                        throw new ParsingException("Failed parenthesis.");
+                        throw new ExpressionParsingException("Failed parenthesis.");
                     }
 
                     operators.pop();
@@ -148,23 +148,23 @@ public class ShuntingYardParser implements ExpressionParser {
                         arguments = new ArrayList<>();
                     }
                     if (!arguments.isEmpty()) {
-                        throw new ParsingException("Failed while parsing function.");
+                        throw new ExpressionParsingException("Failed while parsing function.");
                     }
                 }
-                default -> throw new ParsingException("Unexpected token type: " + token);
+                default -> throw new ExpressionParsingException("Unexpected token type: " + token);
             }
         }
 
         while (!operators.isEmpty()) {
             if (operators.peek() instanceof NonFunctionOperator operator && operator.type() == NonFunctionOperator.Type.OPEN_PARENTHESIS) {
-                throw new ParsingException("Closing parenthesis not found.");
+                throw new ExpressionParsingException("Closing parenthesis not found.");
             }
 
             expressions.add(getBinaryExpression(expressions, operators));
         }
 
         if (expressions.size() > 1) {
-            throw new ParsingException("Could not build expression tree: extra expressions found.");
+            throw new ExpressionParsingException("Could not build expression tree: extra expressions found.");
         }
 
         return expressions.peek();

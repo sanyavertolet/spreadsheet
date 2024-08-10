@@ -1,9 +1,9 @@
-package com.sanyavertolet.interview.cells;
+package com.sanyavertolet.interview.data;
 
-public class DoubleCell extends Cell {
+public class DoubleData extends Data {
     private final Double value;
 
-    public DoubleCell(String text) {
+    public DoubleData(String text) {
         super(text);
         try {
             value = Double.valueOf(text);
@@ -12,7 +12,7 @@ public class DoubleCell extends Cell {
         }
     }
 
-    public DoubleCell(String text, Double value) {
+    public DoubleData(String text, Double value) {
         super(text);
         this.value = value;
     }

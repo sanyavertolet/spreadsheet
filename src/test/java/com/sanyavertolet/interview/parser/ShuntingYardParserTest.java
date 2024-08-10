@@ -1,10 +1,10 @@
 package com.sanyavertolet.interview.parser;
 
-import com.sanyavertolet.interview.cells.cellmanager.CellAccessor;
-import com.sanyavertolet.interview.exceptions.CellAccessException;
+import com.sanyavertolet.interview.data.manager.DataAccessor;
+import com.sanyavertolet.interview.exceptions.DataAccessException;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
-import com.sanyavertolet.interview.exceptions.EvaluationException;
-import com.sanyavertolet.interview.exceptions.ParsingException;
+import com.sanyavertolet.interview.exceptions.ExpressionEvaluationException;
+import com.sanyavertolet.interview.exceptions.ExpressionParsingException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.expressions.Expression;
 import org.junit.jupiter.api.Assertions;
@@ -15,15 +15,15 @@ public class ShuntingYardParserTest {
     private final CellReference b2CellReference = CellReference.of("B2");
     private final Double a1CellValue = 2.0;
     private final Double b2CellValue = -40.0;
-    private final CellAccessor cellAccessor = new CellAccessor() {
+    private final DataAccessor dataAccessor = new DataAccessor() {
         @Override
-        public Double getDoubleCellValue(CellReference reference) throws CellAccessException {
+        public Double getDoubleCellValue(CellReference reference) throws DataAccessException {
             if (a1CellReference.equals(reference)) {
                 return a1CellValue;
             } else if (b2CellReference.equals(reference)) {
                 return b2CellValue;
             }
-            throw new CellAccessException("Cannot access cell reference");
+            throw new DataAccessException("Cannot access cell reference");
         }
 
         @Override
@@ -31,12 +31,12 @@ public class ShuntingYardParserTest {
             return reference.equals(a1CellReference);
         }
     };
-    private final ShuntingYardParser parser = new ShuntingYardParser(cellAccessor);
+    private final ShuntingYardParser parser = new ShuntingYardParser(dataAccessor);
 
     public ShuntingYardParserTest() throws CellReferenceException { }
 
     @Test
-    void dummyExpressionTest() throws ParsingException, EvaluationException {
+    void dummyExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
         String expressionText = "=1 + 2";
         Expression expression = parser.parse(expressionText);
 
@@ -46,7 +46,7 @@ public class ShuntingYardParserTest {
     }
 
     @Test
-    void parameterlessFunctionExpressionTest() throws ParsingException, EvaluationException {
+    void parameterlessFunctionExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
         String expressionText = "=PI() + E()";
         Expression expression = parser.parse(expressionText);
 
@@ -56,7 +56,7 @@ public class ShuntingYardParserTest {
     }
 
     @Test
-    void parameterizedFunctionExpressionTest() throws ParsingException, EvaluationException {
+    void parameterizedFunctionExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
         String expressionText = "=POW(2.0, 2.0)";
         Expression expression = parser.parse(expressionText);
 
@@ -66,7 +66,7 @@ public class ShuntingYardParserTest {
     }
 
     @Test
-    void complexExpressionFunctionExpressionTest() throws ParsingException, EvaluationException {
+    void complexExpressionFunctionExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
         String expressionText = "=2 ^ 5 + (3 * E()) / (4 - 7)";
         Expression expression = parser.parse(expressionText);
 
@@ -76,7 +76,7 @@ public class ShuntingYardParserTest {
     }
 
     @Test
-    void nestedFunctionExpressionTest() throws ParsingException, EvaluationException {
+    void nestedFunctionExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
         String expressionText = "=POW(PI(), 2)";
         Expression expression = parser.parse(expressionText);
 
@@ -86,7 +86,7 @@ public class ShuntingYardParserTest {
     }
 
     @Test
-    void negativeNumberExpressionTest() throws ParsingException, EvaluationException {
+    void negativeNumberExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
         String expressionText = "=-5 + 10";
         Expression expression = parser.parse(expressionText);
 
@@ -96,7 +96,7 @@ public class ShuntingYardParserTest {
     }
 
     @Test
-    void multipleOperationsExpressionTest() throws ParsingException, EvaluationException {
+    void multipleOperationsExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
         String expressionText = "=2 + 3 * 4 - 5 / 2";
         Expression expression = parser.parse(expressionText);
 
@@ -106,7 +106,7 @@ public class ShuntingYardParserTest {
     }
 
     @Test
-    void nestedParenthesesExpressionTest() throws ParsingException, EvaluationException {
+    void nestedParenthesesExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
         String expressionText = "=((2 + 3) * (4 - 1)) / 5";
         Expression expression = parser.parse(expressionText);
 
@@ -116,7 +116,7 @@ public class ShuntingYardParserTest {
     }
 
     @Test
-    void mixedFunctionAndOperationExpressionTest() throws ParsingException, EvaluationException {
+    void mixedFunctionAndOperationExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
         String expressionText = "=(POW(2, 3) + 4) * PI()";
         Expression expression = parser.parse(expressionText);
 
@@ -126,7 +126,7 @@ public class ShuntingYardParserTest {
     }
 
     @Test
-    void cellReferenceExpressionTest() throws ParsingException, EvaluationException {
+    void cellReferenceExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
         String expressionText = "=A1 * 2";
         Expression expression = parser.parse(expressionText);
 
@@ -136,7 +136,7 @@ public class ShuntingYardParserTest {
     }
 
     @Test
-    void exampleExpressionTest() throws ParsingException, EvaluationException {
+    void exampleExpressionTest() throws ExpressionParsingException, ExpressionEvaluationException {
         String expressionText = "=pow(-2, A1 - 3) * (42 + B2)";
         Expression expression = parser.parse(expressionText);
 
@@ -148,116 +148,116 @@ public class ShuntingYardParserTest {
     @Test
     void tooManyCommasExpressionTest() {
         String expressionText = "=POW(2,, 3)";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void tooManyOpenBracketsExpressionTest() {
         String expressionText = "=POW((2, 3)";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void tooManyCloseBracketsExpressionTest() {
         String expressionText = "=POW(2, 3))";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void brokenBracketsExpressionTest() {
         String expressionText = "=2 * )(2)";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void unmatchedParenthesesTest() {
         String expressionText = "=2 + (3 * 4";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void extraClosingParenthesisTest() {
         String expressionText = "=2 + 3) * 4";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void invalidTokenTest() {
         String expressionText = "=2 + 3 & 4";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void invalidFunctionNameTest() {
         String expressionText = "=UNKNOWN(2, 3)";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void missingFunctionArgumentTest() {
         String expressionText = "=POW(2)";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void extraFunctionArgumentTest() {
         String expressionText = "=POW(2, 3, 4)";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void invalidExpressionSequenceTest() {
         String expressionText = "=2 2 + 3";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void missingOperatorBetweenNumbersTest() {
         String expressionText = "=2 3 + 4";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void emptyParenthesesTest() {
         String expressionText = "=POW(,)";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void incompleteFunctionTest() {
         String expressionText = "=POW(2, ";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void multipleOperatorsWithoutOperandTest() {
         String expressionText = "=2 + / 3";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void startingWithOperatorTest() {
         String expressionText = "=* 2 * 3";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void endingWithOperatorTest() {
         String expressionText = "=2 * 3 +";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
     void missingFunctionParenthesesTest() {
         String expressionText = "=POW 2, 3)";
-        Assertions.assertThrows(ParsingException.class, () -> parser.parse(expressionText));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 
     @Test
-    void missingCellTest() throws ParsingException {
+    void missingCellTest() throws ExpressionParsingException {
         String expressionText = "=F2";
         Expression expression = parser.parse(expressionText);
 
-        Assertions.assertThrows(EvaluationException.class, expression::evaluate);
+        Assertions.assertThrows(ExpressionEvaluationException.class, expression::evaluate);
     }
 }

@@ -1,8 +1,8 @@
 package com.sanyavertolet.interview.ui;
 
 import com.sanyavertolet.interview.Configuration;
-import com.sanyavertolet.interview.cells.Cell;
-import com.sanyavertolet.interview.exceptions.CellAccessException;
+import com.sanyavertolet.interview.data.Data;
+import com.sanyavertolet.interview.exceptions.DataAccessException;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.ui.table.SpreadsheetTable;
@@ -50,12 +50,12 @@ public class MainFrame extends JFrame {
         try {
             CellReference cellReference = table.getSelectedCell();
             if (cellReference != null) {
-                Cell cell = table.getValueAt(cellReference);
-                debugPanel.setSelectedCell(cellReference, cell);
+                Data data = table.getValueAt(cellReference);
+                debugPanel.setSelectedCell(cellReference, data);
             } else {
                 debugPanel.setSelectedCell(null, null);
             }
-        } catch (CellReferenceException | CellAccessException ignored) {
+        } catch (CellReferenceException | DataAccessException ignored) {
 
         }
     }

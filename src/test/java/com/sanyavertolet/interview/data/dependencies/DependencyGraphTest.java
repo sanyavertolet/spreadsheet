@@ -1,7 +1,7 @@
-package com.sanyavertolet.interview.cells.dependencies;
+package com.sanyavertolet.interview.data.dependencies;
 
 import com.sanyavertolet.interview.TestUtils;
-import com.sanyavertolet.interview.exceptions.CellDependencyException;
+import com.sanyavertolet.interview.exceptions.DataDependencyException;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 import org.junit.jupiter.api.Assertions;
@@ -25,7 +25,7 @@ public class DependencyGraphTest {
     public DependencyGraphTest() throws CellReferenceException { }
 
     @Test
-    void straightForwardDependenciesTest() throws CellDependencyException {
+    void straightForwardDependenciesTest() throws DataDependencyException {
         dependencyGraph.addDependency(a1, b1);
         dependencyGraph.addDependency(b1, c1);
         dependencyGraph.addDependency(c1, a2);
@@ -49,7 +49,7 @@ public class DependencyGraphTest {
     }
 
     @Test
-    void partialStraightForwardDependenciesTest() throws CellDependencyException {
+    void partialStraightForwardDependenciesTest() throws DataDependencyException {
         dependencyGraph.addDependency(a1, b1);
         dependencyGraph.addDependency(b1, c1);
         dependencyGraph.addDependency(c1, a2);
@@ -68,19 +68,19 @@ public class DependencyGraphTest {
 
     @Test
     void selfDependencyTest() {
-        Assertions.assertThrows(CellDependencyException.class, () -> dependencyGraph.addDependency(a1, a1));
+        Assertions.assertThrows(DataDependencyException.class, () -> dependencyGraph.addDependency(a1, a1));
     }
 
     @Test
-    void dummyCyclicDependenciesTest() throws CellDependencyException {
+    void dummyCyclicDependenciesTest() throws DataDependencyException {
         dependencyGraph.addDependency(a1, b1);
         dependencyGraph.addDependency(b1, c1);
         dependencyGraph.addDependency(c1, a1);
-        Assertions.assertThrows(CellDependencyException.class, () -> dependencyGraph.getUpdateList(a1));
+        Assertions.assertThrows(DataDependencyException.class, () -> dependencyGraph.getUpdateList(a1));
     }
 
     @Test
-    void nonTrivialCyclicDependenciesTest() throws CellDependencyException {
+    void nonTrivialCyclicDependenciesTest() throws DataDependencyException {
         dependencyGraph.addDependency(a1, b1);
         dependencyGraph.addDependency(b1, c1);
         dependencyGraph.addDependency(c1, a2);
@@ -93,11 +93,11 @@ public class DependencyGraphTest {
         TestUtils.assertHappensBefore(b1, c1, updateList);
         TestUtils.assertHappensBefore(c1, a2, updateList);
         TestUtils.assertHappensBefore(b1, c3, updateList);
-        Assertions.assertThrows(CellDependencyException.class, () -> dependencyGraph.getUpdateList(a1));
+        Assertions.assertThrows(DataDependencyException.class, () -> dependencyGraph.getUpdateList(a1));
     }
 
     @Test
-    void squareDependenciesTest() throws CellDependencyException {
+    void squareDependenciesTest() throws DataDependencyException {
         dependencyGraph.addDependency(a1, b1);
         dependencyGraph.addDependency(a1, c1);
         dependencyGraph.addDependency(b1, a2);

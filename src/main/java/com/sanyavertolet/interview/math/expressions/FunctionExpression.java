@@ -1,7 +1,7 @@
 package com.sanyavertolet.interview.math.expressions;
 
 import com.sanyavertolet.interview.math.Function;
-import com.sanyavertolet.interview.exceptions.EvaluationException;
+import com.sanyavertolet.interview.exceptions.ExpressionEvaluationException;
 import com.sanyavertolet.interview.exceptions.FunctionArgumentException;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class FunctionExpression extends Expression {
     }
 
     @Override
-    public void recalculate() throws EvaluationException {
+    public void recalculate() throws ExpressionEvaluationException {
         value = function.evaluate(arguments);
     }
 
@@ -31,5 +31,9 @@ public class FunctionExpression extends Expression {
             builder.append(argument.prettyPrint(shift + 2));
         }
         return builder.toString();
+    }
+
+    public List<Expression> getArguments() {
+        return arguments;
     }
 }

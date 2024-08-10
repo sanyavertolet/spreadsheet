@@ -1,7 +1,7 @@
 package com.sanyavertolet.interview.ui;
 
-import com.sanyavertolet.interview.cells.Cell;
-import com.sanyavertolet.interview.cells.ExpressionCell;
+import com.sanyavertolet.interview.data.Data;
+import com.sanyavertolet.interview.data.ExpressionData;
 import com.sanyavertolet.interview.math.CellReference;
 
 import javax.swing.*;
@@ -12,7 +12,7 @@ public class DebugPanel extends JPanel {
     private final JLabel contentLabel;
     private final JLabel typeLabel;
     private final JTextArea treeTextArea;
-    private Cell selectedCell;
+    private Data selectedData;
 
     public DebugPanel() {
         GridBagLayout layout = new GridBagLayout();
@@ -51,19 +51,19 @@ public class DebugPanel extends JPanel {
         add(scrollPane, gbc);
     }
 
-    public void setSelectedCell(CellReference cellReference, Cell selectedCell) {
-        this.selectedCell = selectedCell;
+    public void setSelectedCell(CellReference cellReference, Data selectedData) {
+        this.selectedData = selectedData;
         updateDebugInfo(cellReference);
     }
 
     private void updateDebugInfo(CellReference cellReference) {
-        if (selectedCell != null) {
+        if (selectedData != null) {
             coordinatesLabel.setText("Coordinates: " + cellReference.identifier());
-            contentLabel.setText("Content: " + selectedCell.getValueAsString());
-            typeLabel.setText("Type: " + selectedCell.getClass().getSimpleName());
+            contentLabel.setText("Content: " + selectedData.getValueAsString());
+            typeLabel.setText("Type: " + selectedData.getClass().getSimpleName());
 
-            if (selectedCell instanceof ExpressionCell) {
-                treeTextArea.setText("Expression Tree: \n" + ((ExpressionCell) selectedCell).getPrettyPrintedExpressionTree());
+            if (selectedData instanceof ExpressionData) {
+                treeTextArea.setText("Expression Tree: \n" + ((ExpressionData) selectedData).getPrettyPrintedExpressionTree());
             } else {
                 treeTextArea.setText("Expression Tree: \n");
             }
