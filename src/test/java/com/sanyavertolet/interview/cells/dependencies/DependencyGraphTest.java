@@ -86,12 +86,13 @@ public class DependencyGraphTest {
         dependencyGraph.addDependency(c1, a2);
         dependencyGraph.addDependency(a1, a2);
         dependencyGraph.addDependency(b1, c3);
+        dependencyGraph.addDependency(a1, c2);
+        dependencyGraph.addDependency(c2, a1);
 
         List<CellReference> updateList = dependencyGraph.getUpdateList(b1);
-        Assertions.assertEquals(b1, updateList.get(0));
-        Assertions.assertEquals(c1, updateList.get(1));
-        Assertions.assertEquals(a2, updateList.get(2));
-        Assertions.assertEquals(c3, updateList.get(3));
+        TestUtils.assertHappensBefore(b1, c1, updateList);
+        TestUtils.assertHappensBefore(c1, a2, updateList);
+        TestUtils.assertHappensBefore(b1, c3, updateList);
         Assertions.assertThrows(CellDependencyException.class, () -> dependencyGraph.getUpdateList(a1));
     }
 
@@ -103,6 +104,9 @@ public class DependencyGraphTest {
         dependencyGraph.addDependency(c1, a2);
 
         List<CellReference> updateList = dependencyGraph.getUpdateList(a1);
+        TestUtils.assertHappensBefore(a1, b1, updateList);
+        TestUtils.assertHappensBefore(a1, c1, updateList);
+        TestUtils.assertHappensBefore(a1, a2, updateList);
         TestUtils.assertHappensBefore(b1, a2, updateList);
         TestUtils.assertHappensBefore(c1, a2, updateList);
     }

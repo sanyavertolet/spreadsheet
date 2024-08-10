@@ -52,7 +52,6 @@ public class SimpleDependencyGraph implements DependencyGraph {
         if (visiting.contains(current)) {
             throw new CellDependencyException("Cycle detected");
         }
-        sorted.add(current);
 
         visiting.add(current);
         for (CellReference cellReference : getDependants(current)) {
@@ -60,5 +59,6 @@ public class SimpleDependencyGraph implements DependencyGraph {
         }
         visiting.remove(current);
         visited.add(current);
+        sorted.add(0, current);
     }
 }
