@@ -98,6 +98,10 @@ public class Expressions {
             return new CellReferenceExpression(CellReference.of(identifier));
         }
 
+        public static Expression cell(CellReference reference) {
+            return new CellReferenceExpression(reference);
+        }
+
         public static Expression a1() throws CellReferenceException {
             return cell("A1");
         }

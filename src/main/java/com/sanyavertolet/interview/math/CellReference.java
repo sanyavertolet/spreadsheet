@@ -53,4 +53,9 @@ public record CellReference(int row, int column, String identifier) {
     public static CellReference of(int row, int column) throws CellReferenceException {
         return new CellReference(row, column, coordinatesToReference(row, column));
     }
+
+    @Override
+    public String toString() {
+        return identifier;
+    }
 }

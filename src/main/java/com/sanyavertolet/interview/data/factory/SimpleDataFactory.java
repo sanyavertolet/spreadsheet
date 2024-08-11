@@ -31,7 +31,7 @@ public class SimpleDataFactory implements DataFactory {
 
         if (cellText.startsWith("=")) {
             try {
-                return new ExpressionData(cellText, expressionParser.parse(cellText), expressionEvaluator);
+                return new ExpressionData(cellText, expressionParser.parse(cellText), expressionEvaluator::evaluate);
             } catch (ExpressionParsingException exception) {
                 return new TextData(cellText);
             }

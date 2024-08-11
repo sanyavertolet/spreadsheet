@@ -6,11 +6,15 @@ import com.sanyavertolet.interview.data.ExpressionData;
 import com.sanyavertolet.interview.data.TextData;
 import com.sanyavertolet.interview.data.factory.DataFactory;
 import com.sanyavertolet.interview.data.factory.SimpleDataFactory;
+import com.sanyavertolet.interview.data.watcher.DataWatcher;
+import com.sanyavertolet.interview.data.watcher.SimpleDataWatcher;
+import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.exceptions.DataAccessException;
 import com.sanyavertolet.interview.math.CellReference;
 
 public class SimpleDataManager implements DataManager {
     private final DataFactory dataFactory = new SimpleDataFactory(this);
+    private final DataWatcher dataWatcher = new SimpleDataWatcher(this);
     private final Data[][] data;
 
     public SimpleDataManager(int rows, int columns) {
@@ -24,12 +28,25 @@ public class SimpleDataManager implements DataManager {
 
     @Override
     public void setData(int row, int column, String text) {
+        CellReference reference;
+        try {
+            reference = CellReference.of(row, column);
+        } catch (CellReferenceException exception) {
+            throw new RuntimeException("Internal error: access to cell that does not exist.", exception);
+        }
+
         data[row][column] = dataFactory.create(text);
+        dataWatcher.update(data[row][column], reference);
     }
 
     @Override
     public Data getData(int row, int column) {
         return data[row][column];
+    }
+
+    @Override
+    public Data getData(CellReference reference) {
+        return getData(reference.row(), reference.column());
     }
 
     @Override

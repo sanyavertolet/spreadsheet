@@ -1,26 +1,33 @@
 package com.sanyavertolet.interview.data.dependencies;
 
 import com.sanyavertolet.interview.exceptions.DataDependencyException;
+import com.sanyavertolet.interview.exceptions.DataSelfReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 
 import java.util.*;
 
 public class SimpleDependencyGraph implements DependencyGraph {
-    private final Map<CellReference, Set<CellReference>> dependencies = new HashMap<>();
-    private final Map<CellReference, Set<CellReference>> dependants = new HashMap<>();
+    private final Map<CellReference, Set<CellReference>> previous = new HashMap<>();
+    private final Map<CellReference, Set<CellReference>> next = new HashMap<>();
+    private final Set<CellReference> failedCellReferences = new HashSet<>();
 
     @Override
-    public void addDependency(CellReference dependsOn, CellReference dependantCell) throws DataDependencyException {
-        if (dependantCell.identifier().equals(dependsOn.identifier())) {
-            throw new DataDependencyException("Cell cannot depend on itself: " + dependantCell.identifier());
+    public void addDependency(CellReference before, CellReference after) throws DataSelfReferenceException {
+        if (before.identifier().equals(after.identifier())) {
+            throw new DataSelfReferenceException("Cell cannot depend on itself: " + after);
         }
-        dependencies.computeIfAbsent(dependsOn, k -> new HashSet<>()).add(dependantCell);
-        dependants.computeIfAbsent(dependsOn, k -> new HashSet<>()).add(dependantCell);
+        previous.computeIfAbsent(after, k -> new HashSet<>()).add(before);
+        next.computeIfAbsent(before, k -> new HashSet<>()).add(after);
     }
 
     @Override
-    public Set<CellReference> getDependants(CellReference cellReference) {
-        return dependants.getOrDefault(cellReference, Collections.emptySet());
+    public void clearDependencies(CellReference reference) {
+        Set<CellReference> cellDependencies = previous.remove(reference);
+        if (cellDependencies != null) {
+            for (CellReference dependsOn : cellDependencies) {
+                previous.getOrDefault(dependsOn, new HashSet<>()).remove(reference);
+            }
+        }
     }
 
     @Override
@@ -28,37 +35,56 @@ public class SimpleDependencyGraph implements DependencyGraph {
         List<CellReference> sorted = new ArrayList<>();
         Set<CellReference> visited = new HashSet<>();
         Set<CellReference> visiting = new HashSet<>();
+        Stack<CellReference> visitingStack = new Stack<>();
 
-        topologicalSort(cellReference, visited, visiting, sorted);
+        topologicalSort(cellReference, visited, visiting, visitingStack, sorted);
 
         return sorted;
     }
 
     @Override
-    public void clearDependencies(CellReference cellReference) {
-        Set<CellReference> cellDependencies = dependencies.remove(cellReference);
-        if (cellDependencies != null) {
-            for (CellReference dependant : cellDependencies) {
-                dependants.get(dependant).remove(cellReference);
-            }
-        }
+    public Set<CellReference> getFailedCellReferences() {
+        return failedCellReferences;
     }
 
-
-    private void topologicalSort(CellReference current, Set<CellReference> visited, Set<CellReference> visiting, List<CellReference> sorted) throws DataDependencyException {
+    private void topologicalSort(
+            CellReference current,
+            Set<CellReference> visited,
+            Set<CellReference> visiting,
+            Stack<CellReference> visitingStack,
+            List<CellReference> sorted
+    ) throws DataDependencyException {
         if (visited.contains(current)) {
             return;
         }
+        visitingStack.push(current);
         if (visiting.contains(current)) {
+            updateFailedCellReferences(visitingStack);
             throw new DataDependencyException("Cycle detected");
         }
 
         visiting.add(current);
-        for (CellReference cellReference : getDependants(current)) {
-            topologicalSort(cellReference, visited, visiting, sorted);
+        for (CellReference cellReference : getNext(current)) {
+            topologicalSort(cellReference, visited, visiting, visitingStack, sorted);
         }
         visiting.remove(current);
+        visitingStack.pop();
         visited.add(current);
         sorted.add(0, current);
+    }
+
+    private void updateFailedCellReferences(Stack<CellReference> visitingStack) {
+        failedCellReferences.clear();
+        while (!visitingStack.isEmpty()) {
+            CellReference reference = visitingStack.pop();
+            if (failedCellReferences.contains(reference)) {
+                return;
+            }
+            failedCellReferences.add(reference);
+        }
+    }
+
+    private Set<CellReference> getNext(CellReference cellReference) {
+        return next.getOrDefault(cellReference, Collections.emptySet());
     }
 }

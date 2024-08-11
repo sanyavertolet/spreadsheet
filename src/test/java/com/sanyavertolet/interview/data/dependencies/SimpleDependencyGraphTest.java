@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class DependencyGraphTest {
+public class SimpleDependencyGraphTest {
     private final DependencyGraph dependencyGraph = new SimpleDependencyGraph();
 
     private final CellReference a1 = CellReference.of("A1");
@@ -22,7 +22,7 @@ public class DependencyGraphTest {
     private final CellReference b3 = CellReference.of("B3");
     private final CellReference c3 = CellReference.of("C3");
 
-    public DependencyGraphTest() throws CellReferenceException { }
+    public SimpleDependencyGraphTest() throws CellReferenceException { }
 
     @Test
     void straightForwardDependenciesTest() throws DataDependencyException {

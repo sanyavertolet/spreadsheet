@@ -1,5 +1,6 @@
 package com.sanyavertolet.interview.math.expressions.evaluator;
 
+import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.data.manager.DataAccessor;
 import com.sanyavertolet.interview.exceptions.*;
 import com.sanyavertolet.interview.math.CellReference;
@@ -15,7 +16,7 @@ import static com.sanyavertolet.interview.Expressions.Functions.*;
 import static com.sanyavertolet.interview.Expressions.Numbers.*;
 import static com.sanyavertolet.interview.Expressions.Numbers.fortyTwo;
 
-public class ExpressionEvaluatorTest {
+public class SimpleExpressionEvaluatorTest {
     private final CellReference a1Ref = CellReference.of("A1");
     private final CellReference b2Ref = CellReference.of("B2");
 
@@ -23,6 +24,11 @@ public class ExpressionEvaluatorTest {
     private final Double b2Val = 7.0;
 
     private final DataAccessor dataAccessor = new DataAccessor() {
+        @Override
+        public Data getData(CellReference reference) {
+            return null;
+        }
+
         @Override
         public Double getDoubleCellValue(CellReference cellReference) throws DataAccessException {
             return switch (cellReference.identifier()) {
@@ -40,7 +46,7 @@ public class ExpressionEvaluatorTest {
 
     private final ExpressionEvaluator expressionEvaluator = new SimpleExpressionEvaluator(dataAccessor);
 
-    public ExpressionEvaluatorTest() throws CellReferenceException { }
+    public SimpleExpressionEvaluatorTest() throws CellReferenceException { }
 
     @Test
     void dummyExpressionTest() throws ExpressionEvaluationException {
