@@ -1,7 +1,7 @@
 package com.sanyavertolet.interview.data.factory;
 
 import com.sanyavertolet.interview.data.*;
-import com.sanyavertolet.interview.data.manager.DataAccessor;
+import com.sanyavertolet.interview.data.accessor.DataAccessor;
 import com.sanyavertolet.interview.exceptions.ExpressionParsingException;
 import com.sanyavertolet.interview.math.expressions.evaluator.ExpressionEvaluator;
 import com.sanyavertolet.interview.math.expressions.evaluator.SimpleExpressionEvaluator;

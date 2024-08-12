@@ -3,7 +3,7 @@ package com.sanyavertolet.interview.data.watcher;
 import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.data.DoubleData;
 import com.sanyavertolet.interview.data.ExpressionData;
-import com.sanyavertolet.interview.data.manager.DataAccessor;
+import com.sanyavertolet.interview.data.accessor.DataAccessor;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 import org.junit.jupiter.api.Assertions;

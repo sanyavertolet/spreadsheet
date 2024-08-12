@@ -4,7 +4,7 @@ import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.data.ExpressionData;
 import com.sanyavertolet.interview.data.dependencies.DependencyGraph;
 import com.sanyavertolet.interview.data.dependencies.SimpleDependencyGraph;
-import com.sanyavertolet.interview.data.manager.DataAccessor;
+import com.sanyavertolet.interview.data.accessor.DataAccessor;
 import com.sanyavertolet.interview.exceptions.DataDependencyException;
 import com.sanyavertolet.interview.exceptions.DataSelfReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
