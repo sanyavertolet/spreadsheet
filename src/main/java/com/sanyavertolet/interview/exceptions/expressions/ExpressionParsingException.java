@@ -1,4 +1,4 @@
-package com.sanyavertolet.interview.exceptions;
+package com.sanyavertolet.interview.exceptions.expressions;
 
 public class ExpressionParsingException extends Exception {
     @SuppressWarnings("unused")

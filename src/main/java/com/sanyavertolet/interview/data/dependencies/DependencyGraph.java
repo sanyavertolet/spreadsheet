@@ -1,7 +1,7 @@
 package com.sanyavertolet.interview.data.dependencies;
 
-import com.sanyavertolet.interview.exceptions.DataDependencyException;
-import com.sanyavertolet.interview.exceptions.DataSelfReferenceException;
+import com.sanyavertolet.interview.exceptions.data.DataDependencyException;
+import com.sanyavertolet.interview.exceptions.data.DataSelfReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 
 import java.util.List;

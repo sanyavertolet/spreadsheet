@@ -15,7 +15,7 @@ public class BinaryExpression extends Expression {
 
     @Override
     public String prettyPrint(int shift) {
-        return ".".repeat(shift) + operator.symbol() + "\n" + left.prettyPrint(shift + 2) + right.prettyPrint(shift + 2);
+        return ".".repeat(shift) + operator.getSymbol() + "\n" + left.prettyPrint(shift + 2) + right.prettyPrint(shift + 2);
     }
 
     public Expression getLeft() {

@@ -1,6 +1,6 @@
 package com.sanyavertolet.interview.parser.tokenizer;
 
-import com.sanyavertolet.interview.exceptions.ExpressionParsingException;
+import com.sanyavertolet.interview.exceptions.expressions.ExpressionParsingException;
 
 import java.util.List;
 

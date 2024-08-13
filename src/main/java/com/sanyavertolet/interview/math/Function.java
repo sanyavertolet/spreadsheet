@@ -1,6 +1,6 @@
 package com.sanyavertolet.interview.math;
 
-import com.sanyavertolet.interview.exceptions.ExpressionEvaluationException;
+import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
 
 import java.util.List;
 

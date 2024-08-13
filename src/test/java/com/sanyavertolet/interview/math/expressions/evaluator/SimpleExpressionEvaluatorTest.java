@@ -3,6 +3,8 @@ package com.sanyavertolet.interview.math.expressions.evaluator;
 import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.data.accessor.DataAccessor;
 import com.sanyavertolet.interview.exceptions.*;
+import com.sanyavertolet.interview.exceptions.data.DataAccessException;
+import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.expressions.Expression;
 import org.junit.jupiter.api.Assertions;

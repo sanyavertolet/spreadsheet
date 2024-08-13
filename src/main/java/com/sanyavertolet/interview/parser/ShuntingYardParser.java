@@ -1,7 +1,7 @@
 package com.sanyavertolet.interview.parser;
 
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
-import com.sanyavertolet.interview.exceptions.ExpressionParsingException;
+import com.sanyavertolet.interview.exceptions.expressions.ExpressionParsingException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.Function;
 import com.sanyavertolet.interview.exceptions.FunctionArgumentException;
@@ -64,7 +64,7 @@ public class ShuntingYardParser implements ExpressionParser {
         if (operator instanceof NonFunctionOperator nonFunctionOperator) {
             return new BinaryExpression(expressions.pop(), right, nonFunctionOperator);
         }
-        throw new ExpressionParsingException("Found insufficient operator: " + operator.symbol());
+        throw new ExpressionParsingException("Found insufficient operator: " + operator.getSymbol());
     }
 
     private Expression getBinaryExpression(Stack<Expression> expressions, NonFunctionOperator operator) {

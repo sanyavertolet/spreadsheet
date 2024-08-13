@@ -1,6 +1,6 @@
 package com.sanyavertolet.interview.data;
 
-import com.sanyavertolet.interview.exceptions.ExpressionEvaluationException;
+import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.expressions.BinaryExpression;
 import com.sanyavertolet.interview.math.expressions.CellReferenceExpression;

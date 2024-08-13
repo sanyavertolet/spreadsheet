@@ -2,6 +2,7 @@ package com.sanyavertolet.interview.parser;
 
 import com.sanyavertolet.interview.TestUtils;
 import com.sanyavertolet.interview.exceptions.*;
+import com.sanyavertolet.interview.exceptions.expressions.ExpressionParsingException;
 import com.sanyavertolet.interview.math.expressions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

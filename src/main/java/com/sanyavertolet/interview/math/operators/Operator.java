@@ -7,12 +7,12 @@ public abstract class Operator {
         this.symbol = symbol;
     }
 
-    public String symbol() {
+    public String getSymbol() {
         return symbol;
     }
 
     @Override
     public String toString() {
-        return symbol();
+        return getSymbol();
     }
 }

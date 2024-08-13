@@ -1,12 +1,12 @@
 package com.sanyavertolet.interview.data.dependencies;
 
-import com.sanyavertolet.interview.exceptions.DataDependencyException;
-import com.sanyavertolet.interview.exceptions.DataSelfReferenceException;
+import com.sanyavertolet.interview.exceptions.data.DataDependencyException;
+import com.sanyavertolet.interview.exceptions.data.DataSelfReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 
 import java.util.*;
 
-public class SimpleDependencyGraph implements DependencyGraph {
+public class TopologicallySortedDependencyGraph implements DependencyGraph {
     private final Map<CellReference, Set<CellReference>> previous = new HashMap<>();
     private final Map<CellReference, Set<CellReference>> next = new HashMap<>();
     private final Set<CellReference> failedCellReferences = new HashSet<>();

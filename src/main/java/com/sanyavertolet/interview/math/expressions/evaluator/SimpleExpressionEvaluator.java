@@ -1,8 +1,8 @@
 package com.sanyavertolet.interview.math.expressions.evaluator;
 
 import com.sanyavertolet.interview.data.accessor.DataAccessor;
-import com.sanyavertolet.interview.exceptions.DataAccessException;
-import com.sanyavertolet.interview.exceptions.ExpressionEvaluationException;
+import com.sanyavertolet.interview.exceptions.data.DataAccessException;
+import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.Function;
 import com.sanyavertolet.interview.math.expressions.*;

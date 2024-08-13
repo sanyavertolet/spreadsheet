@@ -6,7 +6,7 @@ import com.sanyavertolet.interview.math.CellReference;
 
 import java.util.*;
 
-public class DataContainer {
+public class DataContainer implements DataExporter {
     private final Map<CellReference, Data> container;
     private int maxRow;
     private int maxCol;
@@ -45,6 +45,20 @@ public class DataContainer {
     }
 
     public Data getOrEmpty(CellReference reference) {
-        return container.computeIfAbsent(reference, (ref) -> new TextData(""));
+        return container.getOrDefault(reference, new TextData(""));
+    }
+
+    @Override
+    public List<CellReference.WithText> exportDataMap() {
+        List<CellReference.WithText> dataList = new ArrayList<>();
+        for (Map.Entry<CellReference, Data> entry : container.entrySet()) {
+            dataList.add(new CellReference.WithText(entry.getKey(), entry.getValue().getText()));
+        }
+        return dataList;
+    }
+
+    @Override
+    public void clearDataMap() {
+        container.clear();
     }
 }

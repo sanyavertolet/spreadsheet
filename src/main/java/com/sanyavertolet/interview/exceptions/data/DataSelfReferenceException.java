@@ -1,4 +1,4 @@
-package com.sanyavertolet.interview.exceptions;
+package com.sanyavertolet.interview.exceptions.data;
 
 public class DataSelfReferenceException extends DataDependencyException {
     @SuppressWarnings("unused")

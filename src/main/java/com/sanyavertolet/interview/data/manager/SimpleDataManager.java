@@ -4,6 +4,7 @@ import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.data.accessor.ContainerBasedDataAccessor;
 import com.sanyavertolet.interview.data.accessor.DataAccessor;
 import com.sanyavertolet.interview.data.container.DataContainer;
+import com.sanyavertolet.interview.data.container.DataExporter;
 import com.sanyavertolet.interview.data.factory.DataFactory;
 import com.sanyavertolet.interview.data.factory.SimpleDataFactory;
 import com.sanyavertolet.interview.data.watcher.DataWatcher;
@@ -47,6 +48,11 @@ public class SimpleDataManager implements DataManager {
     @Override
     public int getColumnCount() {
         return container.getColumnCount();
+    }
+
+    @Override
+    public DataExporter getDataExporter() {
+        return container;
     }
 
     private CellReference reference(int row, int column) {

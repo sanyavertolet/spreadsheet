@@ -2,9 +2,10 @@ package com.sanyavertolet.interview.ui;
 
 import com.sanyavertolet.interview.Configuration;
 import com.sanyavertolet.interview.data.Data;
-import com.sanyavertolet.interview.exceptions.DataAccessException;
+import com.sanyavertolet.interview.exceptions.data.DataAccessException;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
+import com.sanyavertolet.interview.ui.menu.MenuBar;
 import com.sanyavertolet.interview.ui.table.SpreadsheetTable;
 
 import javax.swing.*;
@@ -19,9 +20,9 @@ public class MainFrame extends JFrame {
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setJMenuBar(new MenuBar());
-
         table = new SpreadsheetTable();
+
+        MenuBar menuBar = new MenuBar(table.getDataManager());
 
         JScrollPane scrollPane = new JScrollPane(
                 table,
@@ -29,6 +30,9 @@ public class MainFrame extends JFrame {
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED
         );
         debugPanel = new DebugPanel();
+
+        setJMenuBar(menuBar);
+
         if (configuration.isDebug()) {
             scrollPane.setMinimumSize(new Dimension(50, 50));
             debugPanel.setMinimumSize(new Dimension(50, 50));

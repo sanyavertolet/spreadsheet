@@ -1,7 +1,7 @@
 package com.sanyavertolet.interview.data.dependencies;
 
 import com.sanyavertolet.interview.TestUtils;
-import com.sanyavertolet.interview.exceptions.DataDependencyException;
+import com.sanyavertolet.interview.exceptions.data.DataDependencyException;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 import org.junit.jupiter.api.Assertions;
@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class SimpleDependencyGraphTest {
-    private final DependencyGraph dependencyGraph = new SimpleDependencyGraph();
+public class TopologicalSortedDependencyGraphTest {
+    private final DependencyGraph dependencyGraph = new TopologicallySortedDependencyGraph();
 
     private final CellReference a1 = CellReference.of("A1");
     private final CellReference b1 = CellReference.of("B1");
@@ -22,7 +22,7 @@ public class SimpleDependencyGraphTest {
     private final CellReference b3 = CellReference.of("B3");
     private final CellReference c3 = CellReference.of("C3");
 
-    public SimpleDependencyGraphTest() throws CellReferenceException { }
+    public TopologicalSortedDependencyGraphTest() throws CellReferenceException { }
 
     @Test
     void straightForwardDependenciesTest() throws DataDependencyException {

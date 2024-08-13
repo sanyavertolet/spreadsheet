@@ -1,4 +1,4 @@
-package com.sanyavertolet.interview.exceptions;
+package com.sanyavertolet.interview.exceptions.data;
 
 public class DataAccessException extends Exception {
     @SuppressWarnings("unused")

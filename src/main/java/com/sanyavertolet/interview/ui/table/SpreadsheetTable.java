@@ -1,7 +1,8 @@
 package com.sanyavertolet.interview.ui.table;
 
 import com.sanyavertolet.interview.data.Data;
-import com.sanyavertolet.interview.exceptions.DataAccessException;
+import com.sanyavertolet.interview.data.manager.DataManager;
+import com.sanyavertolet.interview.exceptions.data.DataAccessException;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 
@@ -48,5 +49,10 @@ public class SpreadsheetTable extends JTable {
             return cell;
         }
         throw new DataAccessException("Cannot access cell " + cellReference.identifier() + " due to its type.");
+    }
+
+    public DataManager getDataManager() {
+        SpreadsheetTableModel tableModel = (SpreadsheetTableModel) getModel();
+        return tableModel.getDataManager();
     }
 }

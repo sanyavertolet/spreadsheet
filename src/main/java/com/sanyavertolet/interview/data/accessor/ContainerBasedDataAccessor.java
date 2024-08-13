@@ -4,7 +4,7 @@ import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.data.DoubleData;
 import com.sanyavertolet.interview.data.ExpressionData;
 import com.sanyavertolet.interview.data.container.DataContainer;
-import com.sanyavertolet.interview.exceptions.DataAccessException;
+import com.sanyavertolet.interview.exceptions.data.DataAccessException;
 import com.sanyavertolet.interview.math.CellReference;
 
 public class ContainerBasedDataAccessor implements DataAccessor {

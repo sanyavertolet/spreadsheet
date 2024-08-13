@@ -3,10 +3,10 @@ package com.sanyavertolet.interview.data.watcher;
 import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.data.ExpressionData;
 import com.sanyavertolet.interview.data.dependencies.DependencyGraph;
-import com.sanyavertolet.interview.data.dependencies.SimpleDependencyGraph;
+import com.sanyavertolet.interview.data.dependencies.TopologicallySortedDependencyGraph;
 import com.sanyavertolet.interview.data.accessor.DataAccessor;
-import com.sanyavertolet.interview.exceptions.DataDependencyException;
-import com.sanyavertolet.interview.exceptions.DataSelfReferenceException;
+import com.sanyavertolet.interview.exceptions.data.DataDependencyException;
+import com.sanyavertolet.interview.exceptions.data.DataSelfReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class SimpleDataWatcher implements DataWatcher {
     private final DataAccessor dataAccessor;
-    private final DependencyGraph dependencyGraph = new SimpleDependencyGraph();
+    private final DependencyGraph dependencyGraph = new TopologicallySortedDependencyGraph();
 
     public SimpleDataWatcher(final DataAccessor dataAccessor) {
         this.dataAccessor = dataAccessor;

@@ -25,7 +25,7 @@ public class SpreadsheetTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int row, int col) {
-        return col == 0 ? row + 1 : dataManager.getData(row, col - 1);
+        return col == 0 ? row + 1 : dataManager.getData(row, col);
     }
 
     @Override
@@ -36,12 +36,16 @@ public class SpreadsheetTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object value, int row, int col) {
         Data data = (Data) value;
-        dataManager.setData(row, col - 1, data.getText());
+        dataManager.setData(row, col, data.getText());
         fireTableCellUpdated(row, col);
     }
 
     @Override
     public String getColumnName(int col) {
         return col != 0 ? super.getColumnName(col - 1) : "";
+    }
+
+    public DataManager getDataManager() {
+        return dataManager;
     }
 }
