@@ -2,112 +2,103 @@ package com.sanyavertolet.interview.data.dependencies;
 
 import com.sanyavertolet.interview.TestUtils;
 import com.sanyavertolet.interview.exceptions.data.DataDependencyException;
-import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static com.sanyavertolet.interview.CellReferences.*;
+
 public class TopologicalSortedDependencyGraphTest {
     private final DependencyGraph dependencyGraph = new TopologicallySortedDependencyGraph();
 
-    private final CellReference a1 = CellReference.of("A1");
-    private final CellReference b1 = CellReference.of("B1");
-    private final CellReference c1 = CellReference.of("C1");
-    private final CellReference a2 = CellReference.of("A2");
-    private final CellReference b2 = CellReference.of("B2");
-    private final CellReference c2 = CellReference.of("C2");
-    private final CellReference a3 = CellReference.of("A3");
-    private final CellReference b3 = CellReference.of("B3");
-    private final CellReference c3 = CellReference.of("C3");
-
-    public TopologicalSortedDependencyGraphTest() throws CellReferenceException { }
+    public TopologicalSortedDependencyGraphTest() { }
 
     @Test
     void straightForwardDependenciesTest() throws DataDependencyException {
-        dependencyGraph.addDependency(a1, b1);
-        dependencyGraph.addDependency(b1, c1);
-        dependencyGraph.addDependency(c1, a2);
-        dependencyGraph.addDependency(a2, b2);
-        dependencyGraph.addDependency(b2, c2);
-        dependencyGraph.addDependency(c2, a3);
-        dependencyGraph.addDependency(a3, b3);
-        dependencyGraph.addDependency(b3, c3);
+        dependencyGraph.addDependency(a1Ref, b1Ref);
+        dependencyGraph.addDependency(b1Ref, c1Ref);
+        dependencyGraph.addDependency(c1Ref, a2Ref);
+        dependencyGraph.addDependency(a2Ref, b2Ref);
+        dependencyGraph.addDependency(b2Ref, c2Ref);
+        dependencyGraph.addDependency(c2Ref, a3Ref);
+        dependencyGraph.addDependency(a3Ref, b3Ref);
+        dependencyGraph.addDependency(b3Ref, c3Ref);
 
-        List<CellReference> updateList = dependencyGraph.getUpdateList(a1);
+        List<CellReference> updateList = dependencyGraph.getUpdateList(a1Ref);
         Assertions.assertEquals(9, updateList.size());
-        Assertions.assertEquals(a1, updateList.get(0));
-        Assertions.assertEquals(b1, updateList.get(1));
-        Assertions.assertEquals(c1, updateList.get(2));
-        Assertions.assertEquals(a2, updateList.get(3));
-        Assertions.assertEquals(b2, updateList.get(4));
-        Assertions.assertEquals(c2, updateList.get(5));
-        Assertions.assertEquals(a3, updateList.get(6));
-        Assertions.assertEquals(b3, updateList.get(7));
-        Assertions.assertEquals(c3, updateList.get(8));
+        Assertions.assertEquals(a1Ref, updateList.get(0));
+        Assertions.assertEquals(b1Ref, updateList.get(1));
+        Assertions.assertEquals(c1Ref, updateList.get(2));
+        Assertions.assertEquals(a2Ref, updateList.get(3));
+        Assertions.assertEquals(b2Ref, updateList.get(4));
+        Assertions.assertEquals(c2Ref, updateList.get(5));
+        Assertions.assertEquals(a3Ref, updateList.get(6));
+        Assertions.assertEquals(b3Ref, updateList.get(7));
+        Assertions.assertEquals(c3Ref, updateList.get(8));
     }
 
     @Test
     void partialStraightForwardDependenciesTest() throws DataDependencyException {
-        dependencyGraph.addDependency(a1, b1);
-        dependencyGraph.addDependency(b1, c1);
-        dependencyGraph.addDependency(c1, a2);
-        dependencyGraph.addDependency(a2, b2);
-        dependencyGraph.addDependency(b2, c2);
-        dependencyGraph.addDependency(c2, a3);
-        dependencyGraph.addDependency(a3, b3);
-        dependencyGraph.addDependency(b3, c3);
+        dependencyGraph.addDependency(a1Ref, b1Ref);
+        dependencyGraph.addDependency(b1Ref, c1Ref);
+        dependencyGraph.addDependency(c1Ref, a2Ref);
+        dependencyGraph.addDependency(a2Ref, b2Ref);
+        dependencyGraph.addDependency(b2Ref, c2Ref);
+        dependencyGraph.addDependency(c2Ref, a3Ref);
+        dependencyGraph.addDependency(a3Ref, b3Ref);
+        dependencyGraph.addDependency(b3Ref, c3Ref);
 
-        List<CellReference> updateList = dependencyGraph.getUpdateList(a3);
+        List<CellReference> updateList = dependencyGraph.getUpdateList(a3Ref);
         Assertions.assertEquals(3, updateList.size());
-        Assertions.assertEquals(a3, updateList.get(0));
-        Assertions.assertEquals(b3, updateList.get(1));
-        Assertions.assertEquals(c3, updateList.get(2));
+        Assertions.assertEquals(a3Ref, updateList.get(0));
+        Assertions.assertEquals(b3Ref, updateList.get(1));
+        Assertions.assertEquals(c3Ref, updateList.get(2));
     }
 
     @Test
     void selfDependencyTest() {
-        Assertions.assertThrows(DataDependencyException.class, () -> dependencyGraph.addDependency(a1, a1));
+        Assertions.assertThrows(DataDependencyException.class, () -> dependencyGraph.addDependency(a1Ref, a1Ref));
     }
 
     @Test
     void dummyCyclicDependenciesTest() throws DataDependencyException {
-        dependencyGraph.addDependency(a1, b1);
-        dependencyGraph.addDependency(b1, c1);
-        dependencyGraph.addDependency(c1, a1);
-        Assertions.assertThrows(DataDependencyException.class, () -> dependencyGraph.getUpdateList(a1));
+        dependencyGraph.addDependency(a1Ref, b1Ref);
+        dependencyGraph.addDependency(b1Ref, c1Ref);
+        dependencyGraph.addDependency(c1Ref, a1Ref);
+        Assertions.assertThrows(DataDependencyException.class, () -> dependencyGraph.getUpdateList(a1Ref));
     }
 
     @Test
     void nonTrivialCyclicDependenciesTest() throws DataDependencyException {
-        dependencyGraph.addDependency(a1, b1);
-        dependencyGraph.addDependency(b1, c1);
-        dependencyGraph.addDependency(c1, a2);
-        dependencyGraph.addDependency(a1, a2);
-        dependencyGraph.addDependency(b1, c3);
-        dependencyGraph.addDependency(a1, c2);
-        dependencyGraph.addDependency(c2, a1);
+        dependencyGraph.addDependency(a1Ref, b1Ref);
+        dependencyGraph.addDependency(b1Ref, c1Ref);
+        dependencyGraph.addDependency(c1Ref, a2Ref);
+        dependencyGraph.addDependency(a1Ref, a2Ref);
+        dependencyGraph.addDependency(b1Ref, c3Ref);
+        dependencyGraph.addDependency(a1Ref, c2Ref);
+        dependencyGraph.addDependency(c2Ref, a1Ref);
 
-        List<CellReference> updateList = dependencyGraph.getUpdateList(b1);
-        TestUtils.assertHappensBefore(b1, c1, updateList);
-        TestUtils.assertHappensBefore(c1, a2, updateList);
-        TestUtils.assertHappensBefore(b1, c3, updateList);
-        Assertions.assertThrows(DataDependencyException.class, () -> dependencyGraph.getUpdateList(a1));
+        List<CellReference> updateList = dependencyGraph.getUpdateList(b1Ref);
+        TestUtils.assertHappensBefore(b1Ref, c1Ref, updateList);
+        TestUtils.assertHappensBefore(c1Ref, a2Ref, updateList);
+        TestUtils.assertHappensBefore(b1Ref, c3Ref, updateList);
+        Assertions.assertThrows(DataDependencyException.class, () -> dependencyGraph.getUpdateList(a1Ref));
     }
 
     @Test
     void squareDependenciesTest() throws DataDependencyException {
-        dependencyGraph.addDependency(a1, b1);
-        dependencyGraph.addDependency(a1, c1);
-        dependencyGraph.addDependency(b1, a2);
-        dependencyGraph.addDependency(c1, a2);
+        dependencyGraph.addDependency(a1Ref, b1Ref);
+        dependencyGraph.addDependency(a1Ref, c1Ref);
+        dependencyGraph.addDependency(b1Ref, a2Ref);
+        dependencyGraph.addDependency(c1Ref, a2Ref);
 
-        List<CellReference> updateList = dependencyGraph.getUpdateList(a1);
-        TestUtils.assertHappensBefore(a1, b1, updateList);
-        TestUtils.assertHappensBefore(a1, c1, updateList);
-        TestUtils.assertHappensBefore(a1, a2, updateList);
-        TestUtils.assertHappensBefore(b1, a2, updateList);
-        TestUtils.assertHappensBefore(c1, a2, updateList);
+        List<CellReference> updateList = dependencyGraph.getUpdateList(a1Ref);
+        TestUtils.assertHappensBefore(a1Ref, b1Ref, updateList);
+        TestUtils.assertHappensBefore(a1Ref, c1Ref, updateList);
+        TestUtils.assertHappensBefore(a1Ref, a2Ref, updateList);
+        TestUtils.assertHappensBefore(b1Ref, a2Ref, updateList);
+        TestUtils.assertHappensBefore(c1Ref, a2Ref, updateList);
     }
 }

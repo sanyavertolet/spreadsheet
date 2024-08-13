@@ -10,6 +10,8 @@ import com.sanyavertolet.interview.math.expressions.Expression;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static com.sanyavertolet.interview.CellReferences.a1Ref;
+import static com.sanyavertolet.interview.CellReferences.b2Ref;
 import static com.sanyavertolet.interview.Expressions.BinaryExpressions.*;
 import static com.sanyavertolet.interview.Expressions.Cells.a1;
 import static com.sanyavertolet.interview.Expressions.Cells.b1;
@@ -19,9 +21,6 @@ import static com.sanyavertolet.interview.Expressions.Numbers.*;
 import static com.sanyavertolet.interview.Expressions.Numbers.fortyTwo;
 
 public class SimpleExpressionEvaluatorTest {
-    private final CellReference a1Ref = CellReference.of("A1");
-    private final CellReference b2Ref = CellReference.of("B2");
-
     private final Double a1Val = 2.0;
     private final Double b2Val = 7.0;
 
@@ -48,7 +47,7 @@ public class SimpleExpressionEvaluatorTest {
 
     private final ExpressionEvaluator expressionEvaluator = new SimpleExpressionEvaluator(dataAccessor);
 
-    public SimpleExpressionEvaluatorTest() throws CellReferenceException { }
+    public SimpleExpressionEvaluatorTest() { }
 
     @Test
     void dummyExpressionTest() throws ExpressionEvaluationException {

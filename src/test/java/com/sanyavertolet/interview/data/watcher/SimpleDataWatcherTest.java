@@ -4,12 +4,12 @@ import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.data.DoubleData;
 import com.sanyavertolet.interview.data.ExpressionData;
 import com.sanyavertolet.interview.data.accessor.DataAccessor;
-import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.sanyavertolet.interview.CellReferences.*;
 import static com.sanyavertolet.interview.Expressions.BinaryExpressions.mul;
 import static com.sanyavertolet.interview.Expressions.BinaryExpressions.plus;
 import static com.sanyavertolet.interview.Expressions.Cells.cell;
@@ -18,11 +18,6 @@ import static com.sanyavertolet.interview.Expressions.Numbers.two;
 
 
 public class SimpleDataWatcherTest {
-    private final CellReference a1Ref = CellReference.of("A1");
-    private final CellReference a2Ref = CellReference.of("A2");
-    private final CellReference a3Ref = CellReference.of("A3");
-    private final CellReference a4Ref = CellReference.of("A4");
-
     private DoubleData a1;
     private ExpressionData a2;
     private ExpressionData a3;
@@ -50,10 +45,9 @@ public class SimpleDataWatcherTest {
         }
     };
 
-
     private final DataWatcher dataWatcher = new SimpleDataWatcher(dataAccessor);
 
-    public SimpleDataWatcherTest() throws CellReferenceException { }
+    public SimpleDataWatcherTest() { }
 
     @BeforeEach
     void setUp() {
