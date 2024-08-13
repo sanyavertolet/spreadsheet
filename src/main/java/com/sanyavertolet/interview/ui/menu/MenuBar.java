@@ -1,7 +1,7 @@
 package com.sanyavertolet.interview.ui.menu;
 
 import com.sanyavertolet.interview.data.manager.DataManager;
-import com.sanyavertolet.interview.ui.menu.save.FileMenu;
+import com.sanyavertolet.interview.ui.menu.file.FileMenu;
 
 import javax.swing.*;
 

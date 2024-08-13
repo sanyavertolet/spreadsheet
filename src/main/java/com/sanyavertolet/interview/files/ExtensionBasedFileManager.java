@@ -11,25 +11,25 @@ import java.io.File;
 public class ExtensionBasedFileManager implements FileManager {
     @Override
     public void save(File file, DataManager manager) throws FileWriteException {
-        FileAdapter adapter = getCorrespondingFileAdapter(file.getName());
+        FileAdapter adapter = getCorrespondingFileAdapter(file);
         adapter.save(file, manager);
     }
 
     @Override
     public void load(File file, DataManager manager) throws FileReadException {
-        FileAdapter adapter = getCorrespondingFileAdapter(file.getName());
+        FileAdapter adapter = getCorrespondingFileAdapter(file);
         adapter.load(file, manager);
     }
 
-    private FileAdapter getCorrespondingFileAdapter(String fileName) {
-        // todo: support more FileAdapters
-        return switch (getFileExtension(fileName)) {
-            case "sheets" -> new JacksonSerializationFileAdapter();
-            default -> throw new IllegalStateException("Not implemented yet");
-        };
+    private FileAdapter getCorrespondingFileAdapter(File file) {
+        return getCorrespondingFileAdapter(FileType.of(file.getName()));
     }
 
-    private String getFileExtension(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
+    private FileAdapter getCorrespondingFileAdapter(FileType fileType) {
+        // todo: support more FileAdapters
+        return switch (fileType) {
+            case SHEETS -> new JacksonSerializationFileAdapter();
+            case XLSX -> throw new IllegalStateException("Not implemented yet");
+        };
     }
 }
