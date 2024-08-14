@@ -1,6 +1,7 @@
 package com.sanyavertolet.interview.data.container;
 
 import com.sanyavertolet.interview.data.Data;
+import com.sanyavertolet.interview.data.ExpressionData;
 import com.sanyavertolet.interview.data.TextData;
 import com.sanyavertolet.interview.math.CellReference;
 
@@ -50,11 +51,17 @@ public class DataContainer implements DataExporter {
 
     @Override
     public List<CellReference.WithText> exportDataMap() {
-        List<CellReference.WithText> dataList = new ArrayList<>();
+        List<CellReference.WithText> expressionDataList = new ArrayList<>();
+        List<CellReference.WithText> nonExpressionDataList = new ArrayList<>();
         for (Map.Entry<CellReference, Data> entry : container.entrySet()) {
-            dataList.add(new CellReference.WithText(entry.getKey(), entry.getValue().getText()));
+            if (entry.getValue() instanceof ExpressionData expressionData) {
+                expressionDataList.add(new CellReference.WithText(entry.getKey(), expressionData.getText()));
+            } else {
+                nonExpressionDataList.add(new CellReference.WithText(entry.getKey(), entry.getValue().getText()));
+            }
         }
-        return dataList;
+        expressionDataList.addAll(nonExpressionDataList);
+        return expressionDataList;
     }
 
     @Override

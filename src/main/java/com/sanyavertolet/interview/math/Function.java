@@ -45,7 +45,11 @@ public enum Function {
         if (arguments.size() != argumentsSize) {
             throw new ExpressionEvaluationException(name() + " should have exactly " + argumentsSize + " arguments");
         }
-        return evaluator.invoke(arguments);
+        try {
+            return evaluator.invoke(arguments);
+        } catch (NullPointerException exception) {
+            throw new ExpressionEvaluationException("Could not evaluate expression as one of the arguments is null");
+        }
     }
 
     private interface Evaluator {
