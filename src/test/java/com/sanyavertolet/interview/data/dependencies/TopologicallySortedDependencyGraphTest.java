@@ -10,10 +10,10 @@ import java.util.List;
 
 import static com.sanyavertolet.interview.CellReferences.*;
 
-public class TopologicalSortedDependencyGraphTest {
+public class TopologicallySortedDependencyGraphTest {
     private final DependencyGraph dependencyGraph = new TopologicallySortedDependencyGraph();
 
-    public TopologicalSortedDependencyGraphTest() { }
+    public TopologicallySortedDependencyGraphTest() { }
 
     @Test
     void straightForwardDependenciesTest() throws DataDependencyException {
