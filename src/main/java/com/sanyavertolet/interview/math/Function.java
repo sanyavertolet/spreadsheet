@@ -29,12 +29,19 @@ public enum Function {
 
     MIN(1, args -> Value.of(Math.min(args.get(0).asDouble(), args.get(1).asDouble()))),
     MAX(1, args -> Value.of(Math.max(args.get(0).asDouble(), args.get(1).asDouble()))),
+    CEILING(1, args -> Value.of(Math.ceil(args.get(0).asDouble()))),
+    FLOOR(1, args -> Value.of(Math.floor(args.get(0).asDouble()))),
+
+    MOD(2, args -> Value.of(args.get(0).asInteger() % args.get(1).asInteger())),
 
     CONTAINS(2, args -> Value.of(args.get(0).asString().contains(args.get(1).asString()))),
     REPEAT(2, args -> Value.of(args.get(0).asString().repeat(args.get(1).asInteger()))),
+    LENGTH(1, args -> Value.of(args.get(0).asString().length())),
     STRING(1, args -> Value.of(args.get(0).asString())),
     
-    SUM(1, FunctionUtils::sum)
+    SUM(1, FunctionUtils::sum),
+    AVERAGE(1, FunctionUtils::average),
+    COUNT(1, FunctionUtils::count)
     ;
 
     private final Integer argumentsSize;
