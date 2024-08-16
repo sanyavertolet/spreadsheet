@@ -1,8 +1,6 @@
 package com.sanyavertolet.interview.data.container;
 
 import com.sanyavertolet.interview.data.Data;
-import com.sanyavertolet.interview.data.ExpressionData;
-import com.sanyavertolet.interview.data.TextData;
 import com.sanyavertolet.interview.math.CellReference;
 
 import java.util.*;
@@ -19,7 +17,7 @@ public class DataContainer implements DataExporter {
     }
 
     public Data get(CellReference cellReference) {
-        return container.getOrDefault(cellReference, new TextData(""));
+        return container.getOrDefault(cellReference, new Data(""));
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -41,27 +39,20 @@ public class DataContainer implements DataExporter {
         return maxCol + 1;
     }
 
-    public boolean hasData(CellReference reference) {
-        return container.containsKey(reference);
-    }
-
-    public Data getOrEmpty(CellReference reference) {
-        return container.getOrDefault(reference, new TextData(""));
-    }
-
     @Override
     public List<CellReference.WithText> exportDataMap() {
-        List<CellReference.WithText> expressionDataList = new ArrayList<>();
-        List<CellReference.WithText> nonExpressionDataList = new ArrayList<>();
+        List<CellReference.WithText> dataList = new ArrayList<>();
+        List<CellReference.WithText> primitiveDataList = new ArrayList<>();
         for (Map.Entry<CellReference, Data> entry : container.entrySet()) {
-            if (entry.getValue() instanceof ExpressionData expressionData) {
-                expressionDataList.add(new CellReference.WithText(entry.getKey(), expressionData.getText()));
+            CellReference.WithText referencedData = new CellReference.WithText(entry.getKey(), entry.getValue().getText());
+            if (entry.getValue().getExpressionTree() == null) {
+                dataList.add(referencedData);
             } else {
-                nonExpressionDataList.add(new CellReference.WithText(entry.getKey(), entry.getValue().getText()));
+                primitiveDataList.add(referencedData);
             }
         }
-        expressionDataList.addAll(nonExpressionDataList);
-        return expressionDataList;
+        dataList.addAll(primitiveDataList);
+        return dataList;
     }
 
     @Override

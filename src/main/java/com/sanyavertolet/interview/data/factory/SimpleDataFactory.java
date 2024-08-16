@@ -1,10 +1,11 @@
 package com.sanyavertolet.interview.data.factory;
 
 import com.sanyavertolet.interview.data.*;
-import com.sanyavertolet.interview.data.accessor.DataAccessor;
+import com.sanyavertolet.interview.data.value.Value;
+import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionParsingException;
+import com.sanyavertolet.interview.math.expressions.Expression;
 import com.sanyavertolet.interview.math.expressions.evaluator.ExpressionEvaluator;
-import com.sanyavertolet.interview.math.expressions.evaluator.SimpleExpressionEvaluator;
 import com.sanyavertolet.interview.parser.ExpressionParser;
 import com.sanyavertolet.interview.parser.ShuntingYardParser;
 
@@ -12,31 +13,23 @@ public class SimpleDataFactory implements DataFactory {
     private final ExpressionParser expressionParser;
     private final ExpressionEvaluator expressionEvaluator;
 
-    public SimpleDataFactory(DataAccessor dataAccessor) {
+    public SimpleDataFactory(ExpressionEvaluator expressionEvaluator) {
         this.expressionParser = new ShuntingYardParser();
-        this.expressionEvaluator = new SimpleExpressionEvaluator(dataAccessor);
+        this.expressionEvaluator = expressionEvaluator;
     }
 
     @Override
     public Data create(String cellText) {
-        try {
-            return new DoubleData(cellText, Double.valueOf(cellText));
-        } catch (NumberFormatException ignored) { }
-
-        if (cellText.trim().equalsIgnoreCase("true")) {
-             return new BooleanData(cellText, true);
-        } else if (cellText.trim().equalsIgnoreCase("false")) {
-            return new BooleanData(cellText, false);
-        }
-
+        Expression expression = null;
+        Value value = null;
         if (cellText.startsWith("=")) {
             try {
-                return new ExpressionData(cellText, expressionParser.parse(cellText), expressionEvaluator::evaluate);
-            } catch (ExpressionParsingException exception) {
-                return new TextData(cellText);
-            }
+                expression = expressionParser.parse(cellText);
+                value = expressionEvaluator.evaluate(expression);
+            } catch (ExpressionParsingException | ExpressionEvaluationException ignored) { }
+        } else {
+            value = Value.parse(cellText);
         }
-
-        return new TextData(cellText);
+        return new Data(cellText, value, expression);
     }
 }

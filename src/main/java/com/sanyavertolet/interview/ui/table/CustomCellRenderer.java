@@ -1,6 +1,7 @@
 package com.sanyavertolet.interview.ui.table;
 
 import com.sanyavertolet.interview.data.Data;
+import com.sanyavertolet.interview.data.value.Value;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -21,10 +22,15 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
         setForeground(table.getForeground());
 
         if (value instanceof Data data) {
-            if (isSelected) {
-                setText(data.getText());
+            Value val = data.getValue();
+            if (val == null) {
+                setText("ERR");
             } else {
-                setText(data.getValueAsString());
+                if (isSelected) {
+                    setText(data.getText());
+                } else {
+                    setText(val.asString());
+                }
             }
         }
 

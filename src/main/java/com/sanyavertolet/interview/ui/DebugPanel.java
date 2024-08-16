@@ -1,7 +1,7 @@
 package com.sanyavertolet.interview.ui;
 
 import com.sanyavertolet.interview.data.Data;
-import com.sanyavertolet.interview.data.ExpressionData;
+import com.sanyavertolet.interview.data.value.Value;
 import com.sanyavertolet.interview.math.CellReference;
 
 import javax.swing.*;
@@ -58,12 +58,13 @@ public class DebugPanel extends JPanel {
 
     private void updateDebugInfo(CellReference cellReference) {
         if (selectedData != null) {
+            Value val = selectedData.getValue();
             coordinatesLabel.setText("Coordinates: " + cellReference.identifier());
-            contentLabel.setText("Content: " + selectedData.getValueAsString());
-            typeLabel.setText("Type: " + selectedData.getClass().getSimpleName());
+            contentLabel.setText("Content: " + selectedData.getValue());
+            typeLabel.setText("Type: " + (val != null ? val.getClass().getSimpleName() : "ERR"));
 
-            if (selectedData instanceof ExpressionData) {
-                treeTextArea.setText("Expression Tree: \n" + ((ExpressionData) selectedData).getPrettyPrintedExpressionTree());
+            if (selectedData.getExpressionTree() != null) {
+                treeTextArea.setText("Expression Tree: \n" + selectedData.prettyPrintExpression());
             } else {
                 treeTextArea.setText("Expression Tree: \n");
             }

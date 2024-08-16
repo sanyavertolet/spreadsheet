@@ -1,6 +1,9 @@
 package com.sanyavertolet.interview.math.expressions;
 
+import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.operators.NonFunctionOperator;
+
+import java.util.List;
 
 public class BinaryExpression extends Expression {
     private final Expression left;
@@ -16,6 +19,13 @@ public class BinaryExpression extends Expression {
     @Override
     public String prettyPrint(int shift) {
         return ".".repeat(shift) + operator.getSymbol() + "\n" + left.prettyPrint(shift + 2) + right.prettyPrint(shift + 2);
+    }
+
+    @Override
+    public List<CellReference> getCellReferences() {
+        List<CellReference> result = left.getCellReferences();
+        result.addAll(right.getCellReferences());
+        return result;
     }
 
     public Expression getLeft() {

@@ -63,31 +63,31 @@ public class Expressions {
         }
     }
 
-    public static class Numbers {
-        private Numbers() { }
+    public static class Values {
+        private Values() { }
 
-        private static Expression number(String number) {
-            return new NumberExpression(number);
+        public static Expression value(String string) {
+            return new ValueExpression(string);
         }
 
-        public static Expression one = number("1");
+        public static Expression one = value("1");
 
-        public static Expression two = number("2");
+        public static Expression two = value("2");
 
-        public static Expression three = number("3");
+        public static Expression three = value("3");
 
-        public static Expression four = number("4");
+        public static Expression four = value("4");
 
-        public static Expression five = number("5");
+        public static Expression five = value("5");
 
-        public static Expression seven = number("7");
+        public static Expression seven = value("7");
 
-        public static Expression ten = number("10");
+        public static Expression ten = value("10");
 
-        public static Expression fortyTwo = number("42");
+        public static Expression fortyTwo = value("42");
 
         public static Expression minus(Expression expression) {
-            return BinaryExpressions.mul(number("-1"), expression);
+            return BinaryExpressions.mul(value("-1"), expression);
         }
     }
 

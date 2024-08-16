@@ -63,20 +63,4 @@ public class NonFunctionOperator extends Operator {
             default -> throw new IllegalStateException("Operator has no priority: " + this);
         };
     }
-
-    public Double calculate(Double left, Double right) {
-        return switch (type) {
-            case PLUS -> left + right;
-            case MINUS -> left - right;
-            case MULTIPLY -> left * right;
-            case DIVIDE -> {
-                if (left.equals(0.0)) {
-                    throw new ArithmeticException("Division by zero");
-                }
-                yield left / right;
-            }
-            case POWER -> Math.pow(left, right);
-            default -> throw new IllegalStateException("Operator cannot be evaluated: " + this);
-        };
-    }
 }

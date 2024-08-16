@@ -2,6 +2,9 @@ package com.sanyavertolet.interview.math.expressions;
 
 import com.sanyavertolet.interview.math.CellReference;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CellReferenceExpression extends Expression {
     private final CellReference cellReference;
 
@@ -12,6 +15,11 @@ public class CellReferenceExpression extends Expression {
     @Override
     public String prettyPrint(int shift) {
         return ".".repeat(shift) + cellReference.identifier() + "\n";
+    }
+
+    @Override
+    public List<CellReference> getCellReferences() {
+        return new ArrayList<>(List.of(cellReference));
     }
 
     public CellReference getCellReference() {

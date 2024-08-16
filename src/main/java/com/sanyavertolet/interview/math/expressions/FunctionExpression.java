@@ -1,8 +1,10 @@
 package com.sanyavertolet.interview.math.expressions;
 
+import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.Function;
 import com.sanyavertolet.interview.exceptions.FunctionArgumentException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionExpression extends Expression {
@@ -15,6 +17,15 @@ public class FunctionExpression extends Expression {
             throw new FunctionArgumentException("Insufficient number of arguments for function " + function);
         }
         this.arguments = arguments;
+    }
+
+    @Override
+    public List<CellReference> getCellReferences() {
+        List<CellReference> cellReferences = new ArrayList<>();
+        for (Expression argument : arguments) {
+            cellReferences.addAll(argument.getCellReferences());
+        }
+        return cellReferences;
     }
 
     @Override

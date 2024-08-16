@@ -11,6 +11,8 @@ import com.sanyavertolet.interview.data.watcher.DataWatcher;
 import com.sanyavertolet.interview.data.watcher.SimpleDataWatcher;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
+import com.sanyavertolet.interview.math.expressions.evaluator.ExpressionEvaluator;
+import com.sanyavertolet.interview.math.expressions.evaluator.SimpleExpressionEvaluator;
 
 public class SimpleDataManager implements DataManager {
     private final DataContainer container;
@@ -21,8 +23,11 @@ public class SimpleDataManager implements DataManager {
     public SimpleDataManager(int rows, int columns) {
         container = new DataContainer(rows, columns);
         accessor = new ContainerBasedDataAccessor(container);
-        dataFactory = new SimpleDataFactory(accessor);
-        dataWatcher = new SimpleDataWatcher(accessor);
+
+        ExpressionEvaluator expressionEvaluator = new SimpleExpressionEvaluator(accessor);
+
+        dataFactory = new SimpleDataFactory(expressionEvaluator);
+        dataWatcher = new SimpleDataWatcher(accessor, expressionEvaluator);
     }
 
     @Override

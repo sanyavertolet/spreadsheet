@@ -11,7 +11,7 @@ import static com.sanyavertolet.interview.Expressions.BinaryExpressions.*;
 import static com.sanyavertolet.interview.Expressions.Cells.a1;
 import static com.sanyavertolet.interview.Expressions.Cells.b2;
 import static com.sanyavertolet.interview.Expressions.Functions.*;
-import static com.sanyavertolet.interview.Expressions.Numbers.*;
+import static com.sanyavertolet.interview.Expressions.Values.*;
 
 public class ShuntingYardParserTest {
     private final ShuntingYardParser parser = new ShuntingYardParser();

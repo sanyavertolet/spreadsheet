@@ -86,7 +86,7 @@ public class ShuntingYardParser implements ExpressionParser {
         for (int i = 0; i < tokens.size(); i++) {
             Token token = tokens.get(i);
             switch (token.type()) {
-                case NUMBER -> expressions.add(new NumberExpression(token.value()));
+                case NUMBER -> expressions.add(new ValueExpression(token.value()));
                 case REFERENCE -> {
                     if (isFunction(getNextToken(i, tokens))) {
                         if (isFunctionWithoutArguments(i, tokens)) {
@@ -104,7 +104,7 @@ public class ShuntingYardParser implements ExpressionParser {
                     NonFunctionOperator currentOperator = new NonFunctionOperator(token.value());
 
                     if (isUnaryMinus(currentOperator, getPreviousToken(i, tokens))) {
-                        expressions.add(new NumberExpression("-1"));
+                        expressions.add(new ValueExpression("-1"));
                         operators.push(new NonFunctionOperator("*"));
                     } else if (operators.isEmpty()) {
                         operators.push(currentOperator);

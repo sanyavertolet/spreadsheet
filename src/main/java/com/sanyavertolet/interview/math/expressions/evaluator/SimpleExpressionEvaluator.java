@@ -1,10 +1,9 @@
 package com.sanyavertolet.interview.math.expressions.evaluator;
 
+import com.sanyavertolet.interview.data.value.Value;
 import com.sanyavertolet.interview.data.accessor.DataAccessor;
-import com.sanyavertolet.interview.exceptions.data.DataAccessException;
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
 import com.sanyavertolet.interview.math.CellReference;
-import com.sanyavertolet.interview.math.Function;
 import com.sanyavertolet.interview.math.expressions.*;
 import com.sanyavertolet.interview.math.operators.NonFunctionOperator;
 
@@ -18,29 +17,47 @@ public class SimpleExpressionEvaluator implements ExpressionEvaluator {
         this.dataAccessor = dataAccessor;
     }
 
+    private Value evaluate(BinaryExpression expression) throws ExpressionEvaluationException {
+        Value left = evaluate(expression.getLeft());
+        Value right = evaluate(expression.getRight());
+        NonFunctionOperator operator = expression.getOperator();
+        return switch (operator.type()) {
+            case PLUS -> left.plus(right);
+            case MINUS -> left.minus(right);
+            case MULTIPLY -> left.multiply(right);
+            case DIVIDE -> left.divide(right);
+            case POWER -> left.pow(right);
+            default -> throw new ExpressionEvaluationException("Unknown operator type: " + operator.type());
+        };
+    }
+
+    private Value evaluate(FunctionExpression expression) throws ExpressionEvaluationException {
+        List<Value> argumentValues = new ArrayList<>();
+        for (Expression argument : expression.getArguments()) {
+            argumentValues.add(evaluate(argument));
+        }
+        return expression.getFunction().evaluate(argumentValues);
+    }
+
+    private Value evaluate(ValueExpression expression) {
+        return expression.getValue();
+    }
+
+    private Value evaluate(CellReferenceExpression expression) {
+        CellReference cellReference = expression.getCellReference();
+        return dataAccessor.getData(cellReference).getValue();
+    }
+
     @Override
-    public Double evaluate(Expression expression) throws ExpressionEvaluationException {
+    public Value evaluate(Expression expression) throws ExpressionEvaluationException {
         if (expression instanceof CellReferenceExpression cellReferenceExpression) {
-            CellReference cellReference = cellReferenceExpression.getCellReference();
-            try {
-                return dataAccessor.getDoubleCellValue(cellReference);
-            } catch (DataAccessException exception) {
-                throw new ExpressionEvaluationException("Could not access cell " + cellReference.identifier(), exception);
-            }
-        } else if (expression instanceof NumberExpression numberExpression) {
-            return numberExpression.getNumber();
+            return evaluate(cellReferenceExpression);
+        } else if (expression instanceof ValueExpression valueExpression) {
+            return evaluate(valueExpression);
         } else if (expression instanceof BinaryExpression binaryExpression) {
-            Double leftExpressionValue = evaluate(binaryExpression.getLeft());
-            Double rightExpressionValue = evaluate(binaryExpression.getRight());
-            NonFunctionOperator operator = binaryExpression.getOperator();
-            return operator.calculate(leftExpressionValue, rightExpressionValue);
+            return evaluate(binaryExpression);
         }  else if (expression instanceof FunctionExpression functionExpression) {
-            List<Double> argumentValues = new ArrayList<>();
-            for (Expression argumentExpression : functionExpression.getArguments()) {
-                argumentValues.add(evaluate(argumentExpression));
-            }
-            Function function = functionExpression.getFunction();
-            return function.evaluate(argumentValues);
+            return evaluate(functionExpression);
         }
         throw new ExpressionEvaluationException("Unknown expression: " + expression.toString());
     }

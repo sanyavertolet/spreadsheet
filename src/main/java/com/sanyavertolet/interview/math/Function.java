@@ -1,59 +1,60 @@
 package com.sanyavertolet.interview.math;
 
+import com.sanyavertolet.interview.data.value.Value;
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
 
 import java.util.List;
 
 public enum Function {
-    PI(0, (args) -> Math.PI),
-    E(0, (args) -> Math.E),
-    POW(2, (args) -> Math.pow(args.get(0), args.get(1))),
+    PI(0, (args) -> Value.of(Math.PI)),
+    E(0, (args) -> Value.of(Math.E)),
+    POW(2, (args) -> Value.of(Math.pow(args.get(0).asDouble(), args.get(1).asDouble()))),
 
-    SIN(1, (args) -> Math.sin(args.get(0))),
-    COS(1, (args) -> Math.cos(args.get(0))),
-    TAN(1, (args) -> Math.tan(args.get(0))),
-    CTG(1, (args) -> 1 / Math.tan(args.get(0))),
+    SIN(1, (args) -> Value.of(Math.sin(args.get(0).asDouble()))),
+    COS(1, (args) -> Value.of(Math.cos(args.get(0).asDouble()))),
+    TAN(1, (args) -> Value.of(Math.tan(args.get(0).asDouble()))),
+    CTG(1, (args) -> Value.of(1 / Math.tan(args.get(0).asDouble()))),
 
-    ASIN(1, (args) -> Math.asin(args.get(0))),
-    ACOS(1, (args) -> Math.acos(args.get(0))),
-    ATAN(1, (args) -> Math.atan(args.get(0))),
+    ASIN(1, (args) -> Value.of(Math.asin(args.get(0).asDouble()))),
+    ACOS(1, (args) -> Value.of(Math.acos(args.get(0).asDouble()))),
+    ATAN(1, (args) -> Value.of(Math.atan(args.get(0).asDouble()))),
 
-    LN(1, (args) -> Math.log(args.get(0))),
-    LOG(2, (args) -> Math.log(args.get(1)) / Math.log(args.get(0))),
+    LN(1, (args) -> Value.of(Math.log(args.get(0).asDouble()))),
+    LOG(2, (args) -> Value.of(Math.log(args.get(1).asDouble()) / Math.log(args.get(0).asDouble()))),
 
-    ABS(1, (args) -> Math.abs(args.get(0))),
-    CBRT(1, (args) -> Math.cbrt(args.get(0))),
-    SQRT(1, (args) -> Math.sqrt(args.get(0))),
+    ABS(1, (args) -> Value.of(Math.abs(args.get(0).asDouble()))),
+    CBRT(1, (args) -> Value.of(Math.cbrt(args.get(0).asDouble()))),
+    SQRT(1, (args) -> Value.of(Math.sqrt(args.get(0).asDouble()))),
 
-    MAX(1, (args) -> Math.max(args.get(0), args.get(1))),
-    MIN(1, (args) -> Math.min(args.get(0), args.get(1))),
+    MIN(1, (args) -> Value.of(Math.min(args.get(0).asDouble(), args.get(1).asDouble()))),
+    MAX(1, (args) -> Value.of(Math.max(args.get(0).asDouble(), args.get(1).asDouble()))),
     ;
 
     private final int argumentsSize;
-    private final Evaluator evaluator;
+    private final FunctionEvaluator functionEvaluator;
 
-    Function(int argumentsSize, Evaluator evaluator) {
+    Function(int argumentsSize, FunctionEvaluator functionEvaluator) {
         this.argumentsSize = argumentsSize;
-        this.evaluator = evaluator;
+        this.functionEvaluator = functionEvaluator;
     }
 
     public int getArgumentsSize() {
         return argumentsSize;
     }
 
-    public Double evaluate(List<Double> arguments) throws ExpressionEvaluationException {
+    public Value evaluate(List<Value> arguments) throws ExpressionEvaluationException {
         if (arguments.size() != argumentsSize) {
             throw new ExpressionEvaluationException(name() + " should have exactly " + argumentsSize + " arguments");
         }
         try {
-            return evaluator.invoke(arguments);
+            return functionEvaluator.invoke(arguments);
         } catch (NullPointerException exception) {
             throw new ExpressionEvaluationException("Could not evaluate expression as one of the arguments is null");
         }
     }
 
-    private interface Evaluator {
-        Double invoke(List<Double> args) throws ExpressionEvaluationException;
+    private interface FunctionEvaluator {
+        Value invoke(List<Value> args) throws ExpressionEvaluationException;
     }
 
     public static Function named(String name) {

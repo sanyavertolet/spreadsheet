@@ -2,47 +2,33 @@ package com.sanyavertolet.interview.math.expressions.evaluator;
 
 import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.data.accessor.DataAccessor;
+import com.sanyavertolet.interview.data.value.Value;
 import com.sanyavertolet.interview.exceptions.*;
-import com.sanyavertolet.interview.exceptions.data.DataAccessException;
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.expressions.Expression;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.sanyavertolet.interview.CellReferences.a1Ref;
-import static com.sanyavertolet.interview.CellReferences.b2Ref;
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.sanyavertolet.interview.Expressions.BinaryExpressions.*;
 import static com.sanyavertolet.interview.Expressions.Cells.a1;
 import static com.sanyavertolet.interview.Expressions.Cells.b1;
 import static com.sanyavertolet.interview.Expressions.Cells.b2;
 import static com.sanyavertolet.interview.Expressions.Functions.*;
-import static com.sanyavertolet.interview.Expressions.Numbers.*;
-import static com.sanyavertolet.interview.Expressions.Numbers.fortyTwo;
+import static com.sanyavertolet.interview.Expressions.Values.*;
+import static com.sanyavertolet.interview.Expressions.Values.fortyTwo;
 
 public class SimpleExpressionEvaluatorTest {
     private final Double a1Val = 2.0;
     private final Double b2Val = 7.0;
 
-    private final DataAccessor dataAccessor = new DataAccessor() {
-        @Override
-        public Data getData(CellReference reference) {
-            return null;
-        }
-
-        @Override
-        public Double getDoubleCellValue(CellReference cellReference) throws DataAccessException {
-            return switch (cellReference.identifier()) {
-                case "A1" -> a1Val;
-                case "B2" -> b2Val;
-                default -> throw new DataAccessException("Cell not found");
-            };
-        }
-
-        @Override
-        public boolean hasCell(CellReference cellReference) {
-            return cellReference.equals(a1Ref) || cellReference.equals(b2Ref);
-        }
+    private final DataAccessor dataAccessor = reference -> switch (reference.identifier()) {
+        case "A1" -> new Data("2.0", a1Val);
+        case "B2" -> new Data("7.0", b2Val);
+        default -> new Data("");
     };
 
     private final ExpressionEvaluator expressionEvaluator = new SimpleExpressionEvaluator(dataAccessor);
@@ -53,8 +39,8 @@ public class SimpleExpressionEvaluatorTest {
     void dummyExpressionTest() throws ExpressionEvaluationException {
         Expression expression = plus(one, two);
 
-        Double expectedValue = 3.0;
-        Double actualValue = expressionEvaluator.evaluate(expression);
+        Value expectedValue = Value.of(3);
+        Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
     }
@@ -63,8 +49,8 @@ public class SimpleExpressionEvaluatorTest {
     void parameterlessFunctionExpressionTest() throws FunctionArgumentException, ExpressionEvaluationException {
         Expression expression = plus(pi(), e());
 
-        Double expectedValue = Math.PI + Math.E;
-        Double actualValue = expressionEvaluator.evaluate(expression);
+        Value expectedValue = Value.of(Math.PI + Math.E);
+        Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
     }
@@ -73,8 +59,8 @@ public class SimpleExpressionEvaluatorTest {
     void parameterizedFunctionExpressionTest() throws FunctionArgumentException, ExpressionEvaluationException {
         Expression expression = powF(two, two);
 
-        Double expectedValue = Math.pow(2.0, 2.0);
-        Double actualValue = expressionEvaluator.evaluate(expression);
+        Value expectedValue = Value.of(Math.pow(2, 2));
+        Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
     }
@@ -89,8 +75,8 @@ public class SimpleExpressionEvaluatorTest {
                 )
         );
 
-        Double expectedValue = Math.pow(2.0, 5.0) + (3.0 * Math.E) / (4.0 - 7.0);
-        Double actualValue = expressionEvaluator.evaluate(expression);
+        Value expectedValue = Value.of(Math.pow(2, 5) + (3.0 * Math.E) / (4 - 7));
+        Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
     }
@@ -99,8 +85,8 @@ public class SimpleExpressionEvaluatorTest {
     void nestedFunctionExpressionTest() throws FunctionArgumentException, ExpressionEvaluationException {
         Expression expression = powF(pi(), two);
 
-        Double expectedValue = Math.pow(Math.PI, 2.0);
-        Double actualValue = expressionEvaluator.evaluate(expression);
+        Value expectedValue = Value.of(Math.pow(Math.PI, 2));
+        Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
     }
@@ -109,8 +95,8 @@ public class SimpleExpressionEvaluatorTest {
     void negativeNumberExpressionTest() throws ExpressionEvaluationException {
         Expression expression = plus(minus(five), ten);
 
-        Double expectedValue = -5.0 + 10.0;
-        Double actualValue = expressionEvaluator.evaluate(expression);
+        Value expectedValue = Value.of(-5 + 10);
+        Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
     }
@@ -125,8 +111,8 @@ public class SimpleExpressionEvaluatorTest {
                 div(five, two)
         );
 
-        Double expectedValue = 2.0 + 3.0 * 4.0 - 5.0 / 2.0;
-        Double actualValue = expressionEvaluator.evaluate(expression);
+        Value expectedValue = Value.of(2 + 3 * 4 - 5 / 2);
+        Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
     }
@@ -141,8 +127,8 @@ public class SimpleExpressionEvaluatorTest {
                 five
         );
 
-        Double expectedValue = ((2.0 + 3.0) * (4.0 - 1.0)) / 5.0;
-        Double actualValue = expressionEvaluator.evaluate(expression);
+        Value expectedValue = Value.of(((2 + 3) * (4 - 1)) / 5);
+        Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
     }
@@ -157,8 +143,8 @@ public class SimpleExpressionEvaluatorTest {
                 pi()
         );
 
-        Double expectedValue = (Math.pow(2, 3) + 4) * Math.PI;
-        Double actualValue = expressionEvaluator.evaluate(expression);
+        Value expectedValue = Value.of((Math.pow(2, 3) + 4) * Math.PI);
+        Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
     }
@@ -167,8 +153,8 @@ public class SimpleExpressionEvaluatorTest {
     void cellReferenceExpressionTest() throws CellReferenceException, ExpressionEvaluationException {
         Expression expression = mul(a1(), two);
 
-        Double expectedValue = a1Val * 2;
-        Double actualValue = expressionEvaluator.evaluate(expression);
+        Value expectedValue = Value.of(a1Val * 2);
+        Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
     }
@@ -183,15 +169,38 @@ public class SimpleExpressionEvaluatorTest {
                 plus(fortyTwo, b2())
         );
 
-        Double expectedValue = Math.pow(-2, a1Val - 3) * (42 + b2Val);
-        Double actualValue = expressionEvaluator.evaluate(expression);
+        Value expectedValue = Value.of(Math.pow(-2, a1Val - 3) * (42 + b2Val));
+        Value actualValue = expressionEvaluator.evaluate(expression);
+
+        Assertions.assertEquals(expectedValue, actualValue);
+    }
+
+    @Test
+    void doubleCastingExpressionTest() throws ExpressionEvaluationException {
+        Expression expression = div(
+                mul(
+                        plus(two, three),
+                        minus(four, one)
+                ),
+                value("5.0")
+        );
+
+        Value expectedValue = Value.of(((2 + 3) * (4 - 1)) / 5.0);
+        Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
     }
 
     @Test
     void missingCellExpressionTest() throws CellReferenceException {
-        Expression expression = b1();
+        Expression expression = mul(two, b1());
+
+        Assertions.assertThrows(ExpressionEvaluationException.class, () -> expressionEvaluator.evaluate(expression));
+    }
+
+    @Test
+    void stringAdditionExpressionTest() {
+        Expression expression = plus(value("a123"), value("b456"));
 
         Assertions.assertThrows(ExpressionEvaluationException.class, () -> expressionEvaluator.evaluate(expression));
     }
@@ -202,6 +211,11 @@ public class SimpleExpressionEvaluatorTest {
             @Override
             public String prettyPrint(int shift) {
                 return "";
+            }
+
+            @Override
+            public List<CellReference> getCellReferences() {
+                return new ArrayList<>();
             }
         };
 

@@ -28,8 +28,8 @@ public class TestUtils {
         }
     }
 
-    private static void assertExpressionsEqual(NumberExpression expected, NumberExpression actual) {
-        Assertions.assertEquals(expected.getNumber(), actual.getNumber());
+    private static void assertExpressionsEqual(ValueExpression expected, ValueExpression actual) {
+        Assertions.assertEquals(expected.getValue(), actual.getValue());
     }
 
     private static void assertExpressionsEqual(CellReferenceExpression expected, CellReferenceExpression actual) {
@@ -53,7 +53,7 @@ public class TestUtils {
     }
 
     public static void assertExpressionsEqual(Expression expected, Expression actual) {
-        if (actual instanceof NumberExpression actualNumber && expected instanceof NumberExpression expectedNumber) {
+        if (actual instanceof ValueExpression actualNumber && expected instanceof ValueExpression expectedNumber) {
             assertExpressionsEqual(expectedNumber, actualNumber);
         } else if (actual instanceof CellReferenceExpression actualCellReference && expected instanceof CellReferenceExpression expectedCellReference) {
             assertExpressionsEqual(expectedCellReference, actualCellReference);
