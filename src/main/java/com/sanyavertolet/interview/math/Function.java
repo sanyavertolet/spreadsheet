@@ -28,6 +28,10 @@ public enum Function {
 
     MIN(1, (args) -> Value.of(Math.min(args.get(0).asDouble(), args.get(1).asDouble()))),
     MAX(1, (args) -> Value.of(Math.max(args.get(0).asDouble(), args.get(1).asDouble()))),
+
+    CONTAINS(2, (args) -> Value.of(args.get(0).asString().contains(args.get(1).asString()))),
+    REPEAT(2, (args) -> Value.of(args.get(0).asString().repeat(args.get(1).asInteger()))),
+    STRING(1, (args) -> Value.of(args.get(0).asString())),
     ;
 
     private final int argumentsSize;

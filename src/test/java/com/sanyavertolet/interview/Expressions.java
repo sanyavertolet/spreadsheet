@@ -61,6 +61,14 @@ public class Expressions {
         public static Expression powF(Expression left, Expression right) throws FunctionArgumentException {
             return new FunctionExpression(Function.POW, List.of(left, right));
         }
+
+        public static Expression contains(Expression string, Expression needle) throws FunctionArgumentException {
+            return new FunctionExpression(Function.CONTAINS, List.of(string, needle));
+        }
+
+        public static Expression string(Expression expression) throws FunctionArgumentException {
+            return new FunctionExpression(Function.STRING, List.of(expression));
+        }
     }
 
     public static class Values {

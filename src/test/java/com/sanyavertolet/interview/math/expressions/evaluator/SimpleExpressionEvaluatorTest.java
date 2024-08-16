@@ -2,6 +2,7 @@ package com.sanyavertolet.interview.math.expressions.evaluator;
 
 import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.data.accessor.DataAccessor;
+import com.sanyavertolet.interview.data.value.StringValue;
 import com.sanyavertolet.interview.data.value.Value;
 import com.sanyavertolet.interview.exceptions.*;
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
@@ -189,6 +190,25 @@ public class SimpleExpressionEvaluatorTest {
         Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
+    }
+
+    @Test
+    void containsExpressionTest() throws ExpressionEvaluationException, FunctionArgumentException {
+        String string = "FooBar";
+        String needle = "oB";
+        Expression expression = contains(value(string), value(needle));
+
+        @SuppressWarnings("ConstantValue") Value expectedValue = Value.of(string.contains(needle));
+        Value actualValue = expressionEvaluator.evaluate(expression);
+
+        Assertions.assertEquals(expectedValue, actualValue);
+    }
+
+    @Test
+    void stringCastExpressionTest() throws ExpressionEvaluationException, FunctionArgumentException {
+        Assertions.assertEquals(new StringValue("5"), expressionEvaluator.evaluate(string(value("5"))));
+        Assertions.assertEquals(new StringValue("true"), expressionEvaluator.evaluate(string(value("true"))));
+        Assertions.assertEquals(new StringValue("5.0"), expressionEvaluator.evaluate(string(value("5.0"))));
     }
 
     @Test
