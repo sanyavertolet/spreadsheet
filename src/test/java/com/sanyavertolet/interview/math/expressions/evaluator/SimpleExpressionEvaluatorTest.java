@@ -6,6 +6,7 @@ import com.sanyavertolet.interview.data.value.StringValue;
 import com.sanyavertolet.interview.data.value.Value;
 import com.sanyavertolet.interview.exceptions.*;
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
+import com.sanyavertolet.interview.exceptions.expressions.RangeParsingException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.expressions.Expression;
 import org.junit.jupiter.api.Assertions;
@@ -15,20 +16,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.sanyavertolet.interview.Expressions.BinaryExpressions.*;
-import static com.sanyavertolet.interview.Expressions.Cells.a1;
-import static com.sanyavertolet.interview.Expressions.Cells.b1;
-import static com.sanyavertolet.interview.Expressions.Cells.b2;
+import static com.sanyavertolet.interview.Expressions.Cells.*;
 import static com.sanyavertolet.interview.Expressions.Functions.*;
+import static com.sanyavertolet.interview.Expressions.Ranges.range;
 import static com.sanyavertolet.interview.Expressions.Values.*;
 import static com.sanyavertolet.interview.Expressions.Values.fortyTwo;
 
 public class SimpleExpressionEvaluatorTest {
-    private final Double a1Val = 2.0;
-    private final Double b2Val = 7.0;
+    private final Double a1Val = 1.0;
+    private final Double a2Val = 2.0;
+    private final Integer b1Val = 3;
+    private final Double b2Val = 4.0;
 
     private final DataAccessor dataAccessor = reference -> switch (reference.identifier()) {
-        case "A1" -> new Data("2.0", a1Val);
-        case "B2" -> new Data("7.0", b2Val);
+        case "A1" -> new Data("1.0", a1Val);
+        case "A2" -> new Data("2.0", a2Val);
+        case "B1" -> new Data("3.0", b1Val);
+        case "B2" -> new Data("4.0", b2Val);
         default -> new Data("");
     };
 
@@ -212,8 +216,21 @@ public class SimpleExpressionEvaluatorTest {
     }
 
     @Test
+    void rangeSumExpressionTest() throws ExpressionEvaluationException, FunctionArgumentException, CellReferenceException, RangeParsingException {
+        Expression expression = mul(
+                sum(range("A1", "B2")),
+                three
+        );
+
+        Value expectedValue = Value.of((a1Val + a2Val + b1Val + b2Val) * 3);
+        Value actualValue = expressionEvaluator.evaluate(expression);
+
+        Assertions.assertEquals(expectedValue, actualValue);
+    }
+
+    @Test
     void missingCellExpressionTest() throws CellReferenceException {
-        Expression expression = mul(two, b1());
+        Expression expression = mul(two, c2());
 
         Assertions.assertThrows(ExpressionEvaluationException.class, () -> expressionEvaluator.evaluate(expression));
     }

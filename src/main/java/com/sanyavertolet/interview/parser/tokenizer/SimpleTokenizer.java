@@ -40,6 +40,9 @@ public class SimpleTokenizer implements Tokenizer {
             case ',':
                 advance();
                 return new Token(Token.Type.COMMA, ",");
+            case ':':
+                advance();
+                return new Token(Token.Type.COLON, ":");
             case '+':
             case '-':
             case '*':

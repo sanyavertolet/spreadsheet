@@ -2,7 +2,7 @@ package com.sanyavertolet.interview.data.value;
 
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
 
-public sealed abstract class Value permits BooleanValue, DoubleValue, StringValue, IntegerValue {
+public sealed abstract class Value permits BooleanValue, DoubleValue, StringValue, IntegerValue, IterableValue {
     public abstract Value plus(Value other) throws ExpressionEvaluationException;
     public abstract Value minus(Value other) throws ExpressionEvaluationException;
     public abstract Value multiply(Value other) throws ExpressionEvaluationException;
@@ -45,19 +45,6 @@ public sealed abstract class Value permits BooleanValue, DoubleValue, StringValu
             return Value.of(Double.valueOf(valueText));
         } catch (NumberFormatException ignored) { }
         return Value.of(valueText);
-    }
-
-    public Value copy() {
-        if (this instanceof BooleanValue value) {
-            return Value.of(value.getValue());
-        } else if (this instanceof DoubleValue value) {
-            return Value.of(value.getValue());
-        } else if (this instanceof StringValue value) {
-            return Value.of(value.getValue());
-        } else if (this instanceof IntegerValue value) {
-            return Value.of(value.getValue());
-        }
-        throw new IllegalArgumentException("Unknown value type: " + this.getClass());
     }
 
     @Override

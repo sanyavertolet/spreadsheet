@@ -52,6 +52,11 @@ public class TestUtils {
         }
     }
 
+    private static void assertExpressionsEqual(RangeExpression expected, RangeExpression actual) {
+        Assertions.assertEquals(expected.getFrom(), actual.getFrom());
+        Assertions.assertEquals(expected.getTo(), actual.getTo());
+    }
+
     public static void assertExpressionsEqual(Expression expected, Expression actual) {
         if (actual instanceof ValueExpression actualNumber && expected instanceof ValueExpression expectedNumber) {
             assertExpressionsEqual(expectedNumber, actualNumber);
@@ -61,6 +66,8 @@ public class TestUtils {
             assertExpressionsEqual(expectedBinary, actualBinary);
         } else if (actual instanceof FunctionExpression actualFunction && expected instanceof FunctionExpression expectedFunction) {
             assertExpressionsEqual(expectedFunction, actualFunction);
+        } else if (actual instanceof RangeExpression actualRange && expected instanceof RangeExpression expectedRange) {
+            assertExpressionsEqual(expectedRange, actualRange);
         } else {
             assertionFailure().message("Classes do not match").expected(expected.getClass()).actual(actual.getClass()).buildAndThrow();
         }

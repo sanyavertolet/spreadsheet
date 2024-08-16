@@ -49,7 +49,7 @@ public class Data {
     }
 
     public Value getValue() {
-        return value != null ? value.copy() : null;
+        return value;
     }
 
     public void recalculateValue(ExpressionEvaluator expressionEvaluator) {

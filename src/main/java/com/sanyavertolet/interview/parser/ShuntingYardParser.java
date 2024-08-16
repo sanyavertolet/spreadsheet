@@ -79,6 +79,17 @@ public class ShuntingYardParser implements ExpressionParser {
         return tokens.get(functionTokenIndex + 2).type() == Token.Type.CLOSE_PARENTHESIS;
     }
 
+    private boolean isRange(Stack<Expression> expressions, Stack<Operator> operators) {
+        if (expressions.isEmpty() || operators.isEmpty()) {
+            return false;
+        }
+        if (!(expressions.peek() instanceof CellReferenceExpression)) {
+            return false;
+        }
+
+        return operators.peek() instanceof NonFunctionOperator nonFunctionOperator && nonFunctionOperator.type() == NonFunctionOperator.Type.COLON;
+    }
+
     private Expression parse(List<Token> tokens) throws ExpressionParsingException, FunctionArgumentException, CellReferenceException {
         Stack<Expression> expressions = new Stack<>();
         Stack<Operator> operators = new Stack<>();
@@ -97,9 +108,16 @@ public class ShuntingYardParser implements ExpressionParser {
                         }
                     } else {
                         CellReference cellReference = CellReference.of(token.value());
-                        expressions.add(new CellReferenceExpression(cellReference));
+                        if (isRange(expressions, operators)) {
+                            CellReferenceExpression fromExpression = (CellReferenceExpression) expressions.pop();
+                            operators.pop();
+                            expressions.add(new RangeExpression(fromExpression.getCellReference(), cellReference));
+                        } else {
+                            expressions.add(new CellReferenceExpression(cellReference));
+                        }
                     }
                 }
+                case COLON -> operators.push(new NonFunctionOperator(":"));
                 case OPERATOR -> {
                     NonFunctionOperator currentOperator = new NonFunctionOperator(token.value());
 

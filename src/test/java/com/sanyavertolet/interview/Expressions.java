@@ -2,6 +2,7 @@ package com.sanyavertolet.interview;
 
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.exceptions.FunctionArgumentException;
+import com.sanyavertolet.interview.exceptions.expressions.RangeParsingException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.Function;
 import com.sanyavertolet.interview.math.expressions.*;
@@ -69,6 +70,10 @@ public class Expressions {
         public static Expression string(Expression expression) throws FunctionArgumentException {
             return new FunctionExpression(Function.STRING, List.of(expression));
         }
+
+        public static Expression sum(Expression range) throws FunctionArgumentException {
+            return new FunctionExpression(Function.SUM, List.of(range));
+        }
     }
 
     public static class Values {
@@ -120,6 +125,18 @@ public class Expressions {
 
         public static Expression b2() throws CellReferenceException {
             return cell("B2");
+        }
+
+        public static Expression c2() throws CellReferenceException {
+            return cell("C2");
+        }
+    }
+
+    public static class Ranges {
+        private Ranges() { }
+
+        public static Expression range(String start, String end) throws CellReferenceException, RangeParsingException {
+            return new RangeExpression(CellReference.of(start), CellReference.of(end));
         }
     }
 }

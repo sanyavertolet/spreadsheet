@@ -16,6 +16,7 @@ public class NonFunctionOperator extends Operator {
         OPEN_PARENTHESIS("("),
         CLOSE_PARENTHESIS(")"),
         COMMA(","),
+        COLON(":")
         ;
 
         private final String symbol;

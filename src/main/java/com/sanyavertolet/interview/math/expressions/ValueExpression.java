@@ -14,7 +14,7 @@ public class ValueExpression extends Expression {
     }
 
     public Value getValue() {
-        return value.copy();
+        return value;
     }
 
     @Override

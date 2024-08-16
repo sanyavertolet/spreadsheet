@@ -1,5 +1,6 @@
 package com.sanyavertolet.interview.math.expressions.evaluator;
 
+import com.sanyavertolet.interview.data.value.IterableValue;
 import com.sanyavertolet.interview.data.value.Value;
 import com.sanyavertolet.interview.data.accessor.DataAccessor;
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
@@ -48,6 +49,14 @@ public class SimpleExpressionEvaluator implements ExpressionEvaluator {
         return dataAccessor.getData(cellReference).getValue();
     }
 
+    private Value evaluate(RangeExpression expression) {
+        return new IterableValue(expression.getCellReferences()
+                .stream()
+                .map(it -> dataAccessor.getData(it).getValue())
+                .toList()
+        );
+    }
+
     @Override
     public Value evaluate(Expression expression) throws ExpressionEvaluationException {
         if (expression instanceof CellReferenceExpression cellReferenceExpression) {
@@ -58,6 +67,8 @@ public class SimpleExpressionEvaluator implements ExpressionEvaluator {
             return evaluate(binaryExpression);
         }  else if (expression instanceof FunctionExpression functionExpression) {
             return evaluate(functionExpression);
+        } else if (expression instanceof RangeExpression rangeExpression) {
+            return evaluate(rangeExpression);
         }
         throw new ExpressionEvaluationException("Unknown expression: " + expression.toString());
     }
