@@ -43,6 +43,38 @@ public class SimpleTokenizer implements Tokenizer {
             case ':':
                 advance();
                 return new Token(Token.Type.COLON, ":");
+            case '=':
+                advance();
+                if (currentSym == '=') {
+                    advance();
+                    return new Token(Token.Type.OPERATOR, "==");
+                } else {
+                    throw new ExpressionParsingException("Unexpected symbol '" + currentSym + "'");
+                }
+            case '!':
+                advance();
+                if (currentSym == '=') {
+                    advance();
+                    return new Token(Token.Type.OPERATOR, "!=");
+                } else {
+                    throw new ExpressionParsingException("Unexpected symbol '" + currentSym + "'");
+                }
+            case '<':
+                advance();
+                if (currentSym == '=') {
+                    advance();
+                    return new Token(Token.Type.OPERATOR, "<=");
+                } else {
+                    return new Token(Token.Type.OPERATOR, "<");
+                }
+            case '>':
+                advance();
+                if (currentSym == '=') {
+                    advance();
+                    return new Token(Token.Type.OPERATOR, ">=");
+                } else {
+                    return new Token(Token.Type.OPERATOR, ">");
+                }
             case '+':
             case '-':
             case '*':

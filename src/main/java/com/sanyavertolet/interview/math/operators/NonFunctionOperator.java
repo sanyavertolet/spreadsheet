@@ -8,15 +8,24 @@ public class NonFunctionOperator extends Operator {
     private final Type type;
 
     public enum Type {
+        OPEN_PARENTHESIS("("),
+        CLOSE_PARENTHESIS(")"),
+
+        COMMA(","),
+        COLON(":"),
+
         PLUS("+"),
         MINUS("-"),
         MULTIPLY("*"),
         DIVIDE("/"),
         POWER("^"),
-        OPEN_PARENTHESIS("("),
-        CLOSE_PARENTHESIS(")"),
-        COMMA(","),
-        COLON(":")
+
+        LT("<"),
+        LEQ("<="),
+        GT(">"),
+        GEQ(">="),
+        EQ("=="),
+        NEQ("!="),
         ;
 
         private final String symbol;
@@ -50,7 +59,7 @@ public class NonFunctionOperator extends Operator {
 
     public Associativity associativity() {
         return switch (type) {
-            case PLUS, MINUS, MULTIPLY, DIVIDE -> Associativity.LEFT;
+            case PLUS, MINUS, MULTIPLY, DIVIDE, EQ, NEQ, LT, GT, LEQ, GEQ -> Associativity.LEFT;
             case POWER -> Associativity.RIGHT;
             default -> throw new IllegalStateException("Operator has no associativity: " + this);
         };
@@ -58,6 +67,7 @@ public class NonFunctionOperator extends Operator {
 
     public int precedence() {
         return switch (type) {
+            case EQ, NEQ, LT, GT, LEQ, GEQ -> 1;
             case PLUS, MINUS -> 2;
             case MULTIPLY, DIVIDE -> 3;
             case POWER -> 4;

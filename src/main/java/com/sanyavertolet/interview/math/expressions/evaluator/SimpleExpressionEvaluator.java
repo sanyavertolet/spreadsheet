@@ -28,6 +28,12 @@ public class SimpleExpressionEvaluator implements ExpressionEvaluator {
             case MULTIPLY -> left.multiply(right);
             case DIVIDE -> left.divide(right);
             case POWER -> left.pow(right);
+            case EQ -> left.eq(right);
+            case NEQ -> left.neq(right);
+            case LT -> left.lt(right);
+            case GT -> left.gt(right);
+            case LEQ -> left.leq(right);
+            case GEQ -> left.geq(right);
             default -> throw new ExpressionEvaluationException("Unknown operator type: " + operator.type());
         };
     }
