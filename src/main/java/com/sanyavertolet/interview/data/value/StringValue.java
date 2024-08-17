@@ -1,8 +1,5 @@
 package com.sanyavertolet.interview.data.value;
 
-import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
-import com.sanyavertolet.interview.exceptions.expressions.ValueCastException;
-
 import java.util.Objects;
 
 public final class StringValue extends Value {
@@ -17,48 +14,18 @@ public final class StringValue extends Value {
     }
 
     @Override
-    public Value plus(Value other) throws ExpressionEvaluationException {
-        throw new ValueCastException("+ (plus)", this, other);
+    public Value eq(Value other) {
+        return Value.of(asString().equals(other.asString()));
     }
 
     @Override
-    public Value minus(Value other) throws ExpressionEvaluationException {
-        throw new ValueCastException("- (minus)", this, other);
-    }
-
-    @Override
-    public Value multiply(Value other) throws ExpressionEvaluationException {
-        throw new ValueCastException("* (multiply)", this, other);
-    }
-
-    @Override
-    public Value divide(Value other) throws ExpressionEvaluationException {
-        throw new ValueCastException("/ (divide)", this, other);
-    }
-
-    @Override
-    public Value pow(Value other) throws ExpressionEvaluationException {
-        throw new ValueCastException("^ (power)", this, other);
-    }
-
-    @Override
-    public Double asDouble() throws ExpressionEvaluationException {
-        throw new ValueCastException(this, Double.class);
-    }
-
-    @Override
-    public Integer asInteger() throws ExpressionEvaluationException {
-        throw new ValueCastException(this, Integer.class);
+    public Value neq(Value other) {
+        return Value.of(!asString().equals(other.asString()));
     }
 
     @Override
     public String asString() {
         return value;
-    }
-
-    @Override
-    public Boolean asBoolean() throws ExpressionEvaluationException {
-        throw new ValueCastException(this, Boolean.class);
     }
 
     @Override

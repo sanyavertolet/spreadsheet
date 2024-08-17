@@ -1,6 +1,7 @@
 package com.sanyavertolet.interview.data.value;
 
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
+import com.sanyavertolet.interview.exceptions.expressions.ValueCastException;
 
 import java.util.Objects;
 
@@ -20,7 +21,7 @@ public final class IntegerValue extends Value {
     }
 
     @Override
-    public Value plus(Value other) throws ExpressionEvaluationException {
+    public Value plus(Value other) throws ValueCastException {
         if (other instanceof DoubleValue) {
             return Value.of(value + other.asDouble());
         }
@@ -28,7 +29,7 @@ public final class IntegerValue extends Value {
     }
 
     @Override
-    public Value minus(Value other) throws ExpressionEvaluationException {
+    public Value minus(Value other) throws ValueCastException {
         if (other instanceof DoubleValue) {
             return Value.of(value - other.asDouble());
         }
@@ -36,7 +37,7 @@ public final class IntegerValue extends Value {
     }
 
     @Override
-    public Value multiply(Value other) throws ExpressionEvaluationException {
+    public Value multiply(Value other) throws ValueCastException {
         if (other instanceof DoubleValue) {
             return Value.of(value * other.asDouble());
         }
@@ -58,8 +59,38 @@ public final class IntegerValue extends Value {
     }
 
     @Override
-    public Value pow(Value other) throws ExpressionEvaluationException {
+    public Value pow(Value other) throws ValueCastException {
         return Value.of(Math.pow(value, other.asDouble()));
+    }
+
+    @Override
+    public Value lt(Value other) throws ValueCastException {
+        return Value.of(asDouble() < other.asDouble());
+    }
+
+    @Override
+    public Value gt(Value other) throws ValueCastException {
+        return Value.of(asDouble() > other.asDouble());
+    }
+
+    @Override
+    public Value leq(Value other) throws ValueCastException {
+        return Value.of(asDouble() <= other.asDouble());
+    }
+
+    @Override
+    public Value geq(Value other) throws ValueCastException {
+        return Value.of(asDouble() >= other.asDouble());
+    }
+
+    @Override
+    public Value eq(Value other) throws ValueCastException {
+        return Value.of(asDouble().equals(other.asDouble()));
+    }
+
+    @Override
+    public Value neq(Value other) throws ValueCastException {
+        return Value.of(!asDouble().equals(other.asDouble()));
     }
 
     @Override
@@ -75,11 +106,6 @@ public final class IntegerValue extends Value {
     @Override
     public String asString() {
         return value.toString();
-    }
-
-    @Override
-    public Boolean asBoolean() {
-        return value != 0.0;
     }
 
     @Override

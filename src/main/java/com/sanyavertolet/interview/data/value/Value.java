@@ -1,18 +1,54 @@
 package com.sanyavertolet.interview.data.value;
 
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
+import com.sanyavertolet.interview.exceptions.expressions.ValueCastException;
 
 public sealed abstract class Value permits BooleanValue, DoubleValue, StringValue, IntegerValue, IterableValue {
-    public abstract Value plus(Value other) throws ExpressionEvaluationException;
-    public abstract Value minus(Value other) throws ExpressionEvaluationException;
-    public abstract Value multiply(Value other) throws ExpressionEvaluationException;
-    public abstract Value divide(Value other) throws ExpressionEvaluationException;
-    public abstract Value pow(Value other) throws ExpressionEvaluationException;
+    public Value plus(Value other) throws ValueCastException {
+        throw new ValueCastException("+ (plus)", this, other);
+    }
+    public Value minus(Value other) throws ValueCastException {
+        throw new ValueCastException("- (minus)", this, other);
+    }
+    public Value multiply(Value other) throws ValueCastException {
+        throw new ValueCastException("* (multiply)", this, other);
+    }
+    public Value divide(Value other) throws ExpressionEvaluationException {
+        throw new ValueCastException("/ (divide)", this, other);
+    }
+    public Value pow(Value other) throws ValueCastException {
+        throw new ValueCastException("^ (power)", this, other);
+    }
 
-    public abstract Double asDouble() throws ExpressionEvaluationException;
-    public abstract Integer asInteger() throws ExpressionEvaluationException;
+    public Value lt(Value other) throws ValueCastException {
+        throw new ValueCastException("< (less than)", this, other);
+    }
+    public Value gt(Value other) throws ValueCastException {
+        throw new ValueCastException("> (greater than)", this, other);
+    }
+    public Value leq(Value other) throws ValueCastException {
+        throw new ValueCastException("<= (less than or equal)", this, other);
+    }
+    public Value geq(Value other) throws ValueCastException {
+        throw new ValueCastException(">= (greater than or equal)", this, other);
+    }
+    public Value eq(Value other) throws ValueCastException {
+        throw new ValueCastException("== (equal)", this, other);
+    }
+    public Value neq(Value other) throws ValueCastException {
+        throw new ValueCastException("!= (not equal)", this, other);
+    }
+
     public abstract String asString();
-    public abstract Boolean asBoolean() throws ExpressionEvaluationException;
+    public Double asDouble() throws ValueCastException {
+        throw new ValueCastException(this, Double.class);
+    }
+    public Integer asInteger() throws ValueCastException {
+        throw new ValueCastException(this, Integer.class);
+    }
+    public  Boolean asBoolean() throws ValueCastException {
+        throw new ValueCastException(this, Boolean.class);
+    }
 
     public static Value of(Double value) {
         return new DoubleValue(value);

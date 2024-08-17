@@ -1,6 +1,5 @@
 package com.sanyavertolet.interview.data.value;
 
-import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
 import com.sanyavertolet.interview.exceptions.expressions.ValueCastException;
 
 import java.util.Objects;
@@ -17,7 +16,7 @@ public final class BooleanValue extends Value {
     }
 
     @Override
-    public Value plus(Value other) throws ExpressionEvaluationException {
+    public Value plus(Value other) throws ValueCastException {
         if (other instanceof BooleanValue otherValue) {
             return Value.of(value || otherValue.value);
         }
@@ -25,12 +24,7 @@ public final class BooleanValue extends Value {
     }
 
     @Override
-    public Value minus(Value other) throws ExpressionEvaluationException {
-        throw new ValueCastException("- (minus)", this, other);
-    }
-
-    @Override
-    public Value multiply(Value other) throws ExpressionEvaluationException {
+    public Value multiply(Value other) throws ValueCastException {
         if (other instanceof BooleanValue otherValue) {
             return Value.of(value && otherValue.value);
         }
@@ -38,23 +32,13 @@ public final class BooleanValue extends Value {
     }
 
     @Override
-    public Value divide(Value other) throws ExpressionEvaluationException {
-        throw new ValueCastException("/ (divide)", this, other);
+    public Value eq(Value other) throws ValueCastException {
+        return Value.of(asBoolean().equals(other.asBoolean()));
     }
 
     @Override
-    public Value pow(Value other) throws ExpressionEvaluationException {
-        throw new ValueCastException("^ (power)", this, other);
-    }
-
-    @Override
-    public Double asDouble() throws ValueCastException {
-        throw new ValueCastException(this, Double.class);
-    }
-
-    @Override
-    public Integer asInteger() throws ValueCastException {
-        throw new ValueCastException(this, Integer.class);
+    public Value neq(Value other) throws ValueCastException {
+        return Value.of(!asBoolean().equals(other.asBoolean()));
     }
 
     @Override
@@ -65,10 +49,6 @@ public final class BooleanValue extends Value {
     @Override
     public Boolean asBoolean() {
         return value;
-    }
-
-    public static BooleanValue of(Boolean value) {
-        return new BooleanValue(value);
     }
 
     @Override
