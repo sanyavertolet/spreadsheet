@@ -40,6 +40,18 @@ public class Expressions {
             return binary(left, right, operator("/"));
         }
 
+        public static Expression lt(Expression left, Expression right) { return binary(left, right, operator("<")); }
+
+        public static Expression leq(Expression left, Expression right) { return binary(left, right, operator("<=")); }
+
+        public static Expression gt(Expression left, Expression right) { return binary(left, right, operator(">")); }
+
+        public static Expression geq(Expression left, Expression right) { return binary(left, right, operator(">=")); }
+
+        public static Expression eq(Expression left, Expression right) { return binary(left, right, operator("==")); }
+
+        public static Expression neq(Expression left, Expression right) { return binary(left, right, operator("!=")); }
+
         public static Expression powOp(Expression left, Expression right) {
             return binary(left, right, operator("^"));
         }

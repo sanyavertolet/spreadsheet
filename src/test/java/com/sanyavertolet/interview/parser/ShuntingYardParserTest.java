@@ -171,6 +171,19 @@ public class ShuntingYardParserTest {
     }
 
     @Test
+    void validBooleanExpressionTest() throws ExpressionParsingException, FunctionArgumentException, CellReferenceException {
+        String expressionText = "=sum(A1:F4) < 5";
+
+        Expression expectedExpression = lt(
+                sum(range("A1", "F4")),
+                five
+        );
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+    }
+
+    @Test
     void tooManyCommasExpressionTest() {
         String expressionText = "=POW(2,, 3)";
         Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));

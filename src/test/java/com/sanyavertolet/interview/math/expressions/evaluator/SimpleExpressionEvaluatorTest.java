@@ -215,6 +215,18 @@ public class SimpleExpressionEvaluatorTest {
         Assertions.assertEquals(new StringValue("5.0"), expressionEvaluator.evaluate(string(value("5.0"))));
     }
 
+    @SuppressWarnings("ConstantValue")
+    @Test
+    void booleanArithmeticExpressionTest() throws ExpressionEvaluationException, FunctionArgumentException {
+        Assertions.assertEquals(Value.of(4 + 1 == 5), expressionEvaluator.evaluate(eq(plus(four, one), five)));
+        Assertions.assertEquals(Value.of(4 != 5), expressionEvaluator.evaluate(neq(four, five)));
+        Assertions.assertEquals(Value.of(Math.PI < 5), expressionEvaluator.evaluate(lt(pi(), five)));
+        Assertions.assertEquals(Value.of(2 * Math.PI > 5), expressionEvaluator.evaluate(gt(mul(two, pi()), five)));
+
+        Assertions.assertThrows(ExpressionEvaluationException.class, () -> expressionEvaluator.evaluate(gt(gt(one, two), three)));
+        Assertions.assertThrows(ExpressionEvaluationException.class, () -> expressionEvaluator.evaluate(eq(eq(one, one), one)));
+    }
+
     @Test
     void rangeSumExpressionTest() throws ExpressionEvaluationException, FunctionArgumentException, CellReferenceException, RangeParsingException {
         Expression expression = mul(
