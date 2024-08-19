@@ -33,10 +33,10 @@ public sealed abstract class Value permits BooleanValue, DoubleValue, StringValu
         throw new ValueCastException(">= (greater than or equal)", this, other);
     }
     public Value eq(Value other) throws ValueCastException {
-        throw new ValueCastException("== (equal)", this, other);
+        return Value.of(equals(other));
     }
     public Value neq(Value other) throws ValueCastException {
-        throw new ValueCastException("!= (not equal)", this, other);
+        return Value.of(!equals(other));
     }
 
     public abstract String asString();

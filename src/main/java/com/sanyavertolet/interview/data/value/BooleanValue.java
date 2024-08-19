@@ -32,16 +32,6 @@ public final class BooleanValue extends Value {
     }
 
     @Override
-    public Value eq(Value other) throws ValueCastException {
-        return Value.of(asBoolean().equals(other.asBoolean()));
-    }
-
-    @Override
-    public Value neq(Value other) throws ValueCastException {
-        return Value.of(!asBoolean().equals(other.asBoolean()));
-    }
-
-    @Override
     public String asString() {
         return value.toString();
     }

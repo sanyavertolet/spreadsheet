@@ -69,16 +69,6 @@ public final class DoubleValue extends Value {
     }
 
     @Override
-    public Value eq(Value other) throws ValueCastException {
-        return Value.of(asDouble().equals(other.asDouble()));
-    }
-
-    @Override
-    public Value neq(Value other) throws ValueCastException {
-        return Value.of(!asDouble().equals(other.asDouble()));
-    }
-
-    @Override
     public Double asDouble() {
         return value;
     }

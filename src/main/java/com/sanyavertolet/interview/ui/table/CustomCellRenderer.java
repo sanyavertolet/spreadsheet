@@ -23,14 +23,12 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
 
         if (value instanceof Data data) {
             Value val = data.getValue();
-            if (val == null) {
+            if (isSelected) {
+                setText(data.getText());
+            } else if (val == null) {
                 setText("ERR");
             } else {
-                if (isSelected) {
-                    setText(data.getText());
-                } else {
-                    setText(val.asString());
-                }
+                setText(val.asString());
             }
         }
 

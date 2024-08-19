@@ -14,16 +14,6 @@ public final class StringValue extends Value {
     }
 
     @Override
-    public Value eq(Value other) {
-        return Value.of(asString().equals(other.asString()));
-    }
-
-    @Override
-    public Value neq(Value other) {
-        return Value.of(!asString().equals(other.asString()));
-    }
-
-    @Override
     public String asString() {
         return value;
     }

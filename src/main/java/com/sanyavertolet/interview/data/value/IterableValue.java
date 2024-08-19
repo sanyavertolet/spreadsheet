@@ -16,16 +16,6 @@ public final class IterableValue extends Value {
     }
 
     @Override
-    public Value eq(Value other) {
-        return Value.of(other instanceof IterableValue itOther && equals(itOther));
-    }
-
-    @Override
-    public Value neq(Value other) {
-        return Value.of(!(other instanceof IterableValue itOther && equals(itOther)));
-    }
-
-    @Override
     public String asString() {
         return values.stream().map(Value::asString).collect(Collectors.joining(", ", "[", "]"));
     }
