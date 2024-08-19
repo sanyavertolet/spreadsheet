@@ -37,7 +37,7 @@ public enum Function {
     CONTAINS(2, args -> Value.of(args.get(0).asString().contains(args.get(1).asString()))),
     REPEAT(2, args -> Value.of(args.get(0).asString().repeat(args.get(1).asInteger()))),
     LENGTH(1, args -> Value.of(args.get(0).asString().length())),
-    STRING(1, args -> Value.of(args.get(0).asString())),
+    STRING(1, args -> Value.of(args.get(0).toString())),
     
     SUM(1, FunctionUtils::sum),
     AVERAGE(1, FunctionUtils::average),

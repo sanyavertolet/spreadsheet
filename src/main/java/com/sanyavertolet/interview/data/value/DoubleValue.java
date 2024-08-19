@@ -6,17 +6,9 @@ import com.sanyavertolet.interview.exceptions.expressions.ValueCastException;
 import java.util.Objects;
 
 public final class DoubleValue extends Value {
-    private Double value;
+    private final Double value;
 
     public DoubleValue(Double value) {
-        this.value = value;
-    }
-
-    public Double getValue() {
-        return value;
-    }
-
-    public void setValue(Double value) {
         this.value = value;
     }
 
@@ -74,7 +66,7 @@ public final class DoubleValue extends Value {
     }
 
     @Override
-    public String asString() {
+    public String toString() {
         return value.toString();
     }
 

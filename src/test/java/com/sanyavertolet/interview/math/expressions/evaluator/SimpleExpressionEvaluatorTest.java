@@ -9,6 +9,7 @@ import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationEx
 import com.sanyavertolet.interview.exceptions.expressions.RangeParsingException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.expressions.Expression;
+import com.sanyavertolet.interview.math.expressions.ValueExpression;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -223,8 +224,10 @@ public class SimpleExpressionEvaluatorTest {
         Assertions.assertEquals(Value.of(Math.PI < 5), expressionEvaluator.evaluate(lt(pi(), five)));
         Assertions.assertEquals(Value.of(2 * Math.PI > 5), expressionEvaluator.evaluate(gt(mul(two, pi()), five)));
 
+        Assertions.assertEquals(Value.of(false), expressionEvaluator.evaluate(eq(eq(one, one), one)));
+        Assertions.assertEquals(Value.of(true), expressionEvaluator.evaluate(eq(eq(one, one), new ValueExpression("true"))));
+
         Assertions.assertThrows(ExpressionEvaluationException.class, () -> expressionEvaluator.evaluate(gt(gt(one, two), three)));
-        Assertions.assertThrows(ExpressionEvaluationException.class, () -> expressionEvaluator.evaluate(eq(eq(one, one), one)));
     }
 
     @Test

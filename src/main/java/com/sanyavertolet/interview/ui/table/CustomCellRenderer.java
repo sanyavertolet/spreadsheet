@@ -28,7 +28,7 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
             } else if (val == null) {
                 setText("ERR");
             } else {
-                setText(val.asString());
+                setText(val.toString());
             }
         }
 

@@ -11,13 +11,13 @@ public final class IterableValue extends Value {
         this.values = values;
     }
 
-    public List<Value> getValue() {
+    public List<Value> getValues() {
         return values;
     }
 
     @Override
-    public String asString() {
-        return values.stream().map(Value::asString).collect(Collectors.joining(", ", "[", "]"));
+    public String toString() {
+        return values.stream().map(Value::toString).collect(Collectors.joining(", ", "[", "]"));
     }
 
     @Override
@@ -28,11 +28,11 @@ public final class IterableValue extends Value {
         if (!(obj instanceof IterableValue iterableValue)) {
             return false;
         }
-        if (values.size() != iterableValue.getValue().size()) {
+        if (values.size() != iterableValue.getValues().size()) {
             return false;
         }
         for (int i = 0; i < values.size(); i++) {
-            if (!values.get(i).equals(iterableValue.getValue().get(i))) {
+            if (!values.get(i).equals(iterableValue.getValues().get(i))) {
                 return false;
             }
         }

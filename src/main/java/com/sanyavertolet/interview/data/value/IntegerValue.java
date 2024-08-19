@@ -6,17 +6,9 @@ import com.sanyavertolet.interview.exceptions.expressions.ValueCastException;
 import java.util.Objects;
 
 public final class IntegerValue extends Value {
-    private Integer value;
+    private final Integer value;
 
     public IntegerValue(Integer value) {
-        this.value = value;
-    }
-
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
         this.value = value;
     }
 
@@ -94,7 +86,7 @@ public final class IntegerValue extends Value {
     }
 
     @Override
-    public String asString() {
+    public String toString() {
         return value.toString();
     }
 

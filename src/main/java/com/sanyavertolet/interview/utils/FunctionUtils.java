@@ -27,7 +27,7 @@ public class FunctionUtils {
 
     private static Value sum(IterableValue iterableValue) throws ExpressionEvaluationException {
         Value accumulator = new IntegerValue(0);
-        for (Value value : iterableValue.getValue()) {
+        for (Value value : iterableValue.getValues()) {
             accumulator = accumulator.plus(value);
         }
         return accumulator;
@@ -38,7 +38,7 @@ public class FunctionUtils {
             throw new ExpressionEvaluationException("SUM function should have only one valid range argument");
         }
         int counter = 0;
-        for (Value value : iterableValue.getValue()) {
+        for (Value value : iterableValue.getValues()) {
             if (value instanceof IntegerValue || value instanceof DoubleValue) {
                 counter += 1;
             }

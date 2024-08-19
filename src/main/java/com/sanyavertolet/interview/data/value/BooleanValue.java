@@ -11,10 +11,6 @@ public final class BooleanValue extends Value {
         this.value = value;
     }
 
-    public Boolean getValue() {
-        return value;
-    }
-
     @Override
     public Value plus(Value other) throws ValueCastException {
         if (other instanceof BooleanValue otherValue) {
@@ -32,13 +28,13 @@ public final class BooleanValue extends Value {
     }
 
     @Override
-    public String asString() {
-        return value.toString();
+    public Boolean asBoolean() {
+        return value;
     }
 
     @Override
-    public Boolean asBoolean() {
-        return value;
+    public String toString() {
+        return value.toString();
     }
 
     @Override

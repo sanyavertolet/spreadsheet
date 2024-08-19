@@ -32,14 +32,17 @@ public sealed abstract class Value permits BooleanValue, DoubleValue, StringValu
     public Value geq(Value other) throws ValueCastException {
         throw new ValueCastException(">= (greater than or equal)", this, other);
     }
-    public Value eq(Value other) throws ValueCastException {
+
+    public Value eq(Value other) {
         return Value.of(equals(other));
     }
-    public Value neq(Value other) throws ValueCastException {
+    public Value neq(Value other) {
         return Value.of(!equals(other));
     }
 
-    public abstract String asString();
+    public String asString() throws ValueCastException {
+        throw new ValueCastException(this, String.class);
+    }
     public Double asDouble() throws ValueCastException {
         throw new ValueCastException(this, Double.class);
     }
@@ -81,10 +84,5 @@ public sealed abstract class Value permits BooleanValue, DoubleValue, StringValu
             return Value.of(Double.valueOf(valueText));
         } catch (NumberFormatException ignored) { }
         return Value.of(valueText);
-    }
-
-    @Override
-    public String toString() {
-        return asString();
     }
 }

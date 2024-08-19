@@ -9,12 +9,13 @@ public final class StringValue extends Value {
         this.value = value;
     }
 
-    public String getValue() {
+    @Override
+    public String asString() {
         return value;
     }
 
     @Override
-    public String asString() {
+    public String toString() {
         return value;
     }
 
