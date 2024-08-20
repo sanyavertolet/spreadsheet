@@ -41,7 +41,11 @@ public class SimpleExpressionEvaluator implements ExpressionEvaluator {
     private Value evaluate(FunctionExpression expression) throws ExpressionEvaluationException {
         List<Value> argumentValues = new ArrayList<>();
         for (Expression argument : expression.getArguments()) {
-            argumentValues.add(evaluate(argument));
+            try {
+                argumentValues.add(evaluate(argument));
+            } catch (ExpressionEvaluationException e) {
+                argumentValues.add(null);
+            }
         }
         return expression.getFunction().evaluate(argumentValues);
     }

@@ -9,8 +9,16 @@ import java.util.List;
 public class ValueExpression extends Expression {
     private final Value value;
 
-    public ValueExpression(String value) {
-        this.value = Value.parse(value);
+    public ValueExpression(String rawString) {
+        this.value = Value.of(rawString);
+    }
+
+    private ValueExpression(Value value) {
+        this.value = value;
+    }
+
+    public static ValueExpression parse(String value) {
+        return new ValueExpression(Value.parse(value));
     }
 
     public Value getValue() {

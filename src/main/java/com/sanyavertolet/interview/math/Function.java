@@ -35,13 +35,17 @@ public enum Function {
     MOD(2, args -> Value.of(args.get(0).asInteger() % args.get(1).asInteger())),
 
     CONTAINS(2, args -> Value.of(args.get(0).asString().contains(args.get(1).asString()))),
+    CONCAT(2, args -> Value.of(args.get(0).asString() + args.get(1).asString())),
     REPEAT(2, args -> Value.of(args.get(0).asString().repeat(args.get(1).asInteger()))),
     LENGTH(1, args -> Value.of(args.get(0).asString().length())),
     STRING(1, args -> Value.of(args.get(0).toString())),
     
     SUM(1, FunctionUtils::sum),
     AVERAGE(1, FunctionUtils::average),
-    COUNT(1, FunctionUtils::count)
+    COUNT(1, FunctionUtils::count),
+
+    IF(3, args -> args.get(0).asBoolean() ? args.get(1) : args.get(2)),
+    IFERROR(2, args -> args.get(0) != null ? args.get(0) : args.get(1))
     ;
 
     private final Integer argumentsSize;

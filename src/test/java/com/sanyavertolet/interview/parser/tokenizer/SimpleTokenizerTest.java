@@ -167,6 +167,24 @@ public class SimpleTokenizerTest {
     }
 
     @Test
+    void stringExpressionTokenizerTest() throws ExpressionParsingException {
+        String expression = "=A1 + \"A1\"";
+        List<Token> expectedTokens = List.of(
+                new Token(Token.Type.REFERENCE, "A1"),
+                new Token(Token.Type.OPERATOR, "+"),
+                new Token(Token.Type.STRING, "A1")
+        );
+        List<Token> actualTokens = simpleTokenizer.tokenize(expression);
+        Assertions.assertIterableEquals(expectedTokens, actualTokens);
+    }
+
+    @Test
+    void invalidStringExpressionTokenizerTest() {
+        String expression = "=A1 + \"A1";
+        Assertions.assertThrows(ExpressionParsingException.class, () -> simpleTokenizer.tokenize(expression));
+    }
+
+    @Test
     void unknownOperationTokenizerTest() {
         String expression = "=2 & 3";
         Assertions.assertThrows(ExpressionParsingException.class, () -> simpleTokenizer.tokenize(expression));

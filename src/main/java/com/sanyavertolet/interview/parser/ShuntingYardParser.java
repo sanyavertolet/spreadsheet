@@ -97,7 +97,7 @@ public class ShuntingYardParser implements ExpressionParser {
         for (int i = 0; i < tokens.size(); i++) {
             Token token = tokens.get(i);
             switch (token.type()) {
-                case NUMBER -> expressions.add(new ValueExpression(token.value()));
+                case NUMBER -> expressions.add(ValueExpression.parse(token.value()));
                 case REFERENCE -> {
                     if (isFunction(getNextToken(i, tokens))) {
                         if (isFunctionWithoutArguments(i, tokens)) {
@@ -120,9 +120,8 @@ public class ShuntingYardParser implements ExpressionParser {
                 case COLON -> operators.push(new NonFunctionOperator(":"));
                 case OPERATOR -> {
                     NonFunctionOperator currentOperator = new NonFunctionOperator(token.value());
-
                     if (isUnaryMinus(currentOperator, getPreviousToken(i, tokens))) {
-                        expressions.add(new ValueExpression("-1"));
+                        expressions.add(ValueExpression.parse("-1"));
                         operators.push(new NonFunctionOperator("*"));
                     } else if (operators.isEmpty()) {
                         operators.push(currentOperator);
@@ -163,6 +162,7 @@ public class ShuntingYardParser implements ExpressionParser {
                         throw new ExpressionParsingException("Failed while parsing function.");
                     }
                 }
+                case STRING -> expressions.push(new ValueExpression(token.value()));
                 default -> throw new ExpressionParsingException("Unexpected token type: " + token);
             }
         }

@@ -184,6 +184,19 @@ public class ShuntingYardParserTest {
     }
 
     @Test
+    void stringExpressionTest() throws ExpressionParsingException, FunctionArgumentException {
+        String expressionText = "=CONCAT(\"2\", \"3\")";
+
+        Expression expectedExpression = concat(
+                rawValue("2"),
+                rawValue("3")
+        );
+        Expression actualExpression = parser.parse(expressionText);
+
+        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+    }
+
+    @Test
     void tooManyCommasExpressionTest() {
         String expressionText = "=POW(2,, 3)";
         Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
@@ -288,6 +301,12 @@ public class ShuntingYardParserTest {
     @Test
     void missingFunctionParenthesesTest() {
         String expressionText = "=POW 2, 3)";
+        Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
+    }
+
+    @Test
+    void invalidStringFunctionParenthesesTest() {
+        String expressionText = "=CONCATENATE(\"2\", \"3)";
         Assertions.assertThrows(ExpressionParsingException.class, () -> parser.parse(expressionText));
     }
 }

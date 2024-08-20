@@ -10,5 +10,6 @@ public record Token(Token.Type type, String value) {
         CLOSE_PARENTHESIS,
         COMMA,
         COLON,
+        STRING,
     }
 }

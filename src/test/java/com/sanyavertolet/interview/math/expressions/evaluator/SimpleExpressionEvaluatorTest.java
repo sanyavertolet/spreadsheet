@@ -9,7 +9,6 @@ import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationEx
 import com.sanyavertolet.interview.exceptions.expressions.RangeParsingException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.expressions.Expression;
-import com.sanyavertolet.interview.math.expressions.ValueExpression;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -225,9 +224,22 @@ public class SimpleExpressionEvaluatorTest {
         Assertions.assertEquals(Value.of(2 * Math.PI > 5), expressionEvaluator.evaluate(gt(mul(two, pi()), five)));
 
         Assertions.assertEquals(Value.of(false), expressionEvaluator.evaluate(eq(eq(one, one), one)));
-        Assertions.assertEquals(Value.of(true), expressionEvaluator.evaluate(eq(eq(one, one), new ValueExpression("true"))));
+        Assertions.assertEquals(Value.of(true), expressionEvaluator.evaluate(eq(eq(one, one), value("true"))));
 
         Assertions.assertThrows(ExpressionEvaluationException.class, () -> expressionEvaluator.evaluate(gt(gt(one, two), three)));
+    }
+
+    @Test
+    void stringFunctionsExpressionTest() throws ExpressionEvaluationException, FunctionArgumentException {
+        Assertions.assertEquals(Value.of("concat"), expressionEvaluator.evaluate(concat(rawValue("con"), rawValue("cat"))));
+
+        Assertions.assertEquals(Value.of("true"), expressionEvaluator.evaluate(iff(trueExpr, rawValue("true"), rawValue("false"))));
+        Assertions.assertEquals(Value.of("false"), expressionEvaluator.evaluate(iff(falseExpr, rawValue("true"), rawValue("false"))));
+
+        Assertions.assertEquals(
+                Value.of("error"),
+                expressionEvaluator.evaluate(ifErr(plus(one, rawValue("cannot use plus with strings")), rawValue("error")))
+        );
     }
 
     @Test

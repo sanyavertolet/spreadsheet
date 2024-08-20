@@ -86,12 +86,28 @@ public class Expressions {
         public static Expression sum(Expression range) throws FunctionArgumentException {
             return new FunctionExpression(Function.SUM, List.of(range));
         }
+
+        public static Expression concat(Expression first, Expression second) throws FunctionArgumentException {
+            return new FunctionExpression(Function.CONCAT, List.of(first, second));
+        }
+
+        public static Expression iff(Expression condition, Expression valueIfTrue, Expression valueIfFalse) throws FunctionArgumentException {
+            return new FunctionExpression(Function.IF, List.of(condition, valueIfTrue, valueIfFalse));
+        }
+
+        public static Expression ifErr(Expression expression, Expression valueIfError) throws FunctionArgumentException {
+            return new FunctionExpression(Function.IFERROR, List.of(expression, valueIfError));
+        }
     }
 
     public static class Values {
         private Values() { }
 
         public static Expression value(String string) {
+            return ValueExpression.parse(string);
+        }
+
+        public static Expression rawValue(String string) {
             return new ValueExpression(string);
         }
 
@@ -110,6 +126,10 @@ public class Expressions {
         public static Expression ten = value("10");
 
         public static Expression fortyTwo = value("42");
+
+        public static Expression trueExpr = value("true");
+
+        public static Expression falseExpr = value("false");
 
         public static Expression minus(Expression expression) {
             return BinaryExpressions.mul(value("-1"), expression);

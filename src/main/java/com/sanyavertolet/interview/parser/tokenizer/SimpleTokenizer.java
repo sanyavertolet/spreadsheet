@@ -15,18 +15,18 @@ public class SimpleTokenizer implements Tokenizer {
         expression = "";
     }
 
-    void advance() {
+    private void advance() {
         position++;
         if (position < expression.length()) {
             currentSym = expression.charAt(position);
         }
     }
 
-    boolean hasMoreTokens() {
+    private boolean hasMoreTokens() {
         return position < expression.length();
     }
 
-    Token getNextToken() throws ExpressionParsingException {
+    private Token getNextToken() throws ExpressionParsingException {
         while(hasMoreTokens() && expression.charAt(position) == ' ') {
             advance();
         }
@@ -89,10 +89,28 @@ public class SimpleTokenizer implements Tokenizer {
                     return getNumberToken();
                 } else if (Character.isLetter(currentSym)) {
                     return getReferenceToken();
+                } else if (currentSym == '"') {
+                    advance();
+                    return getStringToken();
                 } else {
                     throw new ExpressionParsingException("Syntax error at position: " + position);
                 }
         }
+    }
+
+    @Override
+    public List<Token> tokenize(String input) throws ExpressionParsingException {
+        expression = input;
+        position = 0;
+        advance();
+
+        List<Token> tokens = new ArrayList<>();
+
+        while (hasMoreTokens()) {
+            tokens.add(getNextToken());
+        }
+
+        return tokens;
     }
 
     private Token getNumberToken() {
@@ -119,18 +137,21 @@ public class SimpleTokenizer implements Tokenizer {
         return new Token(Token.Type.REFERENCE, token.toString());
     }
 
-    @Override
-    public List<Token> tokenize(String input) throws ExpressionParsingException {
-        expression = input;
-        position = 0;
-        advance();
-
-        List<Token> tokens = new ArrayList<>();
-
-        while (hasMoreTokens()) {
-            tokens.add(getNextToken());
+    private Token getStringToken() throws ExpressionParsingException {
+        StringBuilder token = new StringBuilder();
+        if (!hasMoreTokens() && currentSym != '"') {
+            throw new ExpressionParsingException("Could not parse string properly: closing \" is missing");
+        } else if (!hasMoreTokens()) {
+            return new Token(Token.Type.STRING, currentSym.toString());
         }
-
-        return tokens;
+        while(hasMoreTokens() && currentSym != '"') {
+            token.append(currentSym);
+            advance();
+        }
+        if (currentSym != '"') {
+            throw new ExpressionParsingException("Could not parse string properly: closing \" is missing");
+        }
+        advance();
+        return new Token(Token.Type.STRING, token.toString());
     }
 }
