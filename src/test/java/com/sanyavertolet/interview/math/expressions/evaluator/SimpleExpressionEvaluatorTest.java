@@ -226,7 +226,8 @@ public class SimpleExpressionEvaluatorTest {
         Assertions.assertEquals(Value.of(false), expressionEvaluator.evaluate(eq(eq(one, one), one)));
         Assertions.assertEquals(Value.of(true), expressionEvaluator.evaluate(eq(eq(one, one), value("true"))));
 
-        Assertions.assertThrows(ExpressionEvaluationException.class, () -> expressionEvaluator.evaluate(gt(gt(one, two), three)));
+        Assertions.assertEquals(Value.of(true), expressionEvaluator.evaluate(gt(three, gt(one, two))));
+        Assertions.assertEquals(Value.of(false), expressionEvaluator.evaluate(gt(minus(one), gt(one, two))));
     }
 
     @Test

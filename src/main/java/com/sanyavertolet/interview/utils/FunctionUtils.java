@@ -1,9 +1,6 @@
 package com.sanyavertolet.interview.utils;
 
-import com.sanyavertolet.interview.data.value.DoubleValue;
-import com.sanyavertolet.interview.data.value.IntegerValue;
-import com.sanyavertolet.interview.data.value.IterableValue;
-import com.sanyavertolet.interview.data.value.Value;
+import com.sanyavertolet.interview.data.value.*;
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
 
 import java.util.List;
@@ -22,7 +19,7 @@ public class FunctionUtils {
         if (!(values.get(0) instanceof IterableValue iterableValue)) {
             throw new ExpressionEvaluationException("SUM function should have only one valid range argument");
         }
-        return sum(iterableValue).divide(Value.of(values.size()));
+        return sum(iterableValue).divide(Value.of((double) iterableValue.getValues().size()));
     }
 
     private static Value sum(IterableValue iterableValue) throws ExpressionEvaluationException {
@@ -39,7 +36,7 @@ public class FunctionUtils {
         }
         int counter = 0;
         for (Value value : iterableValue.getValues()) {
-            if (value instanceof IntegerValue || value instanceof DoubleValue) {
+            if (value instanceof IntegerValue || value instanceof DoubleValue || value instanceof BooleanValue) {
                 counter += 1;
             }
         }

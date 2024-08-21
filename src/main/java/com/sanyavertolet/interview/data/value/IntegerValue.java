@@ -38,14 +38,11 @@ public final class IntegerValue extends Value {
 
     @Override
     public Value divide(Value other) throws ExpressionEvaluationException {
-        if (other instanceof DoubleValue) {
-            if (other.asDouble() == 0.0) {
-                throw new ExpressionEvaluationException("Division by zero");
-            }
-            return Value.of(value / other.asDouble());
-        }
-        if (other.asInteger() == 0.0) {
+        if (other.asDouble() == 0.0) {
             throw new ExpressionEvaluationException("Division by zero");
+        }
+        if (other instanceof DoubleValue) {
+            return Value.of(value / other.asDouble());
         }
         return Value.of(value / other.asInteger());
     }
