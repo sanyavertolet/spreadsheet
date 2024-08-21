@@ -12,7 +12,7 @@ public class DataContainer implements DataExporter {
 
     public DataContainer(int row, int col) {
         maxRow = row;
-        maxCol = col;
+        maxCol = col + 1;
         this.container = new HashMap<>();
     }
 
@@ -32,11 +32,11 @@ public class DataContainer implements DataExporter {
     }
 
     public int getRowCount() {
-        return maxRow + 1;
+        return maxRow;
     }
 
     public int getColumnCount() {
-        return maxCol + 1;
+        return maxCol;
     }
 
     @Override

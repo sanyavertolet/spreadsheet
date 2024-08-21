@@ -14,7 +14,7 @@ import java.awt.*;
 
 public class SpreadsheetTable extends JTable {
     public SpreadsheetTable() {
-        super(new SpreadsheetTableModel(50, 50));
+        super(new SpreadsheetTableModel(50, 26));
         TableCellRenderer renderer = new CustomCellRenderer();
         setDefaultRenderer(Object.class, renderer);
 
