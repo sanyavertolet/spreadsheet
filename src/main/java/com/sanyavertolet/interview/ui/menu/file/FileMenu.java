@@ -11,10 +11,20 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+/**
+ * A custom file menu for the spreadsheet application, extending {@link JMenu}.
+ * The {@code FileMenu} class provides options to save, open, and clear spreadsheet data using a {@link DataManager}.
+ */
 public class FileMenu extends JMenu {
     private final FileManager fileManager = new ExtensionBasedFileManager();
     private final JFileChooser fileChooser = new SpreadsheetFileChooser();
 
+    /**
+     * Constructs a {@code FileMenu} with the provided {@link DataManager} for managing file operations.
+     * The menu includes options to save the current spreadsheet, open a saved spreadsheet, and clear the current data.
+     *
+     * @param dataManager the data manager used to manage the spreadsheet's data, passed to file operations.
+     */
     public FileMenu(DataManager dataManager) {
         super("File");
 

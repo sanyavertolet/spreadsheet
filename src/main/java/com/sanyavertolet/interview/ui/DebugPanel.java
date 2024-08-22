@@ -7,6 +7,10 @@ import com.sanyavertolet.interview.math.CellReference;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * A panel that displays debugging information about the currently selected cell in the spreadsheet.
+ * The {@code DebugPanel} shows the cell's coordinates, content, value type, and optionally the expression tree.
+ */
 public class DebugPanel extends JPanel {
     private final JLabel coordinatesLabel;
     private final JLabel contentLabel;
@@ -14,6 +18,9 @@ public class DebugPanel extends JPanel {
     private final JTextArea treeTextArea;
     private Data selectedData;
 
+    /**
+     * Constructs a {@code DebugPanel} and sets up the layout and components for displaying cell debugging information.
+     */
     public DebugPanel() {
         GridBagLayout layout = new GridBagLayout();
         setLayout(layout);
@@ -51,11 +58,24 @@ public class DebugPanel extends JPanel {
         add(scrollPane, gbc);
     }
 
+    /**
+     * Updates the debug panel with information about the selected cell. Displays the cell's coordinates, content,
+     * value type, and expression tree (if applicable).
+     *
+     * @param cellReference the reference to the selected cell.
+     * @param selectedData  the data of the selected cell.
+     */
     public void setSelectedCell(CellReference cellReference, Data selectedData) {
         this.selectedData = selectedData;
         updateDebugInfo(cellReference);
     }
 
+    /**
+     * Updates the labels and text area with the relevant debugging information based on the selected cell.
+     * Clears the debug panel if no data is available.
+     *
+     * @param cellReference the reference to the selected cell.
+     */
     private void updateDebugInfo(CellReference cellReference) {
         if (selectedData != null) {
             Value val = selectedData.getValue();

@@ -17,10 +17,23 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+/**
+ * An implementation of the {@link ExpressionParser} interface that uses the Shunting Yard algorithm
+ * to parse mathematical expressions into an {@link Expression} object. The {@code ShuntingYardParser}
+ * handles various types of tokens, including operators, functions, and references, to construct a valid
+ * expression tree.
+ */
 public class ShuntingYardParser implements ExpressionParser {
     private final Logger logger = LoggerFactory.getLogger(ShuntingYardParser.class);
     private final Tokenizer tokenizer = new SimpleTokenizer();
 
+    /**
+     * Parses the given expression string into an {@link Expression} object using the Shunting Yard algorithm.
+     *
+     * @param expression the string representation of the expression to be parsed.
+     * @return an {@link Expression} object representing the parsed expression.
+     * @throws ExpressionParsingException if an error occurs during parsing, such as invalid syntax or unrecognized tokens.
+     */
     @Override
     public Expression parse(String expression) throws ExpressionParsingException {
         logger.debug("Parsing expression: {}", expression);
@@ -37,6 +50,14 @@ public class ShuntingYardParser implements ExpressionParser {
         }
     }
 
+    /**
+     * Determines whether the current operator should be pushed onto the operator stack
+     * or whether higher-precedence operators should be processed first.
+     *
+     * @param operators       the stack of operators.
+     * @param currentOperator the current operator being processed.
+     * @return {@code true} if higher-precedence operators should be processed first; {@code false} otherwise.
+     */
     private boolean shouldPushOperatorHigher(Stack<Operator> operators, NonFunctionOperator currentOperator) {
         if (operators.isEmpty()) {
             return false;
@@ -47,23 +68,58 @@ public class ShuntingYardParser implements ExpressionParser {
                 && (operator.precedence() > currentOperator.precedence() || (operator.precedence() == currentOperator.precedence() && currentOperator.associativity() == NonFunctionOperator.Associativity.LEFT));
     }
 
+    /**
+     * Determines whether the current token represents a unary minus operator.
+     *
+     * @param operator      the current operator.
+     * @param previousToken the previous token in the expression.
+     * @return {@code true} if the operator is a unary minus; {@code false} otherwise.
+     */
     private boolean isUnaryMinus(NonFunctionOperator operator, Token previousToken) {
         return operator.type() == NonFunctionOperator.Type.MINUS &&
                 (previousToken == null || previousToken.type() == Token.Type.OPEN_PARENTHESIS || previousToken.type() == Token.Type.OPERATOR);
     }
 
+    /**
+     * Determines whether the next token represents the start of a function.
+     *
+     * @param nextToken the next token in the expression.
+     * @return {@code true} if the next token starts a function; {@code false} otherwise.
+     */
     private boolean isFunction(Token nextToken) {
         return nextToken != null && nextToken.type() == Token.Type.OPEN_PARENTHESIS;
     }
 
+    /**
+     * Retrieves the previous token in the token list.
+     *
+     * @param index  the current index in the token list.
+     * @param tokens the list of tokens.
+     * @return the previous token, or {@code null} if there is no previous token.
+     */
     private Token getPreviousToken(int index, List<Token> tokens) {
         return index == 0 ? null : tokens.get(index - 1);
     }
 
+    /**
+     * Retrieves the next token in the token list.
+     *
+     * @param index  the current index in the token list.
+     * @param tokens the list of tokens.
+     * @return the next token, or {@code null} if there is no next token.
+     */
     private Token getNextToken(int index, List<Token> tokens) {
         return index + 1 < tokens.size() ? tokens.get(index + 1) : null;
     }
 
+    /**
+     * Creates a binary expression from the top two expressions and the top operator on their respective stacks.
+     *
+     * @param expressions the stack of expressions.
+     * @param operators   the stack of operators.
+     * @return the resulting {@link Expression} object.
+     * @throws ExpressionParsingException if the operator is invalid or the expression is incomplete.
+     */
     private Expression getBinaryExpression(Stack<Expression> expressions, Stack<Operator> operators) throws ExpressionParsingException {
         Expression right = expressions.pop();
         Operator operator = operators.pop();
@@ -73,11 +129,25 @@ public class ShuntingYardParser implements ExpressionParser {
         throw new ExpressionParsingException("Found insufficient operator: " + operator.getSymbol());
     }
 
+    /**
+     * Creates a binary expression from the top two expressions on the stack and the provided operator.
+     *
+     * @param expressions the stack of expressions.
+     * @param operator    the operator to apply to the expressions.
+     * @return the resulting {@link Expression} object.
+     */
     private Expression getBinaryExpression(Stack<Expression> expressions, NonFunctionOperator operator) {
         Expression right = expressions.pop();
         return new BinaryExpression(expressions.pop(), right, operator);
     }
 
+    /**
+     * Determines whether the function has no arguments based on the token list.
+     *
+     * @param functionTokenIndex the index of the function token.
+     * @param tokens             the list of tokens.
+     * @return {@code true} if the function has no arguments; {@code false} otherwise.
+     */
     private boolean isFunctionWithoutArguments(int functionTokenIndex, List<Token> tokens) {
         if (functionTokenIndex + 2 >= tokens.size()) {
             return false;
@@ -85,6 +155,13 @@ public class ShuntingYardParser implements ExpressionParser {
         return tokens.get(functionTokenIndex + 2).type() == Token.Type.CLOSE_PARENTHESIS;
     }
 
+    /**
+     * Determines whether the top expression and operator form a range expression.
+     *
+     * @param expressions the stack of expressions.
+     * @param operators   the stack of operators.
+     * @return {@code true} if the top expression and operator form a range; {@code false} otherwise.
+     */
     private boolean isRange(Stack<Expression> expressions, Stack<Operator> operators) {
         if (expressions.isEmpty() || operators.isEmpty()) {
             return false;
@@ -96,6 +173,15 @@ public class ShuntingYardParser implements ExpressionParser {
         return operators.peek() instanceof NonFunctionOperator nonFunctionOperator && nonFunctionOperator.type() == NonFunctionOperator.Type.COLON;
     }
 
+    /**
+     * Parses a list of tokens into an {@link Expression} object using the Shunting Yard algorithm.
+     *
+     * @param tokens the list of tokens to parse.
+     * @return the resulting {@link Expression} object.
+     * @throws ExpressionParsingException if an error occurs during parsing.
+     * @throws FunctionArgumentException  if there is an error with function arguments.
+     * @throws CellReferenceException     if there is an error with cell references.
+     */
     private Expression parse(List<Token> tokens) throws ExpressionParsingException, FunctionArgumentException, CellReferenceException {
         Stack<Expression> expressions = new Stack<>();
         Stack<Operator> operators = new Stack<>();
@@ -156,7 +242,6 @@ public class ShuntingYardParser implements ExpressionParser {
                     if (operators.isEmpty() || operators.peek() instanceof NonFunctionOperator operator && operator.type() != NonFunctionOperator.Type.OPEN_PARENTHESIS) {
                         throw new ExpressionParsingException("Failed parenthesis.");
                     }
-
                     operators.pop();
                     if (!operators.isEmpty() && operators.peek() instanceof FunctionOperator functionOperator) {
                         operators.pop();

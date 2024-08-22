@@ -11,10 +11,21 @@ import com.sanyavertolet.interview.ui.table.SpreadsheetTable;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The main window for the spreadsheet application, extending {@link JFrame}. The {@code MainFrame} class
+ * is responsible for initializing and displaying the spreadsheet table, as well as the optional debug panel
+ * based on the provided {@link Configuration}.
+ */
 public class MainFrame extends JFrame {
     private final SpreadsheetTable table;
     private final DebugPanel debugPanel;
 
+    /**
+     * Constructs a {@code MainFrame} with the specified configuration. The main frame includes a spreadsheet table
+     * and optionally a debug panel, depending on the debug flag in the configuration.
+     *
+     * @param configuration the configuration settings that determine whether the debug panel is shown.
+     */
     public MainFrame(Configuration configuration) {
         setTitle("Spreadsheets");
         setSize(1200, 800);
@@ -50,6 +61,10 @@ public class MainFrame extends JFrame {
         }
     }
 
+    /**
+     * Updates the debug panel with information about the currently selected cell in the spreadsheet.
+     * If no cell is selected or an error occurs, the debug panel is cleared.
+     */
     private void updateDebugInfo() {
         try {
             CellReference cellReference = table.getSelectedCell();
@@ -59,8 +74,6 @@ public class MainFrame extends JFrame {
             } else {
                 debugPanel.setSelectedCell(null, null);
             }
-        } catch (CellReferenceException | DataAccessException ignored) {
-
-        }
+        } catch (CellReferenceException | DataAccessException ignored) { }
     }
 }

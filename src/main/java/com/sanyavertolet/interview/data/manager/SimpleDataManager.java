@@ -17,6 +17,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+/**
+ * A simple implementation of the {@link DataManager} interface that manages data in a table-like structure.
+ * The {@code SimpleDataManager} uses a {@link DataContainer} for storing data, a {@link DataFactory} for
+ * creating data instances, and a {@link DataWatcher} for monitoring and reacting to changes in the data.
+ */
 public class SimpleDataManager implements DataManager {
     private final Logger logger = LoggerFactory.getLogger(SimpleDataManager.class);
     private final DataContainer container;
@@ -24,6 +29,13 @@ public class SimpleDataManager implements DataManager {
     private final DataFactory dataFactory;
     private final DataWatcher dataWatcher;
 
+    /**
+     * Constructs a {@code SimpleDataManager} with the specified number of rows and columns.
+     * Initializes the necessary components for data management, including data creation, access, and watching.
+     *
+     * @param rows the number of rows in the data structure.
+     * @param columns the number of columns in the data structure.
+     */
     public SimpleDataManager(int rows, int columns) {
         container = new DataContainer(rows, columns);
         accessor = new ContainerBasedDataAccessor(container);
@@ -34,6 +46,15 @@ public class SimpleDataManager implements DataManager {
         dataWatcher = new SimpleDataWatcher(accessor, expressionEvaluator);
     }
 
+    /**
+     * Sets the data for a specified cell identified by its row and column indices.
+     * The data is created using the {@link DataFactory} and stored in the underlying {@link DataContainer}.
+     * The {@link DataWatcher} is then notified of the update.
+     *
+     * @param row the row index of the cell.
+     * @param column the column index of the cell.
+     * @param text the text representation of the data to be set in the cell.
+     */
     @Override
     public void setData(int row, int column, String text) {
         CellReference reference = reference(row, column);
@@ -42,27 +63,54 @@ public class SimpleDataManager implements DataManager {
         dataWatcher.update(data, reference);
     }
 
+    /**
+     * Retrieves the data stored in a specified cell identified by its row and column indices.
+     *
+     * @param row the row index of the cell.
+     * @param column the column index of the cell.
+     * @return the {@link Data} stored in the specified cell.
+     */
     @Override
     public Data getData(int row, int column) {
         CellReference reference = reference(row, column);
         return accessor.getData(reference);
     }
 
+    /**
+     * Retrieves the number of rows in the data structure.
+     *
+     * @return the number of rows.
+     */
     @Override
     public int getRowCount() {
         return container.getRowCount();
     }
 
+    /**
+     * Retrieves the number of columns in the data structure.
+     *
+     * @return the number of columns.
+     */
     @Override
     public int getColumnCount() {
         return container.getColumnCount();
     }
 
+    /**
+     * Exports the data stored in the structure as a list of {@link CellReference.WithText} objects,
+     * each containing the reference and the associated text.
+     *
+     * @return a list of {@link CellReference.WithText} representing the exported data.
+     */
     @Override
     public List<CellReference.WithText> exportData() {
         return container.exportDataMap();
     }
 
+    /**
+     * Clears all data from the structure, effectively resetting it.
+     * Also clears any data-related monitoring handled by the {@link DataWatcher}.
+     */
     @Override
     public void clearData() {
         logger.info("Clearing data...");
@@ -70,6 +118,14 @@ public class SimpleDataManager implements DataManager {
         dataWatcher.clear();
     }
 
+    /**
+     * Converts the specified row and column indices into a {@link CellReference}.
+     * This method handles any exceptions that occur during the creation of the reference.
+     *
+     * @param row the row index.
+     * @param column the column index.
+     * @return the {@link CellReference} corresponding to the specified row and column.
+     */
     private CellReference reference(int row, int column) {
         try {
             return CellReference.of(row, column);
