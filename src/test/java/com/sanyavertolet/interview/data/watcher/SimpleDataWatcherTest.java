@@ -2,8 +2,8 @@ package com.sanyavertolet.interview.data.watcher;
 
 import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.data.accessor.DataAccessor;
+import com.sanyavertolet.interview.data.value.IntegerValue;
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
-import com.sanyavertolet.interview.exceptions.expressions.ValueCastException;
 import com.sanyavertolet.interview.math.expressions.Expression;
 import com.sanyavertolet.interview.math.expressions.evaluator.ExpressionEvaluator;
 import com.sanyavertolet.interview.math.expressions.evaluator.SimpleExpressionEvaluator;
@@ -71,7 +71,7 @@ public class SimpleDataWatcherTest {
         a1 = new Data("5", 5.0);
         dataWatcher.update(a1, a1Ref);
 
-        Assertions.assertThrows(ValueCastException.class, () -> a2.getValue().asInteger());
+        Assertions.assertInstanceOf(IntegerValue.class, a2.getValue());
         Assertions.assertEquals(2 * a1.getValue().asDouble(), a2.getValue().asDouble());
         Assertions.assertEquals(3 * a1.getValue().asDouble(), a3.getValue().asDouble());
         Assertions.assertEquals(a2.getValue().plus(a3.getValue()), a4.getValue());

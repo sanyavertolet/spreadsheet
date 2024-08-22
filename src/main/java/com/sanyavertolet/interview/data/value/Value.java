@@ -54,7 +54,7 @@ public sealed abstract class Value permits BooleanValue, DoubleValue, StringValu
     }
 
     public static Value of(Double value) {
-        return new DoubleValue(value);
+        return value.intValue() == value ? new IntegerValue(value.intValue()) : new DoubleValue(value);
     }
 
     public static Value of(String value) {

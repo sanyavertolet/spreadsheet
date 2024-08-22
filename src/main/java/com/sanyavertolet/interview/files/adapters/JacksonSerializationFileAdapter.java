@@ -18,8 +18,8 @@ public class JacksonSerializationFileAdapter implements FileAdapter {
     public void save(File file, DataManager manager) throws FileWriteException {
         ObjectMapper objectMapper = JsonConfig.createObjectMapper();
         List<CellReference.WithText> referencedDataList = manager.getDataExporter().exportDataMap();
-        try (FileOutputStream out = new FileOutputStream(file)) {
-            objectMapper.writeValue(out, referencedDataList);
+        try {
+            objectMapper.writeValue(file, referencedDataList);
         } catch (IOException exception) {
             throw new FileWriteException("Could not save to file " + file.getAbsolutePath(), exception);
         }
@@ -29,8 +29,8 @@ public class JacksonSerializationFileAdapter implements FileAdapter {
     public void load(File file, DataManager manager) throws FileReadException {
         ObjectMapper objectMapper = JsonConfig.createObjectMapper();
         TypeReference<List<CellReference.WithText>> typeRef = new TypeReference<>() {};
-        try (FileInputStream in = new FileInputStream(file)) {
-            List<CellReference.WithText> referencedDataList = objectMapper.readValue(in, typeRef);
+        try {
+            List<CellReference.WithText> referencedDataList = objectMapper.readValue(file, typeRef);
             for (CellReference.WithText referencedData : referencedDataList) {
                 manager.setData(referencedData.reference().row(), referencedData.reference().column(), referencedData.text());
             }

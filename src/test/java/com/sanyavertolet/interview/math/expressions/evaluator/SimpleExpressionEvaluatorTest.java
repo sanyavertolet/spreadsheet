@@ -212,7 +212,7 @@ public class SimpleExpressionEvaluatorTest {
     void stringCastExpressionTest() throws ExpressionEvaluationException, FunctionArgumentException {
         Assertions.assertEquals(new StringValue("5"), expressionEvaluator.evaluate(string(value("5"))));
         Assertions.assertEquals(new StringValue("true"), expressionEvaluator.evaluate(string(value("true"))));
-        Assertions.assertEquals(new StringValue("5.0"), expressionEvaluator.evaluate(string(value("5.0"))));
+        Assertions.assertEquals(new StringValue("5.2"), expressionEvaluator.evaluate(string(value("5.2"))));
     }
 
     @SuppressWarnings("ConstantValue")
