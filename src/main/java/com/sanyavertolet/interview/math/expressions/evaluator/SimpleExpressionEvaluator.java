@@ -7,11 +7,14 @@ import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationEx
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.expressions.*;
 import com.sanyavertolet.interview.math.operators.NonFunctionOperator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleExpressionEvaluator implements ExpressionEvaluator {
+    private final Logger logger = LoggerFactory.getLogger(SimpleExpressionEvaluator.class);
     private final DataAccessor dataAccessor;
 
     public SimpleExpressionEvaluator(DataAccessor dataAccessor) {
@@ -69,6 +72,7 @@ public class SimpleExpressionEvaluator implements ExpressionEvaluator {
 
     @Override
     public Value evaluate(Expression expression) throws ExpressionEvaluationException {
+        logger.trace("Evaluating expression: \n{}", expression.prettyPrint(0));
         if (expression instanceof CellReferenceExpression cellReferenceExpression) {
             return evaluate(cellReferenceExpression);
         } else if (expression instanceof ValueExpression valueExpression) {
@@ -80,6 +84,6 @@ public class SimpleExpressionEvaluator implements ExpressionEvaluator {
         } else if (expression instanceof RangeExpression rangeExpression) {
             return evaluate(rangeExpression);
         }
-        throw new ExpressionEvaluationException("Unknown expression: " + expression.toString());
+        throw new ExpressionEvaluationException("Unknown expression: " + expression);
     }
 }

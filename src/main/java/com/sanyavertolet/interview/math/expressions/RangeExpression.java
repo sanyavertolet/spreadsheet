@@ -61,4 +61,9 @@ public class RangeExpression extends Expression {
         }
         return cellReferences;
     }
+
+    @Override
+    public String toString() {
+        return startCell + ":" + endCell;
+    }
 }

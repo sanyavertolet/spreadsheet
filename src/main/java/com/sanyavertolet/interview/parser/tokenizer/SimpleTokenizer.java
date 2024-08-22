@@ -1,11 +1,15 @@
 package com.sanyavertolet.interview.parser.tokenizer;
 
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionParsingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SimpleTokenizer implements Tokenizer {
+    private final Logger logger = LoggerFactory.getLogger(SimpleTokenizer.class);
     private Integer position;
     private String expression;
     private Character currentSym;
@@ -100,6 +104,7 @@ public class SimpleTokenizer implements Tokenizer {
 
     @Override
     public List<Token> tokenize(String input) throws ExpressionParsingException {
+        logger.debug("Tokenizing {}", input);
         expression = input;
         position = 0;
         advance();
@@ -109,7 +114,7 @@ public class SimpleTokenizer implements Tokenizer {
         while (hasMoreTokens()) {
             tokens.add(getNextToken());
         }
-
+        logger.trace("Tokenized {} into tokens {}", input, tokens.stream().map(Record::toString).collect(Collectors.joining(", ", "[", "]")));
         return tokens;
     }
 

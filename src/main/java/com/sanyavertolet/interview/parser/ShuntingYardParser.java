@@ -12,21 +12,27 @@ import com.sanyavertolet.interview.math.operators.Operator;
 import com.sanyavertolet.interview.parser.tokenizer.SimpleTokenizer;
 import com.sanyavertolet.interview.parser.tokenizer.Token;
 import com.sanyavertolet.interview.parser.tokenizer.Tokenizer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class ShuntingYardParser implements ExpressionParser {
+    private final Logger logger = LoggerFactory.getLogger(ShuntingYardParser.class);
     private final Tokenizer tokenizer = new SimpleTokenizer();
 
     @Override
     public Expression parse(String expression) throws ExpressionParsingException {
+        logger.debug("Parsing expression: {}", expression);
         List<Token> tokens = tokenizer.tokenize(expression);
 
         try {
             return parse(tokens);
         } catch (ExpressionParsingException exception) {
+            logger.trace(exception.getMessage());
             throw exception;
         } catch (Exception exception) {
+            logger.trace(exception.getMessage());
             throw new ExpressionParsingException(exception.getMessage(), exception);
         }
     }

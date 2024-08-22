@@ -39,4 +39,9 @@ public class BinaryExpression extends Expression {
     public NonFunctionOperator getOperator() {
         return operator;
     }
+
+    @Override
+    public String toString() {
+        return left.toString() + " " + operator.getSymbol() + " " + right.toString();
+    }
 }

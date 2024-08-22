@@ -6,6 +6,7 @@ import com.sanyavertolet.interview.exceptions.FunctionArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FunctionExpression extends Expression {
     private final List<Expression> arguments;
@@ -44,5 +45,10 @@ public class FunctionExpression extends Expression {
 
     public Function getFunction() {
         return function;
+    }
+
+    @Override
+    public String toString() {
+        return function.name() + arguments.stream().map(Object::toString).collect(Collectors.joining(", ", "(", ")"));
     }
 }

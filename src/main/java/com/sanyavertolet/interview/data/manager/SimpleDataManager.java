@@ -12,10 +12,13 @@ import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.expressions.evaluator.ExpressionEvaluator;
 import com.sanyavertolet.interview.math.expressions.evaluator.SimpleExpressionEvaluator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class SimpleDataManager implements DataManager {
+    private final Logger logger = LoggerFactory.getLogger(SimpleDataManager.class);
     private final DataContainer container;
     private final DataAccessor accessor;
     private final DataFactory dataFactory;
@@ -34,7 +37,6 @@ public class SimpleDataManager implements DataManager {
     @Override
     public void setData(int row, int column, String text) {
         CellReference reference = reference(row, column);
-
         Data data = dataFactory.create(text);
         container.put(reference, data);
         dataWatcher.update(data, reference);
@@ -63,6 +65,7 @@ public class SimpleDataManager implements DataManager {
 
     @Override
     public void clearData() {
+        logger.info("Clearing data...");
         container.clearDataMap();
         dataWatcher.clear();
     }

@@ -8,11 +8,14 @@ import com.sanyavertolet.interview.exceptions.data.DataDependencyException;
 import com.sanyavertolet.interview.exceptions.data.DataSelfReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.expressions.evaluator.ExpressionEvaluator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Set;
 
 public class SimpleDataWatcher implements DataWatcher {
+    private final Logger logger = LoggerFactory.getLogger(SimpleDataWatcher.class);
     private final DataAccessor dataAccessor;
     private final ExpressionEvaluator expressionEvaluator;
     private final DependencyGraph dependencyGraph = new TopologicallySortedDependencyGraph();
@@ -24,11 +27,13 @@ public class SimpleDataWatcher implements DataWatcher {
 
     @Override
     public void update(Data data, CellReference reference) {
+        logger.debug("Updating data with reference {}", reference);
         dependencyGraph.clearDependencies(reference);
 
         try {
             addNewDependenciesIfNeeded(data, reference);
         } catch (DataSelfReferenceException exception) {
+            logger.error(exception.getMessage(), exception);
             markCurrentAndNextCellsAsError(reference, data);
             return;
         }
@@ -36,12 +41,14 @@ public class SimpleDataWatcher implements DataWatcher {
         try {
             recalculateInValidOrder(reference);
         } catch (DataDependencyException e) {
+            logger.error(e.getMessage(), e);
             markCyclicCellsAsError();
         }
     }
 
     @Override
     public void clear() {
+        logger.debug("Clearing dependencies...");
         dependencyGraph.clearAll();
     }
 
@@ -49,6 +56,7 @@ public class SimpleDataWatcher implements DataWatcher {
         List<CellReference> updateList = dependencyGraph.getUpdateList(reference);
         for (CellReference updateCellReference : updateList) {
             Data data = dataAccessor.getData(updateCellReference);
+            logger.debug("Recalculating cell {}", updateCellReference);
             data.recalculateValue(expressionEvaluator);
         }
     }
@@ -57,6 +65,7 @@ public class SimpleDataWatcher implements DataWatcher {
         if (cellData.getExpressionTree() == null) {
             return;
         }
+        logger.debug("Adding new dependency for cell {}", reference);
         for (CellReference before : cellData.getExpressionTree().getCellReferences()) {
             dependencyGraph.addDependency(before, reference);
         }

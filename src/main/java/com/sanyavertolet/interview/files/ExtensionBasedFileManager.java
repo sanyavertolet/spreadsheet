@@ -5,13 +5,17 @@ import com.sanyavertolet.interview.exceptions.files.FileReadException;
 import com.sanyavertolet.interview.exceptions.files.FileWriteException;
 import com.sanyavertolet.interview.files.adapters.FileAdapter;
 import com.sanyavertolet.interview.files.adapters.JacksonSerializationFileAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 public class ExtensionBasedFileManager implements FileManager {
+    private final Logger logger = LoggerFactory.getLogger(ExtensionBasedFileManager.class);
     @Override
     public void save(File file, DataManager manager) throws FileWriteException {
         FileAdapter adapter = getCorrespondingFileAdapter(file);
+        logger.info("Saving file: {}", file.getName());
         adapter.save(file, manager);
     }
 
@@ -19,6 +23,7 @@ public class ExtensionBasedFileManager implements FileManager {
     public void load(File file, DataManager manager) throws FileReadException {
         FileAdapter adapter = getCorrespondingFileAdapter(file);
         manager.clearData();
+        logger.info("Loading file: {}", file.getName());
         adapter.load(file, manager);
     }
 

@@ -14,7 +14,7 @@ public class CellReferenceExpression extends Expression {
 
     @Override
     public String prettyPrint(int shift) {
-        return ".".repeat(shift) + cellReference.identifier() + "\n";
+        return ".".repeat(shift) + this + "\n";
     }
 
     @Override
@@ -24,5 +24,10 @@ public class CellReferenceExpression extends Expression {
 
     public CellReference getCellReference() {
         return cellReference;
+    }
+
+    @Override
+    public String toString() {
+        return cellReference.identifier();
     }
 }

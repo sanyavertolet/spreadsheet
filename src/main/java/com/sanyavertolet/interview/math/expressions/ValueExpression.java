@@ -34,4 +34,9 @@ public class ValueExpression extends Expression {
     public List<CellReference> getCellReferences() {
         return new ArrayList<>();
     }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }
