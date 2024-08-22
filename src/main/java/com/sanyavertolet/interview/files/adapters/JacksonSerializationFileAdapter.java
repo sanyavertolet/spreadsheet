@@ -17,7 +17,7 @@ public class JacksonSerializationFileAdapter implements FileAdapter {
     @Override
     public void save(File file, DataManager manager) throws FileWriteException {
         ObjectMapper objectMapper = JsonConfig.createObjectMapper();
-        List<CellReference.WithText> referencedDataList = manager.getDataExporter().exportDataMap();
+        List<CellReference.WithText> referencedDataList = manager.exportData();
         try {
             objectMapper.writeValue(file, referencedDataList);
         } catch (IOException exception) {

@@ -18,7 +18,7 @@ public class ExtensionBasedFileManager implements FileManager {
     @Override
     public void load(File file, DataManager manager) throws FileReadException {
         FileAdapter adapter = getCorrespondingFileAdapter(file);
-        manager.getDataExporter().clearDataMap();
+        manager.clearData();
         adapter.load(file, manager);
     }
 

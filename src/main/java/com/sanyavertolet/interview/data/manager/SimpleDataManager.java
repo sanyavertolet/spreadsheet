@@ -4,7 +4,6 @@ import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.data.accessor.ContainerBasedDataAccessor;
 import com.sanyavertolet.interview.data.accessor.DataAccessor;
 import com.sanyavertolet.interview.data.container.DataContainer;
-import com.sanyavertolet.interview.data.container.DataExporter;
 import com.sanyavertolet.interview.data.factory.DataFactory;
 import com.sanyavertolet.interview.data.factory.SimpleDataFactory;
 import com.sanyavertolet.interview.data.watcher.DataWatcher;
@@ -13,6 +12,8 @@ import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.math.expressions.evaluator.ExpressionEvaluator;
 import com.sanyavertolet.interview.math.expressions.evaluator.SimpleExpressionEvaluator;
+
+import java.util.List;
 
 public class SimpleDataManager implements DataManager {
     private final DataContainer container;
@@ -56,8 +57,14 @@ public class SimpleDataManager implements DataManager {
     }
 
     @Override
-    public DataExporter getDataExporter() {
-        return container;
+    public List<CellReference.WithText> exportData() {
+        return container.exportDataMap();
+    }
+
+    @Override
+    public void clearData() {
+        container.clearDataMap();
+        dataWatcher.clear();
     }
 
     private CellReference reference(int row, int column) {

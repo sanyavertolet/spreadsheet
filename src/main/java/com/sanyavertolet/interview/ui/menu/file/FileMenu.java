@@ -1,6 +1,5 @@
 package com.sanyavertolet.interview.ui.menu.file;
 
-import com.sanyavertolet.interview.data.container.DataExporter;
 import com.sanyavertolet.interview.data.manager.DataManager;
 import com.sanyavertolet.interview.exceptions.files.FileReadException;
 import com.sanyavertolet.interview.exceptions.files.FileWriteException;
@@ -19,8 +18,7 @@ public class FileMenu extends JMenu {
     public FileMenu(DataManager dataManager) {
         super("File");
 
-        DataExporter dataExporter = dataManager.getDataExporter();
-        ActionListener clearActionListener = e -> dataExporter.clearDataMap();
+        ActionListener clearActionListener = e -> dataManager.clearData();
 
         ActionListener saveActionListener = e -> {
             int result = fileChooser.showSaveDialog(null);

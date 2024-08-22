@@ -15,4 +15,6 @@ public interface DependencyGraph {
     List<CellReference> getUpdateList(CellReference cellReference) throws DataDependencyException;
 
     Set<CellReference> getFailedCellReferences();
+
+    void clearAll();
 }

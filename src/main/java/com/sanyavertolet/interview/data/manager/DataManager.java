@@ -1,7 +1,9 @@
 package com.sanyavertolet.interview.data.manager;
 
 import com.sanyavertolet.interview.data.Data;
-import com.sanyavertolet.interview.data.container.DataExporter;
+import com.sanyavertolet.interview.math.CellReference;
+
+import java.util.List;
 
 public interface DataManager {
     void setData(int row, int column, String text);
@@ -12,5 +14,7 @@ public interface DataManager {
 
     int getColumnCount();
 
-    DataExporter getDataExporter();
+    List<CellReference.WithText> exportData();
+
+    void clearData();
 }

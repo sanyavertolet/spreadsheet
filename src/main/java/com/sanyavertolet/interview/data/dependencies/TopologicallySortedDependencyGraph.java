@@ -31,6 +31,13 @@ public class TopologicallySortedDependencyGraph implements DependencyGraph {
     }
 
     @Override
+    public void clearAll() {
+        previous.clear();
+        next.clear();
+        failedCellReferences.clear();
+    }
+
+    @Override
     public List<CellReference> getUpdateList(CellReference cellReference) throws DataDependencyException {
         List<CellReference> sorted = new ArrayList<>();
         Set<CellReference> visited = new HashSet<>();
@@ -38,7 +45,7 @@ public class TopologicallySortedDependencyGraph implements DependencyGraph {
         Stack<CellReference> visitingStack = new Stack<>();
 
         topologicalSort(cellReference, visited, visiting, visitingStack, sorted);
-
+        sorted.remove(cellReference);
         return sorted;
     }
 

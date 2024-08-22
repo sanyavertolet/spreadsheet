@@ -29,7 +29,7 @@ public class SimpleDataWatcher implements DataWatcher {
         try {
             addNewDependenciesIfNeeded(data, reference);
         } catch (DataSelfReferenceException exception) {
-            markCurrentAndNextCellsAsError(reference);
+            markCurrentAndNextCellsAsError(reference, data);
             return;
         }
 
@@ -38,6 +38,11 @@ public class SimpleDataWatcher implements DataWatcher {
         } catch (DataDependencyException e) {
             markCyclicCellsAsError();
         }
+    }
+
+    @Override
+    public void clear() {
+        dependencyGraph.clearAll();
     }
 
     private void recalculateInValidOrder(CellReference reference) throws DataDependencyException {
@@ -61,9 +66,10 @@ public class SimpleDataWatcher implements DataWatcher {
         dataAccessor.getData(reference).markAsError();
     }
 
-    private void markCurrentAndNextCellsAsError(CellReference reference) {
+    private void markCurrentAndNextCellsAsError(CellReference currentReference, Data currentData) {
+        currentData.markAsError();
         try {
-            for (CellReference cellReference : dependencyGraph.getUpdateList(reference)) {
+            for (CellReference cellReference : dependencyGraph.getUpdateList(currentReference)) {
                 markCellAsError(cellReference);
             }
         } catch (DataDependencyException exception) {

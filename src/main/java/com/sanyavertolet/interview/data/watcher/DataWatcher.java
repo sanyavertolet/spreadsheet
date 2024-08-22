@@ -5,4 +5,6 @@ import com.sanyavertolet.interview.math.CellReference;
 
 public interface DataWatcher {
     void update(Data data, CellReference reference);
+
+    void clear();
 }
