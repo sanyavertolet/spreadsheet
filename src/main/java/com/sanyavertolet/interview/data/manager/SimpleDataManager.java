@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 
 /**
  * A simple implementation of the {@link DataManager} interface that manages data in a table-like structure.
@@ -36,14 +37,14 @@ public class SimpleDataManager implements DataManager {
      * @param rows the number of rows in the data structure.
      * @param columns the number of columns in the data structure.
      */
-    public SimpleDataManager(int rows, int columns) {
+    public SimpleDataManager(int rows, int columns, BiConsumer<Integer, Integer> fireTableCellUpdated) {
         container = new DataContainer(rows, columns);
         accessor = new ContainerBasedDataAccessor(container);
 
         ExpressionEvaluator expressionEvaluator = new SimpleExpressionEvaluator(accessor);
 
         dataFactory = new SimpleDataFactory(expressionEvaluator);
-        dataWatcher = new SimpleDataWatcher(accessor, expressionEvaluator);
+        dataWatcher = new SimpleDataWatcher(accessor, expressionEvaluator, fireTableCellUpdated);
     }
 
     /**

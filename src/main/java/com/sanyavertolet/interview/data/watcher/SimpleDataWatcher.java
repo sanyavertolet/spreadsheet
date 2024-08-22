@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 /**
  * A simple implementation of the {@link DataWatcher} interface that monitors and manages dependencies
@@ -21,6 +22,7 @@ import java.util.Set;
  */
 public class SimpleDataWatcher implements DataWatcher {
     private final Logger logger = LoggerFactory.getLogger(SimpleDataWatcher.class);
+    private final BiConsumer<Integer, Integer> fireTableCellUpdated;
     private final DataAccessor dataAccessor;
     private final ExpressionEvaluator expressionEvaluator;
     private final DependencyGraph dependencyGraph = new TopologicallySortedDependencyGraph();
@@ -31,7 +33,8 @@ public class SimpleDataWatcher implements DataWatcher {
      * @param dataAccessor        the data accessor used to retrieve and update cell data.
      * @param expressionEvaluator the evaluator used to recalculate cell values based on expressions.
      */
-    public SimpleDataWatcher(final DataAccessor dataAccessor, final ExpressionEvaluator expressionEvaluator) {
+    public SimpleDataWatcher(final DataAccessor dataAccessor, final ExpressionEvaluator expressionEvaluator, final BiConsumer<Integer, Integer> fireTableCellUpdated) {
+        this.fireTableCellUpdated = fireTableCellUpdated;
         this.dataAccessor = dataAccessor;
         this.expressionEvaluator = expressionEvaluator;
     }
@@ -87,6 +90,7 @@ public class SimpleDataWatcher implements DataWatcher {
             Data data = dataAccessor.getData(updateCellReference);
             logger.debug("Recalculating cell {}", updateCellReference);
             data.recalculateValue(expressionEvaluator);
+            fireTableCellUpdated.accept(updateCellReference.row(), updateCellReference.column());
         }
     }
 

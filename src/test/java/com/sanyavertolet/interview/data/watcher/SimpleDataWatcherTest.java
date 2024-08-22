@@ -32,7 +32,7 @@ public class SimpleDataWatcherTest {
         default -> null;
     };
     private final ExpressionEvaluator expressionEvaluator = new SimpleExpressionEvaluator(dataAccessor);
-    private final DataWatcher dataWatcher = new SimpleDataWatcher(dataAccessor, expressionEvaluator);
+    private final DataWatcher dataWatcher = new SimpleDataWatcher(dataAccessor, expressionEvaluator, (u, v) -> {});
 
     public SimpleDataWatcherTest() { }
 
