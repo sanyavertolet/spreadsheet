@@ -17,6 +17,11 @@ public class DataSelfReferenceException extends DataDependencyException {
         super(message);
     }
 
+    /**
+     * Constructs a new {@code DataSelfReferenceException} with the specified detail message.
+     *
+     * @param reference the self-referenced {@code CellReference}.
+     */
     public DataSelfReferenceException(CellReference reference) {
         super("Cell cannot depend on itself: " + reference);
     }

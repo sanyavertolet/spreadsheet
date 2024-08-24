@@ -23,5 +23,12 @@ public interface DataWatcher {
      * Clears all tracked data or states in the data watcher. This method is typically called
      * when all data in the structure is being reset or cleared.
      */
-    void clear();
+    void clearAll();
+
+    /**
+     * Clears tracked data for given reference in the data watcher.
+     *
+     * @param reference reference to data to be cleared
+     */
+    void clear(CellReference reference);
 }

@@ -43,7 +43,7 @@ public class TopologicallySortedDependencyGraph implements DependencyGraph {
         Set<CellReference> cellDependencies = previous.remove(reference);
         if (cellDependencies != null) {
             for (CellReference dependsOn : cellDependencies) {
-                previous.getOrDefault(dependsOn, new HashSet<>()).remove(reference);
+                next.getOrDefault(dependsOn, new HashSet<>()).remove(reference);
             }
         }
     }
@@ -62,19 +62,19 @@ public class TopologicallySortedDependencyGraph implements DependencyGraph {
      * Retrieves a list of {@link CellReference} instances that need to be updated when the specified cell is modified,
      * sorted in topological order. If a cyclic dependency is detected, an exception is thrown.
      *
-     * @param cellReference the reference to the cell that was modified.
+     * @param reference the reference to the cell that was modified.
      * @return a list of {@link CellReference} instances that should be updated, in topological order.
      * @throws DataDependencyException if a cyclic dependency is detected in the graph.
      */
     @Override
-    public List<CellReference> getUpdateList(CellReference cellReference) throws DataDependencyException {
+    public List<CellReference> getUpdateList(CellReference reference) throws DataDependencyException {
         List<CellReference> sorted = new ArrayList<>();
         Set<CellReference> visited = new HashSet<>();
         Set<CellReference> visiting = new HashSet<>();
         Stack<CellReference> visitingStack = new Stack<>();
 
-        topologicalSort(cellReference, visited, visiting, visitingStack, sorted);
-        sorted.remove(cellReference);
+        topologicalSort(reference, visited, visiting, visitingStack, sorted);
+        sorted.remove(reference);
         return sorted;
     }
 

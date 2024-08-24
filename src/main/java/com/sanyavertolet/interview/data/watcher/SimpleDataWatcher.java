@@ -30,8 +30,9 @@ public class SimpleDataWatcher implements DataWatcher {
     /**
      * Constructs a {@code SimpleDataWatcher} with the specified {@link DataAccessor} and {@link ExpressionEvaluator}.
      *
-     * @param dataAccessor        the data accessor used to retrieve and update cell data.
-     * @param expressionEvaluator the evaluator used to recalculate cell values based on expressions.
+     * @param dataAccessor         the data accessor used to retrieve and update cell data.
+     * @param expressionEvaluator  the evaluator used to recalculate cell values based on expressions.
+     * @param fireTableCellUpdated callback that is used to update the table.
      */
     public SimpleDataWatcher(final DataAccessor dataAccessor, final ExpressionEvaluator expressionEvaluator, final BiConsumer<Integer, Integer> fireTableCellUpdated) {
         this.fireTableCellUpdated = fireTableCellUpdated;
@@ -73,9 +74,18 @@ public class SimpleDataWatcher implements DataWatcher {
      * This method is typically called when all data in the structure is being reset or cleared.
      */
     @Override
-    public void clear() {
+    public void clearAll() {
         logger.debug("Clearing dependencies...");
         dependencyGraph.clearAll();
+    }
+
+    /**
+     * Clears all tracked dependencies and states in the data watcher.
+     * This method is typically called when all data in the structure is being reset or cleared.
+     */
+    @Override
+    public void clear(CellReference reference) {
+        dependencyGraph.clearDependencies(reference);
     }
 
     /**

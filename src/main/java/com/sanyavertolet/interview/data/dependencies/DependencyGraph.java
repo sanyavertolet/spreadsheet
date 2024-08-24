@@ -27,19 +27,19 @@ public interface DependencyGraph {
     /**
      * Clears all dependencies related to the specified {@link CellReference}.
      *
-     * @param cellReference the reference to the cell whose dependencies should be cleared.
+     * @param reference the reference to the cell whose dependencies should be cleared.
      */
-    void clearDependencies(CellReference cellReference);
+    void clearDependencies(CellReference reference);
 
     /**
      * Retrieves a list of {@link CellReference} instances that need to be updated when the specified
      * cell is modified. The order of the returned list represents the sequence in which updates should occur.
      *
-     * @param cellReference the reference to the cell that was modified.
+     * @param reference the reference to the cell that was modified.
      * @return a list of {@link CellReference} instances that should be updated.
      * @throws DataDependencyException if a circular dependency or other error is detected in the graph.
      */
-    List<CellReference> getUpdateList(CellReference cellReference) throws DataDependencyException;
+    List<CellReference> getUpdateList(CellReference reference) throws DataDependencyException;
 
     /**
      * Retrieves a set of {@link CellReference} instances that have failed due to dependency issues, such as cycles.

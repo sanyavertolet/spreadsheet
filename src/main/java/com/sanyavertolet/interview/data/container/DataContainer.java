@@ -60,6 +60,17 @@ public class DataContainer {
     }
 
     /**
+     * Removes the {@code Data} associated with the provided {@link CellReference} from the container.
+     *
+     * @param cellReference the reference of the cell to remove data from.
+     * @return the removed {@code Data} associated with the cell reference, or {@code null} if there was none.
+     */
+    @SuppressWarnings("UnusedReturnValue")
+    public Data remove(CellReference cellReference) {
+        return container.remove(cellReference);
+    }
+
+    /**
      * Returns the number of entries in the container.
      *
      * @return the size of the container.

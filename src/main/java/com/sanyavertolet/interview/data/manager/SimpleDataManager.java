@@ -36,6 +36,7 @@ public class SimpleDataManager implements DataManager {
      *
      * @param rows the number of rows in the data structure.
      * @param columns the number of columns in the data structure.
+     * @param fireTableCellUpdated callback that is used to update the table.
      */
     public SimpleDataManager(int rows, int columns, BiConsumer<Integer, Integer> fireTableCellUpdated) {
         container = new DataContainer(rows, columns);
@@ -59,9 +60,14 @@ public class SimpleDataManager implements DataManager {
     @Override
     public void setData(int row, int column, String text) {
         CellReference reference = reference(row, column);
-        Data data = dataFactory.create(text);
-        container.put(reference, data);
-        dataWatcher.update(data, reference);
+        if (text.isEmpty()) {
+            container.remove(reference);
+            dataWatcher.clear(reference);
+        } else {
+            Data data = dataFactory.create(text);
+            container.put(reference, data);
+            dataWatcher.update(data, reference);
+        }
     }
 
     /**
@@ -116,7 +122,7 @@ public class SimpleDataManager implements DataManager {
     public void clearData() {
         logger.info("Clearing data...");
         container.clearDataMap();
-        dataWatcher.clear();
+        dataWatcher.clearAll();
     }
 
     /**
