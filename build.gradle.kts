@@ -11,8 +11,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.3")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.4")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.4")
 
     implementation("ch.qos.logback:logback-classic:1.5.7")
 
