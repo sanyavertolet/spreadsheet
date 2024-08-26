@@ -17,23 +17,96 @@ public class NonFunctionOperator extends Operator {
      * Each operator type has an associated symbol.
      */
     public enum Type {
+        /**
+         * Represents the opening parenthesis '('.
+         * Used to group expressions or arguments.
+         */
         OPEN_PARENTHESIS("("),
+
+        /**
+         * Represents the closing parenthesis ')'.
+         * Used to close groups of expressions or arguments.
+         */
         CLOSE_PARENTHESIS(")"),
+
+        /**
+         * Represents the comma ','.
+         * Used to separate arguments or values in lists or function calls.
+         */
         COMMA(","),
+
+        /**
+         * Represents the colon ':'.
+         * Used in ranges to specify the start and end points.
+         */
         COLON(":"),
 
+        /**
+         * Represents the addition operator '+'.
+         * Used to add two values or expressions.
+         */
         PLUS("+"),
+
+        /**
+         * Represents the subtraction operator '-'.
+         * Used to subtract one value or expression from another.
+         */
         MINUS("-"),
+
+        /**
+         * Represents the multiplication operator '*'.
+         * Used to multiply two values or expressions.
+         */
         MULTIPLY("*"),
+
+        /**
+         * Represents the division operator '/'.
+         * Used to divide one value or expression by another.
+         */
         DIVIDE("/"),
+
+        /**
+         * Represents the power operator '^'.
+         * Used to raise one value or expression to the power of another.
+         */
         POWER("^"),
 
+        /**
+         * Represents the less than operator.
+         * Used to compare if one value or expression is less than another.
+         */
         LT("<"),
+
+        /**
+         * Represents the less than or equal to operator.
+         * Used to compare if one value or expression is less than or equal to another.
+         */
         LEQ("<="),
+
+        /**
+         * Represents the greater than operator '>'.
+         * Used to compare if one value or expression is greater than another.
+         */
         GT(">"),
+
+        /**
+         * Represents the greater than or equal to operator '>='.
+         * Used to compare if one value or expression is greater than or equal to another.
+         */
         GEQ(">="),
+
+        /**
+         * Represents the equality operator '=='.
+         * Used to compare if two values or expressions are equal.
+         */
         EQ("=="),
-        NEQ("!=");
+
+        /**
+         * Represents the inequality operator '!='.
+         * Used to compare if two values or expressions are not equal.
+         */
+        NEQ("!="),
+        ;
 
         private final String symbol;
 
@@ -61,8 +134,19 @@ public class NonFunctionOperator extends Operator {
      * Operators can be left-associative or right-associative.
      */
     public enum Associativity {
+        /**
+         * Represents left-associative operators.
+         * Operators are evaluated from left to right.
+         * For example, in the expression "1 - 2 - 3", the subtraction is evaluated as "(1 - 2) - 3".
+         */
         LEFT,
-        RIGHT
+
+        /**
+         * Represents right-associative operators.
+         * Operators are evaluated from right to left.
+         * For example, in the expression "a ^ b ^ c", the exponentiation is evaluated as "a ^ (b ^ c)".
+         */
+        RIGHT,
     }
 
     /**
