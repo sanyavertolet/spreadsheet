@@ -110,9 +110,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Enum Constant</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="#LEFT" class="member-name-link">LEFT</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Represents left-associative operators.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="#RIGHT" class="member-name-link">RIGHT</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Represents right-associative operators.</div>
+</div>
 </div>
 </section>
 </li>
@@ -162,12 +166,18 @@ the order they are declared.</div>
 <section class="detail" id="LEFT">
 <h3>LEFT</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="NonFunctionOperator.Associativity.html" title="enum class in com.sanyavertolet.interview.math.operators">NonFunctionOperator.Associativity</a></span>&nbsp;<span class="element-name">LEFT</span></div>
+<div class="block">Represents left-associative operators.
+ Operators are evaluated from left to right.
+ For example, in the expression "1 - 2 - 3", the subtraction is evaluated as "(1 - 2) - 3".</div>
 </section>
 </li>
 <li>
 <section class="detail" id="RIGHT">
 <h3>RIGHT</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="NonFunctionOperator.Associativity.html" title="enum class in com.sanyavertolet.interview.math.operators">NonFunctionOperator.Associativity</a></span>&nbsp;<span class="element-name">RIGHT</span></div>
+<div class="block">Represents right-associative operators.
+ Operators are evaluated from right to left.
+ For example, in the expression "a ^ b ^ c", the exponentiation is evaluated as "a ^ (b ^ c)".</div>
 </section>
 </li>
 </ul>
