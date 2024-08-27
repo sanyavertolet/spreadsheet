@@ -179,22 +179,57 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>contentLabel</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/swing/JLabel.html" title="class or interface in javax.swing" class="external-link">JLabel</a> contentLabel</pre>
+<div class="block">Label that displays cell content</div>
+</li>
+<li class="block-list">
+<h5>contentTitle</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> contentTitle</pre>
+<div class="block">Title of <code>contentLabel</code></div>
 </li>
 <li class="block-list">
 <h5>coordinatesLabel</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/swing/JLabel.html" title="class or interface in javax.swing" class="external-link">JLabel</a> coordinatesLabel</pre>
+<div class="block">Label that displays cell identifier</div>
+</li>
+<li class="block-list">
+<h5>coordinatesTitle</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> coordinatesTitle</pre>
+<div class="block">Title of <code>coordinatesLabel</code></div>
 </li>
 <li class="block-list">
 <h5>selectedData</h5>
 <pre><a href="com/sanyavertolet/interview/data/Data.html" title="class in com.sanyavertolet.interview.data">Data</a> selectedData</pre>
+<div class="block"><code>Data</code> of currently selected cell</div>
 </li>
 <li class="block-list">
 <h5>treeTextArea</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/swing/JTextArea.html" title="class or interface in javax.swing" class="external-link">JTextArea</a> treeTextArea</pre>
+<div class="block">JTextArea that displays expression tree of a cell (if present)</div>
 </li>
 <li class="block-list">
-<h5>typeLabel</h5>
-<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/swing/JLabel.html" title="class or interface in javax.swing" class="external-link">JLabel</a> typeLabel</pre>
+<h5>treeTitle</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> treeTitle</pre>
+<div class="block">Title of <code>treeTextArea</code></div>
+</li>
+<li class="block-list">
+<h5>valueLabel</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/swing/JLabel.html" title="class or interface in javax.swing" class="external-link">JLabel</a> valueLabel</pre>
+<div class="block">Label that displays cell value</div>
+</li>
+<li class="block-list">
+<h5>valueTitle</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> valueTitle</pre>
+<div class="block">Title of <code>valueLabel</code></div>
+</li>
+<li class="block-list">
+<h5>valueTypeLabel</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/swing/JLabel.html" title="class or interface in javax.swing" class="external-link">JLabel</a> valueTypeLabel</pre>
+<div class="block">Label that displays type of cell <code>Value</code></div>
+</li>
+<li class="block-list">
+<h5>valueTypeTitle</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> valueTypeTitle</pre>
+<div class="block">Title of <code>valueTypeLabel</code></div>
 </li>
 </ul>
 </section>
@@ -214,10 +249,12 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>debugPanel</h5>
 <pre><a href="com/sanyavertolet/interview/ui/DebugPanel.html" title="class in com.sanyavertolet.interview.ui">DebugPanel</a> debugPanel</pre>
+<div class="block"><a href="com/sanyavertolet/interview/ui/DebugPanel.html" title="class in com.sanyavertolet.interview.ui"><code>DebugPanel</code></a> component</div>
 </li>
 <li class="block-list">
 <h5>table</h5>
 <pre><a href="com/sanyavertolet/interview/ui/table/SpreadsheetTable.html" title="class in com.sanyavertolet.interview.ui.table">SpreadsheetTable</a> table</pre>
+<div class="block">Main excel <a href="com/sanyavertolet/interview/ui/table/SpreadsheetTable.html" title="class in com.sanyavertolet.interview.ui.table"><code>SpreadsheetTable</code></a> component</div>
 </li>
 </ul>
 </section>
@@ -292,19 +329,6 @@ loadScripts(document, 'script');</script>
 <section class="serialized-class-details" id="com.sanyavertolet.interview.ui.table.CustomCellEditor">
 <h3>Class&nbsp;<a href="com/sanyavertolet/interview/ui/table/CustomCellEditor.html" title="class in com.sanyavertolet.interview.ui.table">com.sanyavertolet.interview.ui.table.CustomCellEditor</a></h3>
 <div class="type-signature">class CustomCellEditor extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/swing/DefaultCellEditor.html" title="class or interface in javax.swing" class="external-link">DefaultCellEditor</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
-<ul class="block-list">
-<li>
-<section class="detail">
-<h4>Serialized Fields</h4>
-<ul class="block-list">
-<li class="block-list">
-<h5>data</h5>
-<pre><a href="com/sanyavertolet/interview/data/Data.html" title="class in com.sanyavertolet.interview.data">Data</a> data</pre>
-</li>
-</ul>
-</section>
-</li>
-</ul>
 </section>
 </li>
 <li>

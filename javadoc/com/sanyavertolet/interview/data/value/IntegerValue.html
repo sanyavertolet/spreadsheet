@@ -283,7 +283,9 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Value.html" title="class in com.sanyavertolet.interview.data.value">Value</a></span>&nbsp;<span class="element-name">divide</span><wbr><span class="parameters">(<a href="Value.html" title="class in com.sanyavertolet.interview.data.value">Value</a>&nbsp;other)</span>
              throws <span class="exceptions"><a href="../../exceptions/expressions/ExpressionEvaluationException.html" title="class in com.sanyavertolet.interview.exceptions.expressions">ExpressionEvaluationException</a></span></div>
 <div class="block">Divides this integer value by another <a href="Value.html" title="class in com.sanyavertolet.interview.data.value"><code>Value</code></a>. Supports division with both <a href="IntegerValue.html" title="class in com.sanyavertolet.interview.data.value"><code>IntegerValue</code></a>
- and <a href="DoubleValue.html" title="class in com.sanyavertolet.interview.data.value"><code>DoubleValue</code></a>. Throws an exception if attempting to divide by zero.</div>
+ and <a href="DoubleValue.html" title="class in com.sanyavertolet.interview.data.value"><code>DoubleValue</code></a>. Throws an exception if attempting to divide by zero.
+ <p>
+ When the division result is floating point number, <a href="DoubleValue.html" title="class in com.sanyavertolet.interview.data.value"><code>DoubleValue</code></a> is returned, <a href="IntegerValue.html" title="class in com.sanyavertolet.interview.data.value"><code>IntegerValue</code></a> otherwise.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="Value.html#divide(com.sanyavertolet.interview.data.value.Value)">divide</a></code>&nbsp;in class&nbsp;<code><a href="Value.html" title="class in com.sanyavertolet.interview.data.value">Value</a></code></dd>
