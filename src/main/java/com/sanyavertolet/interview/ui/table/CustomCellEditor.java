@@ -4,6 +4,8 @@ import com.sanyavertolet.interview.data.Data;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 /**
  * A custom cell editor for editing {@link Data} objects in a {@link JTable} representing a spreadsheet.
@@ -34,6 +36,16 @@ public class CustomCellEditor extends DefaultCellEditor {
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         Data data = (Data) value;
         JTextField textField = (JTextField) super.getTableCellEditorComponent(table, value, isSelected, row, column);
+
+        textField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+                int textLength = textField.getDocument().getLength();
+                textField.select(textLength, textLength);
+            }
+        });
+
         textField.setText(data.getText());
         return textField;
     }
