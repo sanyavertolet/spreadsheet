@@ -169,7 +169,7 @@ loadScripts(document, 'script');</script>
  int&nbsp;row,
  int&nbsp;col)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the value at the specified cell to the provided value.</div>
+<div class="block">Sets the value at the specified cell to the provided value and also creates a new data in the <a href="../../data/manager/DataManager.html" title="interface in com.sanyavertolet.interview.data.manager"><code>DataManager</code></a>.</div>
 </div>
 </div>
 </div>
@@ -277,8 +277,9 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setValueAt</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value,
  int&nbsp;row,
  int&nbsp;col)</span></div>
-<div class="block">Sets the value at the specified cell to the provided value.
- The value is expected to be an instance of <a href="../../data/Data.html" title="class in com.sanyavertolet.interview.data"><code>Data</code></a>, and it updates the corresponding data in the <a href="../../data/manager/DataManager.html" title="interface in com.sanyavertolet.interview.data.manager"><code>DataManager</code></a>.</div>
+<div class="block">Sets the value at the specified cell to the provided value and also creates a new data in the <a href="../../data/manager/DataManager.html" title="interface in com.sanyavertolet.interview.data.manager"><code>DataManager</code></a>.
+ <p>
+ The value is expected to be either an instance of <a href="../../data/Data.html" title="class in com.sanyavertolet.interview.data"><code>Data</code></a> or an instance of <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a>, otherwise nothing is done.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/swing/table/TableModel.html#setValueAt(java.lang.Object,int,int)" title="class or interface in javax.swing.table" class="external-link">setValueAt</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/swing/table/TableModel.html" title="class or interface in javax.swing.table" class="external-link">TableModel</a></code></dd>
