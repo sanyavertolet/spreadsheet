@@ -71,8 +71,9 @@ public class SpreadsheetTableModel extends AbstractTableModel {
     }
 
     /**
-     * Sets the value at the specified cell to the provided value.
-     * The value is expected to be an instance of {@link Data}, and it updates the corresponding data in the {@link DataManager}.
+     * Sets the value at the specified cell to the provided value and also creates a new data in the {@link DataManager}.
+     * <p>
+     * The value is expected to be either an instance of {@link Data} or an instance of {@link String}, otherwise nothing is done.
      *
      * @param value the new value to set.
      * @param row   the row index of the cell to update.
@@ -80,8 +81,13 @@ public class SpreadsheetTableModel extends AbstractTableModel {
      */
     @Override
     public void setValueAt(Object value, int row, int col) {
-        Data data = (Data) value;
-        dataManager.setData(row, col, data.getText());
+        if (value instanceof Data data) {
+            dataManager.setData(row, col, data.getText());
+        } else if (value instanceof String string) {
+            dataManager.setData(row, col, string);
+        } else {
+            return;
+        }
         fireTableCellUpdated(row, col);
     }
 

@@ -5,6 +5,7 @@ import com.sanyavertolet.interview.data.manager.DataManager;
 import com.sanyavertolet.interview.exceptions.data.DataAccessException;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
+import com.sanyavertolet.interview.ui.KeyBindingsConfigurator;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -18,7 +19,6 @@ import java.awt.*;
  * cell-specific rendering, editing, and data management for a spreadsheet application.
  */
 public class SpreadsheetTable extends JTable {
-
     /**
      * Constructs a {@code SpreadsheetTable} with a default model consisting of 50 rows and 26 columns.
      * The table is configured with custom cell renderers, editors, and grid settings suitable for spreadsheet use.
@@ -40,6 +40,8 @@ public class SpreadsheetTable extends JTable {
         setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         setGridColor(Color.LIGHT_GRAY);
         setShowGrid(true);
+
+        KeyBindingsConfigurator.configure(this);
     }
 
     /**
