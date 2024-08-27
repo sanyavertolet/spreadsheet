@@ -12,7 +12,7 @@ import com.sanyavertolet.interview.math.expressions.evaluator.ExpressionEvaluato
  * as erroneous if an evaluation fails.
  */
 public class Data {
-    private String text;
+    private final String text;
     private Value value;
     private final Expression expressionTree;
 
@@ -90,15 +90,6 @@ public class Data {
     }
 
     /**
-     * Sets the text representation of the data.
-     *
-     * @param text the new text of the data.
-     */
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    /**
      * Returns the evaluated value of the data.
      *
      * @return the value of the data.
@@ -149,10 +140,6 @@ public class Data {
      * @return a pretty-printed string of the expression tree or a message indicating it's null.
      */
     public String prettyPrintExpression() {
-        if (this.expressionTree != null) {
-            return expressionTree.prettyPrint(0);
-        } else {
-            return "Expression is null";
-        }
+        return expressionTree != null ? expressionTree.prettyPrint(0) : null;
     }
 }

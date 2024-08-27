@@ -5,6 +5,9 @@ package com.sanyavertolet.interview.math.operators;
  * The {@code Operator} class provides a common structure for operators, including a symbol that represents the operator.
  */
 public abstract class Operator {
+    /**
+     * String representation of {@code Operator}
+     */
     protected final String symbol;
 
     /**

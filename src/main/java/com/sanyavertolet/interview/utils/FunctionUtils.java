@@ -93,6 +93,6 @@ public class FunctionUtils {
         }
         Value sum = sum(iterableValue);
         Value count = count(iterableValue);
-        return Value.of(sum.asDouble() / count.asDouble());
+        return sum.divide(count);
     }
 }

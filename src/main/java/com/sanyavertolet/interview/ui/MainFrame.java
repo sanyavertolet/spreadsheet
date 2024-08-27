@@ -17,7 +17,14 @@ import java.awt.*;
  * based on the provided {@link Configuration}.
  */
 public class MainFrame extends JFrame {
+    /**
+     * Main excel {@link SpreadsheetTable} component
+     */
     private final SpreadsheetTable table;
+
+    /**
+     * {@link DebugPanel} component
+     */
     private final DebugPanel debugPanel;
 
     /**

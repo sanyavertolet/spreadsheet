@@ -12,10 +12,59 @@ import java.awt.*;
  * The {@code DebugPanel} shows the cell's coordinates, content, value type, and optionally the expression tree.
  */
 public class DebugPanel extends JPanel {
+    /**
+     * Label that displays cell identifier
+     */
     private final JLabel coordinatesLabel;
+
+    /**
+     * Label that displays cell content
+     */
     private final JLabel contentLabel;
-    private final JLabel typeLabel;
+
+    /**
+     * Label that displays cell value
+     */
+    private final JLabel valueLabel;
+
+    /**
+     * Label that displays type of cell {@code Value}
+     */
+    private final JLabel valueTypeLabel;
+
+    /**
+     * JTextArea that displays expression tree of a cell (if present)
+     */
     private final JTextArea treeTextArea;
+
+    /**
+     * Title of {@code coordinatesLabel}
+     */
+    private final String coordinatesTitle = "Coordinates: ";
+
+    /**
+     * Title of {@code contentLabel}
+     */
+    private final String contentTitle = "Content: ";
+
+    /**
+     * Title of {@code valueLabel}
+     */
+    private final String valueTitle = "Value: ";
+
+    /**
+     * Title of {@code valueTypeLabel}
+     */
+    private final String valueTypeTitle = "Value type: ";
+
+    /**
+     * Title of {@code treeTextArea}
+     */
+    private final String treeTitle = "Expression tree:\n";
+
+    /**
+     * {@code Data} of currently selected cell
+     */
     private Data selectedData;
 
     /**
@@ -24,11 +73,11 @@ public class DebugPanel extends JPanel {
     public DebugPanel() {
         GridBagLayout layout = new GridBagLayout();
         setLayout(layout);
-
-        coordinatesLabel = new JLabel("Coordinates: ");
-        contentLabel = new JLabel("Content: ");
-        typeLabel = new JLabel("Type: ");
-        treeTextArea = new JTextArea("Expression Tree: \n");
+        coordinatesLabel = new JLabel(coordinatesTitle);
+        contentLabel = new JLabel(contentTitle);
+        valueLabel = new JLabel(valueTitle);
+        valueTypeLabel = new JLabel(valueTypeTitle);
+        treeTextArea = new JTextArea(treeTitle);
         treeTextArea.setEditable(false);
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.add(treeTextArea);
@@ -49,9 +98,12 @@ public class DebugPanel extends JPanel {
         add(contentLabel, gbc);
 
         gbc.gridy = 2;
-        add(typeLabel, gbc);
+        add(valueLabel, gbc);
 
         gbc.gridy = 3;
+        add(valueTypeLabel, gbc);
+
+        gbc.gridy = 4;
         gbc.gridheight = GridBagConstraints.REMAINDER;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
@@ -79,20 +131,17 @@ public class DebugPanel extends JPanel {
     private void updateDebugInfo(CellReference cellReference) {
         if (selectedData != null) {
             Value val = selectedData.getValue();
-            coordinatesLabel.setText("Coordinates: " + cellReference.identifier());
-            contentLabel.setText("Content: " + selectedData.getValue());
-            typeLabel.setText("Type: " + (val != null ? val.getClass().getSimpleName() : "ERR"));
-
-            if (selectedData.getExpressionTree() != null) {
-                treeTextArea.setText("Expression Tree: \n" + selectedData.prettyPrintExpression());
-            } else {
-                treeTextArea.setText("Expression Tree: \n");
-            }
+            coordinatesLabel.setText(coordinatesTitle + cellReference.identifier());
+            contentLabel.setText(contentTitle + selectedData.getText());
+            valueLabel.setText(valueTitle + selectedData.getValue());
+            valueTypeLabel.setText(valueTypeTitle + (val != null ? val.getClass().getSimpleName() : "ERR"));
+            treeTextArea.setText(treeTitle + selectedData.prettyPrintExpression());
         } else {
-            coordinatesLabel.setText("Coordinates: ");
-            contentLabel.setText("Content: ");
-            typeLabel.setText("Type: ");
-            treeTextArea.setText("Expression Tree: \n");
+            coordinatesLabel.setText(coordinatesTitle);
+            contentLabel.setText(contentTitle);
+            valueLabel.setText(valueTitle);
+            valueTypeLabel.setText(valueTypeTitle);
+            treeTextArea.setText(treeTitle);
         }
     }
 }

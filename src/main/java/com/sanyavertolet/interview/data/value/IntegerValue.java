@@ -73,6 +73,8 @@ public final class IntegerValue extends Value {
     /**
      * Divides this integer value by another {@link Value}. Supports division with both {@link IntegerValue}
      * and {@link DoubleValue}. Throws an exception if attempting to divide by zero.
+     * <p/>
+     * When the division result is floating point number, {@link DoubleValue} is returned, {@link IntegerValue} otherwise.
      *
      * @param other the value to divide this value by.
      * @return a {@link Value} representing the quotient of this value and the provided value.
@@ -84,7 +86,7 @@ public final class IntegerValue extends Value {
         if (other.asDouble() == 0.0) {
             throw new ExpressionEvaluationException("Division by zero");
         }
-        if (other instanceof DoubleValue) {
+        if (other instanceof DoubleValue || asInteger() % other.asInteger() != 0) {
             return Value.of(value / other.asDouble());
         }
         return Value.of(value / other.asInteger());

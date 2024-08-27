@@ -11,8 +11,6 @@ import java.awt.*;
  * experience using a {@link JTextField} for input.
  */
 public class CustomCellEditor extends DefaultCellEditor {
-    private Data data;
-
     /**
      * Constructs a {@code CustomCellEditor} with a {@link JTextField} as the editing component.
      */
@@ -34,7 +32,7 @@ public class CustomCellEditor extends DefaultCellEditor {
      */
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        this.data = (Data) value;
+        Data data = (Data) value;
         JTextField textField = (JTextField) super.getTableCellEditorComponent(table, value, isSelected, row, column);
         textField.setText(data.getText());
         return textField;
@@ -49,7 +47,6 @@ public class CustomCellEditor extends DefaultCellEditor {
     @Override
     public Object getCellEditorValue() {
         JTextField textField = (JTextField) getComponent();
-        data.setText(textField.getText());
-        return data;
+        return new Data(textField.getText());
     }
 }
