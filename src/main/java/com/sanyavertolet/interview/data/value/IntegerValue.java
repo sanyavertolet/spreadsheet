@@ -73,7 +73,7 @@ public final class IntegerValue extends Value {
     /**
      * Divides this integer value by another {@link Value}. Supports division with both {@link IntegerValue}
      * and {@link DoubleValue}. Throws an exception if attempting to divide by zero.
-     * <p/>
+     * <p>
      * When the division result is floating point number, {@link DoubleValue} is returned, {@link IntegerValue} otherwise.
      *
      * @param other the value to divide this value by.
