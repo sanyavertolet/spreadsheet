@@ -1,30 +1,27 @@
 package com.sanyavertolet.interview.ui;
 
-import com.sanyavertolet.interview.data.Data;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.exceptions.data.DataAccessException;
 import com.sanyavertolet.interview.math.CellReference;
 import com.sanyavertolet.interview.ui.table.SpreadsheetTable;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.*;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 /**
  * A utility class for configuring key bindings for a {@link SpreadsheetTable}.
  * This class sets up keyboard shortcuts for common operations such as copy, cut, and paste.
  * The key bindings are associated with the following actions:
  * <ul>
- *     <li><code>Ctrl+C</code> for copying the selected cell's content</li>
- *     <li><code>Ctrl+X</code> for cutting the selected cell's content</li>
- *     <li><code>Ctrl+V</code> for pasting the copied content into the selected cell</li>
+ *     <li><code>Ctrl+C</code> for copying the selected cell's content to the system clipboard.</li>
+ *     <li><code>Ctrl+X</code> for cutting the selected cell's content to the system clipboard and clearing the cell's content.</li>
+ *     <li><code>Ctrl+V</code> for pasting the content from the system clipboard into the selected cell.</li>
  * </ul>
- * <p>
- * Note: The copied content is temporarily stored in the static {@code copyPasteBuffer} and is used for paste operations.
- * </p>
  */
 public class KeyBindingsConfigurator {
-    private static String copyPasteBuffer;
-
     /**
      * Private constructor to prevent instantiation of this utility class.
      */
@@ -34,9 +31,9 @@ public class KeyBindingsConfigurator {
      * Configures key bindings for the given {@link SpreadsheetTable}.
      * This method sets up the following key bindings:
      * <ul>
-     *     <li><code>Ctrl+C</code> to copy the content of the selected cell to a buffer.</li>
-     *     <li><code>Ctrl+X</code> to cut the content of the selected cell to a buffer and clear the cell's content.</li>
-     *     <li><code>Ctrl+V</code> to paste the content from the buffer into the selected cell.</li>
+     *     <li><code>Ctrl+C</code> to copy the content of the selected cell to the system clipboard.</li>
+     *     <li><code>Ctrl+X</code> to cut the content of the selected cell to the system clipboard and clear the cell's content.</li>
+     *     <li><code>Ctrl+V</code> to paste the content from the system clipboard into the selected cell.</li>
      * </ul>
      *
      * @param table The {@link SpreadsheetTable} to configure key bindings for.
@@ -45,6 +42,7 @@ public class KeyBindingsConfigurator {
     public static void configure(SpreadsheetTable table) {
         InputMap inputMap = table.getInputMap(JComponent.WHEN_FOCUSED);
         ActionMap actionMap = table.getActionMap();
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
         inputMap.put(KeyStroke.getKeyStroke("control C"), "copy");
         inputMap.put(KeyStroke.getKeyStroke("control X"), "cut");
@@ -53,14 +51,8 @@ public class KeyBindingsConfigurator {
         actionMap.put("copy", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CellReference selectedReference;
                 try {
-                    selectedReference = table.getSelectedCell();
-                    if (selectedReference == null) {
-                        return;
-                    }
-                    Data copiedData = table.getValueAt(selectedReference);
-                    copyPasteBuffer = copiedData.getText();
+                    copyToClipboard(table, clipboard);
                 } catch (CellReferenceException | DataAccessException ignored) { }
             }
         });
@@ -68,15 +60,10 @@ public class KeyBindingsConfigurator {
         actionMap.put("cut", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CellReference selectedReference;
                 try {
-                    selectedReference = table.getSelectedCell();
-                    if (selectedReference == null) {
-                        return;
-                    }
-                    Data copiedData = table.getValueAt(selectedReference);
-                    copyPasteBuffer = copiedData.getText();
-                    table.setValueAt("", selectedReference.row(), selectedReference.column());
+                    CellReference selectedCell = table.getSelectedCell();
+                    copyToClipboard(table, clipboard);
+                    table.setValueAt("", selectedCell.row(), selectedCell.column());
                 } catch (CellReferenceException | DataAccessException ignored) { }
             }
         });
@@ -84,18 +71,41 @@ public class KeyBindingsConfigurator {
         actionMap.put("paste", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (copyPasteBuffer == null) {
-                    return;
+                Transferable transferable = clipboard.getContents(null);
+                if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                    try {
+                        String text = (String) transferable.getTransferData(DataFlavor.stringFlavor);
+                        CellReference selectedReference = table.getSelectedCell();
+                        if (selectedReference == null) {
+                            return;
+                        }
+                        table.setValueAt(text, selectedReference.row(), selectedReference.column());
+                    } catch (UnsupportedFlavorException | IOException | CellReferenceException ignored) { }
                 }
-                CellReference selectedReference;
-                try {
-                    selectedReference = table.getSelectedCell();
-                    if (selectedReference == null) {
-                        return;
-                    }
-                    table.setValueAt(copyPasteBuffer, selectedReference.row(), selectedReference.column());
-                } catch (CellReferenceException ignored) { }
             }
         });
+    }
+
+    /**
+     * Copies the content of the selected cell to the system clipboard.
+     * This method retrieves the content of the selected cell, wraps it in a {@link StringSelection},
+     * and sets it on the system clipboard.
+     *
+     * @param table The {@link SpreadsheetTable} from which the content is copied.
+     * @param clipboard The system clipboard where the content is stored.
+     * @throws CellReferenceException If there is an issue retrieving the selected cell reference.
+     * @throws DataAccessException If there is an issue accessing the cell's data.
+     */
+    private static void copyToClipboard(SpreadsheetTable table, Clipboard clipboard) throws CellReferenceException, DataAccessException {
+        CellReference selectedReference = table.getSelectedCell();
+        if (selectedReference == null) {
+            return;
+        }
+        String copiedText = table.getValueAt(selectedReference).getText();
+        if (copiedText == null) {
+            return;
+        }
+        StringSelection selection = new StringSelection(copiedText);
+        clipboard.setContents(selection, selection);
     }
 }

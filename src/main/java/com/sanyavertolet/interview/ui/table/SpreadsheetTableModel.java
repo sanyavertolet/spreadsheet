@@ -81,13 +81,15 @@ public class SpreadsheetTableModel extends AbstractTableModel {
      */
     @Override
     public void setValueAt(Object value, int row, int col) {
+        String newValue;
         if (value instanceof Data data) {
-            dataManager.setData(row, col, data.getText());
+            newValue = data.getText();
         } else if (value instanceof String string) {
-            dataManager.setData(row, col, string);
+            newValue = string;
         } else {
             return;
         }
+        dataManager.setData(row, col, newValue);
         fireTableCellUpdated(row, col);
     }
 
