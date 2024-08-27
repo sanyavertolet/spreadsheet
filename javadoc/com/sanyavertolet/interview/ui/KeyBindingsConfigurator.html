@@ -81,13 +81,10 @@ loadScripts(document, 'script');</script>
  This class sets up keyboard shortcuts for common operations such as copy, cut, and paste.
  The key bindings are associated with the following actions:
  <ul>
-     <li><code>Ctrl+C</code> for copying the selected cell's content</li>
-     <li><code>Ctrl+X</code> for cutting the selected cell's content</li>
-     <li><code>Ctrl+V</code> for pasting the copied content into the selected cell</li>
- </ul>
- <p>
- Note: The copied content is temporarily stored in the static <code>copyPasteBuffer</code> and is used for paste operations.
- </p></div>
+     <li><code>Ctrl+C</code> for copying the selected cell's content to the system clipboard.</li>
+     <li><code>Ctrl+X</code> for cutting the selected cell's content to the system clipboard and clearing the cell's content.</li>
+     <li><code>Ctrl+V</code> for pasting the content from the system clipboard into the selected cell.</li>
+ </ul></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -131,9 +128,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Configures key bindings for the given <a href="table/SpreadsheetTable.html" title="class in com.sanyavertolet.interview.ui.table"><code>SpreadsheetTable</code></a>.
  This method sets up the following key bindings:
  <ul>
-     <li><code>Ctrl+C</code> to copy the content of the selected cell to a buffer.</li>
-     <li><code>Ctrl+X</code> to cut the content of the selected cell to a buffer and clear the cell's content.</li>
-     <li><code>Ctrl+V</code> to paste the content from the buffer into the selected cell.</li>
+     <li><code>Ctrl+C</code> to copy the content of the selected cell to the system clipboard.</li>
+     <li><code>Ctrl+X</code> to cut the content of the selected cell to the system clipboard and clear the cell's content.</li>
+     <li><code>Ctrl+V</code> to paste the content from the system clipboard into the selected cell.</li>
  </ul></div>
 <dl class="notes">
 <dt>Parameters:</dt>
