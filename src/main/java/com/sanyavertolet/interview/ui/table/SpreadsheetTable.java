@@ -5,7 +5,6 @@ import com.sanyavertolet.interview.data.manager.DataManager;
 import com.sanyavertolet.interview.exceptions.data.DataAccessException;
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.math.CellReference;
-import com.sanyavertolet.interview.ui.KeyBindingsConfigurator;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;

@@ -1,6 +1,9 @@
 package com.sanyavertolet.interview.ui.table;
 
 import com.sanyavertolet.interview.data.Data;
+import com.sanyavertolet.interview.data.value.BooleanValue;
+import com.sanyavertolet.interview.data.value.DoubleValue;
+import com.sanyavertolet.interview.data.value.IntegerValue;
 import com.sanyavertolet.interview.data.value.Value;
 
 import javax.swing.*;
@@ -45,9 +48,18 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
             Value val = data.getValue();
             if (isSelected) {
                 setText(data.getText());
+                setHorizontalAlignment(JLabel.CENTER);
             } else if (val == null) {
                 setText("ERR");
+                setHorizontalAlignment(JLabel.CENTER);
             } else {
+                if (val instanceof DoubleValue || val instanceof IntegerValue) {
+                    setHorizontalAlignment(JLabel.RIGHT);
+                } else if (val instanceof BooleanValue) {
+                    setHorizontalAlignment(JLabel.CENTER);
+                } else {
+                    setHorizontalAlignment(JLabel.LEFT);
+                }
                 setText(val.toString());
             }
         }

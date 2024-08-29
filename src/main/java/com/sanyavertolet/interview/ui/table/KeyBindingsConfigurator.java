@@ -1,9 +1,8 @@
-package com.sanyavertolet.interview.ui;
+package com.sanyavertolet.interview.ui.table;
 
 import com.sanyavertolet.interview.exceptions.CellReferenceException;
 import com.sanyavertolet.interview.exceptions.data.DataAccessException;
 import com.sanyavertolet.interview.math.CellReference;
-import com.sanyavertolet.interview.ui.table.SpreadsheetTable;
 
 import javax.swing.*;
 import java.awt.*;
