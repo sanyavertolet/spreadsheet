@@ -23,7 +23,7 @@ public class SpreadsheetTable extends JTable {
      * The table is configured with custom cell renderers, editors, and grid settings suitable for spreadsheet use.
      */
     public SpreadsheetTable() {
-        super(new SpreadsheetTableModel(50, 26));
+        super(new SpreadsheetTableModel(100, 26));
         TableCellRenderer renderer = new CustomCellRenderer();
         setDefaultRenderer(Object.class, renderer);
 
@@ -39,6 +39,7 @@ public class SpreadsheetTable extends JTable {
         setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         setGridColor(Color.LIGHT_GRAY);
         setShowGrid(true);
+        getTableHeader().setReorderingAllowed(false);
 
         KeyBindingsConfigurator.configure(this);
     }
