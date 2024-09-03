@@ -129,14 +129,19 @@ implements <a href="DependencyGraph.html" title="interface in com.sanyavertolet.
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Clears all dependencies for the specified <a href="../../math/CellReference.html" title="class in com.sanyavertolet.interview.math"><code>CellReference</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../math/CellReference.html" title="class in com.sanyavertolet.interview.math">CellReference</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFailedCellReferences()" class="member-name-link">getFailedCellReferences</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearFailedCellReferences()" class="member-name-link">clearFailedCellReferences</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Clears a set of <a href="../../math/CellReference.html" title="class in com.sanyavertolet.interview.math"><code>CellReference</code></a> instances that have failed due tp dependency issues, such as cycles.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../math/CellReference.html" title="class in com.sanyavertolet.interview.math">CellReference</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFailedCellReferences()" class="member-name-link">getFailedCellReferences</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieves a set of <a href="../../math/CellReference.html" title="class in com.sanyavertolet.interview.math"><code>CellReference</code></a> instances that have failed due to dependency issues, such as cycles.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../math/CellReference.html" title="class in com.sanyavertolet.interview.math">CellReference</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUpdateList(com.sanyavertolet.interview.math.CellReference)" class="member-name-link">getUpdateList</a><wbr>(<a href="../../math/CellReference.html" title="class in com.sanyavertolet.interview.math">CellReference</a>&nbsp;reference)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../math/CellReference.html" title="class in com.sanyavertolet.interview.math">CellReference</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUpdateList(com.sanyavertolet.interview.math.CellReference)" class="member-name-link">getUpdateList</a><wbr>(<a href="../../math/CellReference.html" title="class in com.sanyavertolet.interview.math">CellReference</a>&nbsp;reference)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieves a list of <a href="../../math/CellReference.html" title="class in com.sanyavertolet.interview.math"><code>CellReference</code></a> instances that need to be updated when the specified cell is modified,
  sorted in topological order.</div>
 </div>
@@ -243,6 +248,17 @@ implements <a href="DependencyGraph.html" title="interface in com.sanyavertolet.
 <dd><code><a href="DependencyGraph.html#getFailedCellReferences()">getFailedCellReferences</a></code>&nbsp;in interface&nbsp;<code><a href="DependencyGraph.html" title="interface in com.sanyavertolet.interview.data.dependencies">DependencyGraph</a></code></dd>
 <dt>Returns:</dt>
 <dd>a set of <a href="../../math/CellReference.html" title="class in com.sanyavertolet.interview.math"><code>CellReference</code></a> instances that have failed.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="clearFailedCellReferences()">
+<h3>clearFailedCellReferences</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">clearFailedCellReferences</span>()</div>
+<div class="block">Clears a set of <a href="../../math/CellReference.html" title="class in com.sanyavertolet.interview.math"><code>CellReference</code></a> instances that have failed due tp dependency issues, such as cycles.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="DependencyGraph.html#clearFailedCellReferences()">clearFailedCellReferences</a></code>&nbsp;in interface&nbsp;<code><a href="DependencyGraph.html" title="interface in com.sanyavertolet.interview.data.dependencies">DependencyGraph</a></code></dd>
 </dl>
 </section>
 </li>

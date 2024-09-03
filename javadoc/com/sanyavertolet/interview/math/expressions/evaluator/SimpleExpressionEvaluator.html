@@ -118,6 +118,11 @@ implements <a href="ExpressionEvaluator.html" title="interface in com.sanyaverto
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Evaluates the given expression.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../data/value/Value.html" title="class in com.sanyavertolet.interview.data.value">Value</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#evaluateOrNull(com.sanyavertolet.interview.math.expressions.Expression)" class="member-name-link">evaluateOrNull</a><wbr>(<a href="../Expression.html" title="class in com.sanyavertolet.interview.math.expressions">Expression</a>&nbsp;expression)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Evaluates the given expression and returns the resulting <a href="../../../data/value/Value.html" title="class in com.sanyavertolet.interview.data.value"><code>Value</code></a>.</div>
+</div>
 </div>
 </div>
 </div>
@@ -169,6 +174,21 @@ implements <a href="ExpressionEvaluator.html" title="interface in com.sanyaverto
 <dd>the result of the expression evaluation as a <code>Value</code>.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="../../../exceptions/expressions/ExpressionEvaluationException.html" title="class in com.sanyavertolet.interview.exceptions.expressions">ExpressionEvaluationException</a></code> - if an error occurs during evaluation.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="evaluateOrNull(com.sanyavertolet.interview.math.expressions.Expression)">
+<h3>evaluateOrNull</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../data/value/Value.html" title="class in com.sanyavertolet.interview.data.value">Value</a></span>&nbsp;<span class="element-name">evaluateOrNull</span><wbr><span class="parameters">(<a href="../Expression.html" title="class in com.sanyavertolet.interview.math.expressions">Expression</a>&nbsp;expression)</span></div>
+<div class="block">Evaluates the given expression and returns the resulting <a href="../../../data/value/Value.html" title="class in com.sanyavertolet.interview.data.value"><code>Value</code></a>.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ExpressionEvaluator.html#evaluateOrNull(com.sanyavertolet.interview.math.expressions.Expression)">evaluateOrNull</a></code>&nbsp;in interface&nbsp;<code><a href="ExpressionEvaluator.html" title="interface in com.sanyavertolet.interview.math.expressions.evaluator">ExpressionEvaluator</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>expression</code> - the expression to be evaluated.</dd>
+<dt>Returns:</dt>
+<dd>the computed result of the expression as a <a href="../../../data/value/Value.html" title="class in com.sanyavertolet.interview.data.value"><code>Value</code></a> or null if <a href="../../../exceptions/expressions/ExpressionEvaluationException.html" title="class in com.sanyavertolet.interview.exceptions.expressions"><code>ExpressionEvaluationException</code></a> was thrown.</dd>
 </dl>
 </section>
 </li>
