@@ -1,5 +1,7 @@
 plugins {
-    id("java")
+    java
+    application
+    id("com.gradleup.shadow") version "8.3.0"
     id("pmd")
 }
 
@@ -22,4 +24,14 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass.set("com.sanyavertolet.interview.Application")
+}
+
+tasks.shadowJar {
+    archiveBaseName.set("spreadsheet")
+    archiveClassifier.set("")
+    archiveVersion.set("")
 }
