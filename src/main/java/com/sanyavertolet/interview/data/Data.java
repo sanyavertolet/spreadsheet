@@ -1,7 +1,6 @@
 package com.sanyavertolet.interview.data;
 
 import com.sanyavertolet.interview.data.value.Value;
-import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationException;
 import com.sanyavertolet.interview.math.expressions.Expression;
 import com.sanyavertolet.interview.math.expressions.evaluator.ExpressionEvaluator;
 
@@ -108,11 +107,7 @@ public class Data {
         if (expressionTree == null) {
             return;
         }
-        try {
-            value = expressionEvaluator.evaluate(expressionTree);
-        } catch (ExpressionEvaluationException e) {
-            value = null;
-        }
+        value = expressionEvaluator.evaluateOrNull(expressionTree);
     }
 
     /**

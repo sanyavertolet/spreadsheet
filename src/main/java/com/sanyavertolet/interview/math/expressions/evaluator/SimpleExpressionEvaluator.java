@@ -121,17 +121,36 @@ public class SimpleExpressionEvaluator implements ExpressionEvaluator {
     @Override
     public Value evaluate(Expression expression) throws ExpressionEvaluationException {
         logger.trace("Evaluating expression: \n{}", expression.prettyPrint(0));
-        if (expression instanceof CellReferenceExpression cellReferenceExpression) {
-            return evaluate(cellReferenceExpression);
-        } else if (expression instanceof ValueExpression valueExpression) {
-            return evaluate(valueExpression);
-        } else if (expression instanceof BinaryExpression binaryExpression) {
-            return evaluate(binaryExpression);
-        } else if (expression instanceof FunctionExpression functionExpression) {
-            return evaluate(functionExpression);
-        } else if (expression instanceof RangeExpression rangeExpression) {
-            return evaluate(rangeExpression);
+        try {
+            if (expression instanceof CellReferenceExpression cellReferenceExpression) {
+                return evaluate(cellReferenceExpression);
+            } else if (expression instanceof ValueExpression valueExpression) {
+                return evaluate(valueExpression);
+            } else if (expression instanceof BinaryExpression binaryExpression) {
+                return evaluate(binaryExpression);
+            } else if (expression instanceof FunctionExpression functionExpression) {
+                return evaluate(functionExpression);
+            } else if (expression instanceof RangeExpression rangeExpression) {
+                return evaluate(rangeExpression);
+            }
+        } catch (Exception e) {
+            throw new ExpressionEvaluationException("Could not evaluate expression", e);
         }
         throw new ExpressionEvaluationException("Unknown expression: " + expression);
+    }
+
+    /**
+     * Evaluates the given expression and returns the resulting {@link Value}.
+     *
+     * @param expression the expression to be evaluated.
+     * @return the computed result of the expression as a {@link Value} or null if {@link ExpressionEvaluationException} was thrown.
+     */
+    @Override
+    public Value evaluateOrNull(Expression expression) {
+        try {
+            return evaluate(expression);
+        } catch (ExpressionEvaluationException e) {
+            return null;
+        }
     }
 }

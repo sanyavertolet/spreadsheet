@@ -52,6 +52,7 @@ public class SimpleDataWatcher implements DataWatcher {
     public void update(Data data, CellReference reference) {
         logger.debug("Updating data with reference {}", reference);
         dependencyGraph.clearDependencies(reference);
+        dependencyGraph.clearFailedCellReferences();
 
         try {
             addNewDependenciesIfNeeded(data, reference);

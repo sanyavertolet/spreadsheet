@@ -49,6 +49,11 @@ public interface DependencyGraph {
     Set<CellReference> getFailedCellReferences();
 
     /**
+     * Clears a set of {@link CellReference} instances that have failed due tp dependency issues, such as cycles.
+     */
+    void clearFailedCellReferences();
+
+    /**
      * Clears all dependencies and resets the entire dependency graph.
      */
     void clearAll();

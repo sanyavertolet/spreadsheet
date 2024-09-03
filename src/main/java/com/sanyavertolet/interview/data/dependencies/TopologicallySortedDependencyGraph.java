@@ -89,6 +89,14 @@ public class TopologicallySortedDependencyGraph implements DependencyGraph {
     }
 
     /**
+     * Clears a set of {@link CellReference} instances that have failed due tp dependency issues, such as cycles.
+     */
+    @Override
+    public void clearFailedCellReferences() {
+        failedCellReferences.clear();
+    }
+
+    /**
      * Performs a topological sort starting from the specified {@link CellReference}. This method is used internally
      * to generate a sorted list of cells that should be updated. It also detects cyclic dependencies.
      *

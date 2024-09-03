@@ -116,7 +116,7 @@ public class SimpleExpressionEvaluatorTest {
                 div(five, two)
         );
 
-        Value expectedValue = Value.of(2 + 3 * 4 - 5 / 2);
+        Value expectedValue = Value.of(2 + 3 * 4 - 5 / 2.0);
         Value actualValue = expressionEvaluator.evaluate(expression);
 
         Assertions.assertEquals(expectedValue, actualValue);
