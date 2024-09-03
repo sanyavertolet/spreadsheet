@@ -11,6 +11,8 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
+import static com.sanyavertolet.interview.utils.Constants.CELL_ERROR_TEXT;
+
 /**
  * A custom cell renderer for the cells of a {@link JTable} that represents a spreadsheet.
  * The {@code CustomCellRenderer} class extends {@link DefaultTableCellRenderer} to provide
@@ -23,7 +25,7 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
     /**
      * Returns the component used to render the cell. This renderer customizes the cell's appearance
      * based on its selection state and the content type. It applies a blue border to selected cells
-     * and displays "ERR" for cells containing data with an error.
+     * and displays red-colored {@code CELL_ERROR_TEXT} for cells containing data with an error.
      *
      * @param table the {@link JTable} that uses this renderer.
      * @param value the value to assign to the cell at {@code [row, column]}.
@@ -50,7 +52,8 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
                 setText(data.getText());
                 setHorizontalAlignment(JLabel.CENTER);
             } else if (val == null) {
-                setText("ERR");
+                setText(CELL_ERROR_TEXT);
+                setForeground(Color.RED);
                 setHorizontalAlignment(JLabel.CENTER);
             } else {
                 if (val instanceof DoubleValue || val instanceof IntegerValue) {
