@@ -1,7 +1,7 @@
 import org.ajoberstar.reckon.core.Scope
 import org.ajoberstar.reckon.gradle.ReckonExtension
 
-rootProject.name = "handmade-excel"
+rootProject.name = "spreadsheet"
 
 plugins {
     id("org.ajoberstar.reckon.settings") version "0.18.2"

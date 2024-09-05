@@ -30,7 +30,6 @@ application {
 }
 
 tasks.shadowJar {
-    archiveBaseName.set("spreadsheet")
     archiveClassifier.set("")
 }
 
