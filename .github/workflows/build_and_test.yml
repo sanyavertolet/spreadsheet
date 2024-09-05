@@ -43,10 +43,6 @@ jobs:
             build
             -x
             jar
-            distTar
-            distZip
-            shadowDistTar
-            shadowDistZip
             pmdMain
             pmdTest
 

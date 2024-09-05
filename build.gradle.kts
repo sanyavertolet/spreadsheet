@@ -31,6 +31,7 @@ application {
 
 tasks.shadowJar {
     archiveClassifier.set("")
+    dependsOn("distTar", "distZip")
 }
 
 pmd {
