@@ -11,6 +11,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.io.Serial;
 
 /**
  * A custom table component for displaying and interacting with a spreadsheet.
@@ -18,6 +19,9 @@ import java.awt.*;
  * cell-specific rendering, editing, and data management for a spreadsheet application.
  */
 public class SpreadsheetTable extends JTable {
+    @Serial
+    private static final long serialVersionUID = 42L;
+
     /**
      * Constructs a {@code SpreadsheetTable} with a default model consisting of 50 rows and 26 columns.
      * The table is configured with custom cell renderers, editors, and grid settings suitable for spreadsheet use.

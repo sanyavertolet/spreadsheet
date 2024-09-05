@@ -10,12 +10,16 @@ import com.sanyavertolet.interview.ui.files.SpreadsheetFileChooser;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.Serial;
 
 /**
  * A custom file menu for the spreadsheet application, extending {@link JMenu}.
  * The {@code FileMenu} class provides options to save, open, and clear spreadsheet data using a {@link DataManager}.
  */
 public class FileMenu extends JMenu {
+    @Serial
+    private static final long serialVersionUID = 42L;
+
     private final FileManager fileManager = new ExtensionBasedFileManager();
     private final JFileChooser fileChooser = new SpreadsheetFileChooser();
 

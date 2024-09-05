@@ -69,7 +69,7 @@ public final class DoubleValue extends Value {
      */
     @Override
     public Value divide(Value other) throws ExpressionEvaluationException {
-        if (other.asDouble() == 0.0) {
+        if (other.asDouble().equals(0.0)) {
             throw new ExpressionEvaluationException("Division by zero");
         }
         return Value.of(value / other.asDouble());

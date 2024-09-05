@@ -5,12 +5,15 @@ import com.sanyavertolet.interview.data.manager.DataManager;
 import com.sanyavertolet.interview.data.manager.SimpleDataManager;
 
 import javax.swing.table.AbstractTableModel;
+import java.io.Serial;
 
 /**
  * A table model for the spreadsheet application, extending {@link AbstractTableModel}.
  * The {@code SpreadsheetTableModel} class manages the data in the spreadsheet and interacts with the {@link DataManager}.
  */
 public class SpreadsheetTableModel extends AbstractTableModel {
+    @Serial
+    private static final long serialVersionUID = 42L;
     private final DataManager dataManager;
 
     /**

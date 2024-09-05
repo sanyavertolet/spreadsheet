@@ -24,7 +24,7 @@ import java.util.function.BiConsumer;
  * creating data instances, and a {@link DataWatcher} for monitoring and reacting to changes in the data.
  */
 public class SimpleDataManager implements DataManager {
-    private final Logger logger = LoggerFactory.getLogger(SimpleDataManager.class);
+    private final static Logger logger = LoggerFactory.getLogger(SimpleDataManager.class);
     private final DataContainer container;
     private final DataAccessor accessor;
     private final DataFactory dataFactory;

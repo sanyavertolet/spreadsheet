@@ -21,7 +21,7 @@ import java.util.function.BiConsumer;
  * to track cell dependencies and ensures that data is recalculated in the correct order when updates occur.
  */
 public class SimpleDataWatcher implements DataWatcher {
-    private final Logger logger = LoggerFactory.getLogger(SimpleDataWatcher.class);
+    private final static Logger logger = LoggerFactory.getLogger(SimpleDataWatcher.class);
     private final BiConsumer<Integer, Integer> fireTableCellUpdated;
     private final DataAccessor dataAccessor;
     private final ExpressionEvaluator expressionEvaluator;

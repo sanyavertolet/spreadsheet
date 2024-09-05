@@ -1,8 +1,8 @@
 plugins {
     java
     application
+    pmd
     id("com.gradleup.shadow") version "8.3.0"
-    id("pmd")
 }
 
 group = "com.sanyavertolet.interview"
@@ -32,4 +32,8 @@ application {
 tasks.shadowJar {
     archiveBaseName.set("spreadsheet")
     archiveClassifier.set("")
+}
+
+pmd {
+    toolVersion = "6.55.0"
 }

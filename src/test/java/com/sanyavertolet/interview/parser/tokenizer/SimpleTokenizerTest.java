@@ -180,25 +180,21 @@ public class SimpleTokenizerTest {
 
     @Test
     void invalidStringExpressionTokenizerTest() {
-        String expression = "=A1 + \"A1";
-        Assertions.assertThrows(ExpressionParsingException.class, () -> simpleTokenizer.tokenize(expression));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> simpleTokenizer.tokenize("=A1 + \"A1"));
     }
 
     @Test
     void unknownOperationTokenizerTest() {
-        String expression = "=2 & 3";
-        Assertions.assertThrows(ExpressionParsingException.class, () -> simpleTokenizer.tokenize(expression));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> simpleTokenizer.tokenize("=2 & 3"));
     }
 
     @Test
     void invalidExpressionTokenizerTest() {
-        String expression = "=PI() .3";
-        Assertions.assertThrows(ExpressionParsingException.class, () -> simpleTokenizer.tokenize(expression));
+        Assertions.assertThrows(ExpressionParsingException.class, () -> simpleTokenizer.tokenize("=PI() .3"));
     }
 
     @Test
     void emptyExpressionTokenizerTest() throws ExpressionParsingException {
-        String expression = "=";
-        Assertions.assertIterableEquals(List.of(), simpleTokenizer.tokenize(expression));
+        Assertions.assertIterableEquals(List.of(), simpleTokenizer.tokenize("="));
     }
 }

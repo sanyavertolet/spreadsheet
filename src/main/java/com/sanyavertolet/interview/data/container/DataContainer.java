@@ -13,7 +13,7 @@ import java.util.*;
  * column sizes dynamically as data is added.
  */
 public class DataContainer {
-    private final Logger logger = LoggerFactory.getLogger(DataContainer.class);
+    private final static Logger logger = LoggerFactory.getLogger(DataContainer.class);
     private final Map<CellReference, Data> container;
     private int maxRow;
     private int maxCol;

@@ -2,10 +2,14 @@ package com.sanyavertolet.interview.exceptions.expressions;
 
 import com.sanyavertolet.interview.math.CellReference;
 
+import java.io.Serial;
+
 /**
  * Exception thrown when an error occurs while parsing a range expression.
  */
 public class RangeParsingException extends ExpressionParsingException {
+    @Serial
+    private static final long serialVersionUID = 42L;
 
     /**
      * Constructs a new {@code RangeParsingException} with a detailed message about the invalid range.

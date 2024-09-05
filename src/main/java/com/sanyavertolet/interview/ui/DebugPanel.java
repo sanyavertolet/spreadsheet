@@ -6,12 +6,16 @@ import com.sanyavertolet.interview.math.CellReference;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serial;
 
 /**
  * A panel that displays debugging information about the currently selected cell in the spreadsheet.
  * The {@code DebugPanel} shows the cell's coordinates, content, value type, and optionally the expression tree.
  */
 public class DebugPanel extends JPanel {
+    @Serial
+    private static final long serialVersionUID = 42L;
+
     /**
      * Label that displays cell identifier
      */
@@ -65,7 +69,7 @@ public class DebugPanel extends JPanel {
     /**
      * {@code Data} of currently selected cell
      */
-    private Data selectedData;
+    private transient Data selectedData;
 
     /**
      * Constructs a {@code DebugPanel} and sets up the layout and components for displaying cell debugging information.

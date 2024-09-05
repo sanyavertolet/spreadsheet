@@ -1,9 +1,13 @@
 package com.sanyavertolet.interview.exceptions.data;
 
+import java.io.Serial;
+
 /**
  * Custom exception to handle data access related errors.
  */
 public class DataAccessException extends Exception {
+    @Serial
+    private static final long serialVersionUID = 42L;
 
     /**
      * Constructs a new {@code DataAccessException} with the specified detail message.

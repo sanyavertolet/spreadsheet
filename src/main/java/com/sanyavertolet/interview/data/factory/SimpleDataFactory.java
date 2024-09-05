@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * or directly create value-based data for non-expression text.
  */
 public class SimpleDataFactory implements DataFactory {
-    private final Logger logger = LoggerFactory.getLogger(SimpleDataFactory.class);
+    private final static Logger logger = LoggerFactory.getLogger(SimpleDataFactory.class);
     private final ExpressionParser expressionParser;
     private final ExpressionEvaluator expressionEvaluator;
 
@@ -39,6 +39,7 @@ public class SimpleDataFactory implements DataFactory {
      * @param cellText the text representation of the data to be created.
      * @return a {@link Data} instance corresponding to the provided cell text.
      */
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     @Override
     public Data create(String cellText) {
         Expression expression = null;

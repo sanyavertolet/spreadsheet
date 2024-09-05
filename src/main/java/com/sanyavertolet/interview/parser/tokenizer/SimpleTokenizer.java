@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * basic expression parsing, including operators, numbers, references, and strings.
  */
 public class SimpleTokenizer implements Tokenizer {
-    private final Logger logger = LoggerFactory.getLogger(SimpleTokenizer.class);
+    private final static Logger logger = LoggerFactory.getLogger(SimpleTokenizer.class);
     private Integer position;
     private String expression;
     private Character currentSym;
@@ -71,7 +71,7 @@ public class SimpleTokenizer implements Tokenizer {
                 return new Token(Token.Type.COLON, ":");
             case '=':
                 advance();
-                if (currentSym == '=') {
+                if (currentSym.equals('=')) {
                     advance();
                     return new Token(Token.Type.OPERATOR, "==");
                 } else {
@@ -79,7 +79,7 @@ public class SimpleTokenizer implements Tokenizer {
                 }
             case '!':
                 advance();
-                if (currentSym == '=') {
+                if (currentSym.equals('=')) {
                     advance();
                     return new Token(Token.Type.OPERATOR, "!=");
                 } else {
@@ -87,7 +87,7 @@ public class SimpleTokenizer implements Tokenizer {
                 }
             case '<':
                 advance();
-                if (currentSym == '=') {
+                if (currentSym.equals('=')) {
                     advance();
                     return new Token(Token.Type.OPERATOR, "<=");
                 } else {
@@ -95,7 +95,7 @@ public class SimpleTokenizer implements Tokenizer {
                 }
             case '>':
                 advance();
-                if (currentSym == '=') {
+                if (currentSym.equals('=')) {
                     advance();
                     return new Token(Token.Type.OPERATOR, ">=");
                 } else {
@@ -115,7 +115,7 @@ public class SimpleTokenizer implements Tokenizer {
                     return getNumberToken();
                 } else if (Character.isLetter(currentSym)) {
                     return getReferenceToken();
-                } else if (currentSym == '"') {
+                } else if (currentSym.equals('"')) {
                     advance();
                     return getStringToken();
                 } else {
@@ -154,10 +154,10 @@ public class SimpleTokenizer implements Tokenizer {
      * @return a {@link Token} representing the number.
      */
     private Token getNumberToken() {
-        StringBuilder token = new StringBuilder();
         if (!hasMoreTokens()) {
             return new Token(Token.Type.NUMBER, currentSym.toString());
         }
+        StringBuilder token = new StringBuilder();
         while (hasMoreTokens() && (Character.isDigit(currentSym) || currentSym.equals('.'))) {
             token.append(currentSym);
             advance();
@@ -172,10 +172,10 @@ public class SimpleTokenizer implements Tokenizer {
      * @return a {@link Token} representing the reference.
      */
     private Token getReferenceToken() {
-        StringBuilder token = new StringBuilder();
         if (!hasMoreTokens()) {
             return new Token(Token.Type.REFERENCE, currentSym.toString());
         }
+        StringBuilder token = new StringBuilder();
         while (hasMoreTokens() && (Character.isLetter(currentSym) || Character.isDigit(currentSym))) {
             token.append(currentSym);
             advance();
@@ -190,18 +190,20 @@ public class SimpleTokenizer implements Tokenizer {
      * @return a {@link Token} representing the string.
      * @throws ExpressionParsingException if the string is not properly closed with a quote.
      */
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     private Token getStringToken() throws ExpressionParsingException {
-        StringBuilder token = new StringBuilder();
         if (!hasMoreTokens() && currentSym != '"') {
             throw new ExpressionParsingException("Could not parse string properly: closing \" is missing");
         } else if (!hasMoreTokens()) {
             return new Token(Token.Type.STRING, currentSym.toString());
         }
+
+        StringBuilder token = new StringBuilder();
         while (hasMoreTokens() && currentSym != '"') {
             token.append(currentSym);
             advance();
         }
-        if (currentSym != '"') {
+        if (!currentSym.equals('"')) {
             throw new ExpressionParsingException("Could not parse string properly: closing \" is missing");
         }
         advance();

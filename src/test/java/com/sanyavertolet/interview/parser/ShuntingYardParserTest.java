@@ -1,6 +1,6 @@
 package com.sanyavertolet.interview.parser;
 
-import com.sanyavertolet.interview.TestUtils;
+import com.sanyavertolet.interview.AssertionUtils;
 import com.sanyavertolet.interview.exceptions.*;
 import com.sanyavertolet.interview.exceptions.expressions.ExpressionParsingException;
 import com.sanyavertolet.interview.math.expressions.*;
@@ -14,6 +14,7 @@ import static com.sanyavertolet.interview.Expressions.Functions.*;
 import static com.sanyavertolet.interview.Expressions.Ranges.range;
 import static com.sanyavertolet.interview.Expressions.Values.*;
 
+@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class ShuntingYardParserTest {
     private final ShuntingYardParser parser = new ShuntingYardParser();
 
@@ -24,7 +25,7 @@ public class ShuntingYardParserTest {
         Expression expectedExpression = plus(one, two);
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -34,7 +35,7 @@ public class ShuntingYardParserTest {
         Expression expectedExpression = plus(pi(), e());
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -44,7 +45,7 @@ public class ShuntingYardParserTest {
         Expression expectedExpression = powF(two, two);
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -60,7 +61,7 @@ public class ShuntingYardParserTest {
         );
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -70,7 +71,7 @@ public class ShuntingYardParserTest {
         Expression expectedExpression = powF(pi(), two);
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -80,7 +81,7 @@ public class ShuntingYardParserTest {
         Expression expectedExpression = plus(minus(five), ten);
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -96,7 +97,7 @@ public class ShuntingYardParserTest {
         );
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -112,7 +113,7 @@ public class ShuntingYardParserTest {
         );
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -128,7 +129,7 @@ public class ShuntingYardParserTest {
         );
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -138,7 +139,7 @@ public class ShuntingYardParserTest {
         Expression expectedExpression = mul(a1(), two);
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -154,7 +155,7 @@ public class ShuntingYardParserTest {
         );
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -167,7 +168,7 @@ public class ShuntingYardParserTest {
         );
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -180,7 +181,7 @@ public class ShuntingYardParserTest {
         );
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test
@@ -193,7 +194,7 @@ public class ShuntingYardParserTest {
         );
         Expression actualExpression = parser.parse(expressionText);
 
-        TestUtils.assertExpressionsEqual(expectedExpression, actualExpression);
+        AssertionUtils.assertExpressionsEqual(expectedExpression, actualExpression);
     }
 
     @Test

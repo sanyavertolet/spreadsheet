@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.io.Serial;
 
 /**
  * A custom cell editor for editing {@link Data} objects in a {@link JTable} representing a spreadsheet.
@@ -13,6 +14,9 @@ import java.awt.event.FocusEvent;
  * experience using a {@link JTextField} for input.
  */
 public class CustomCellEditor extends DefaultCellEditor {
+    @Serial
+    private static final long serialVersionUID = 42L;
+
     /**
      * Constructs a {@code CustomCellEditor} with a {@link JTextField} as the editing component.
      */

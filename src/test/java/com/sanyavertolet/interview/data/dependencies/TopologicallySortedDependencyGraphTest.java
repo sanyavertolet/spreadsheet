@@ -1,6 +1,6 @@
 package com.sanyavertolet.interview.data.dependencies;
 
-import com.sanyavertolet.interview.TestUtils;
+import com.sanyavertolet.interview.AssertionUtils;
 import com.sanyavertolet.interview.exceptions.data.DataDependencyException;
 import com.sanyavertolet.interview.math.CellReference;
 import org.junit.jupiter.api.Assertions;
@@ -80,7 +80,7 @@ public class TopologicallySortedDependencyGraphTest {
 
         List<CellReference> updateList = dependencyGraph.getUpdateList(b1Ref);
         Assertions.assertEquals(3, updateList.size());
-        TestUtils.assertHappensBefore(c1Ref, a2Ref, updateList);
+        AssertionUtils.assertHappensBefore(c1Ref, a2Ref, updateList);
         Assertions.assertThrows(DataDependencyException.class, () -> dependencyGraph.getUpdateList(a1Ref));
     }
 
@@ -92,7 +92,7 @@ public class TopologicallySortedDependencyGraphTest {
         dependencyGraph.addDependency(c1Ref, a2Ref);
 
         List<CellReference> updateList = dependencyGraph.getUpdateList(a1Ref);
-        TestUtils.assertHappensBefore(b1Ref, a2Ref, updateList);
-        TestUtils.assertHappensBefore(c1Ref, a2Ref, updateList);
+        AssertionUtils.assertHappensBefore(b1Ref, a2Ref, updateList);
+        AssertionUtils.assertHappensBefore(c1Ref, a2Ref, updateList);
     }
 }

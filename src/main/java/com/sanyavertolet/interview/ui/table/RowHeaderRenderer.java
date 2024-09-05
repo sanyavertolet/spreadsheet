@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.io.Serial;
 
 /**
  * A custom cell renderer for the row headers of a {@link JTable}.
@@ -11,6 +12,8 @@ import java.awt.*;
  * consistent styling with the table's header.
  */
 public class RowHeaderRenderer extends DefaultTableCellRenderer {
+    @Serial
+    private static final long serialVersionUID = 42L;
 
     /**
      * Returns the component used to render the row header cell.

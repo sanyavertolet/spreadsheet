@@ -73,11 +73,11 @@ public class KeyBindingsConfigurator {
                 Transferable transferable = clipboard.getContents(null);
                 if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                     try {
-                        String text = (String) transferable.getTransferData(DataFlavor.stringFlavor);
                         CellReference selectedReference = table.getSelectedCell();
                         if (selectedReference == null) {
                             return;
                         }
+                        String text = (String) transferable.getTransferData(DataFlavor.stringFlavor);
                         table.setValueAt(text, selectedReference.row(), selectedReference.column());
                     } catch (UnsupportedFlavorException | IOException | CellReferenceException ignored) { }
                 }

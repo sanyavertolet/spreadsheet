@@ -5,6 +5,7 @@ import com.sanyavertolet.interview.exceptions.expressions.ExpressionEvaluationEx
 import com.sanyavertolet.interview.utils.FunctionUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * An enum representing various built-in functions that can be evaluated in expressions.
@@ -224,6 +225,7 @@ public enum Function {
      * @return the result of the function evaluation as a {@link Value}.
      * @throws ExpressionEvaluationException if the number of arguments is incorrect or if an error occurs during evaluation.
      */
+    @SuppressWarnings("PMD.AvoidCatchingNPE")
     public Value evaluate(List<Value> arguments) throws ExpressionEvaluationException {
         if (arguments.size() != argumentsSize) {
             throw new ExpressionEvaluationException(name() + " should have exactly " + argumentsSize + " arguments");
@@ -249,6 +251,6 @@ public enum Function {
      * @return the corresponding {@code Function}.
      */
     public static Function named(String name) {
-        return Function.valueOf(name.toUpperCase());
+        return Function.valueOf(name.toUpperCase(Locale.getDefault()));
     }
 }

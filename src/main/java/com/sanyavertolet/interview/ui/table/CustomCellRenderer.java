@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.io.Serial;
 
 import static com.sanyavertolet.interview.utils.Constants.CELL_ERROR_TEXT;
 
@@ -20,6 +21,9 @@ import static com.sanyavertolet.interview.utils.Constants.CELL_ERROR_TEXT;
  * cell borders and error states.
  */
 public class CustomCellRenderer extends DefaultTableCellRenderer {
+    @Serial
+    private static final long serialVersionUID = 42L;
+
     private final Border selectedCellBorder = BorderFactory.createLineBorder(Color.BLUE);
 
     /**
@@ -35,6 +39,7 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
      * @param column the column index of the cell being drawn.
      * @return the {@link Component} used to render the cell.
      */
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         JComponent c = (JComponent) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);

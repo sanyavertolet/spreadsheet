@@ -15,7 +15,7 @@ import java.io.File;
  * This class supports saving and loading files with different formats by delegating the operations to the corresponding file adapter.
  */
 public class ExtensionBasedFileManager implements FileManager {
-    private final Logger logger = LoggerFactory.getLogger(ExtensionBasedFileManager.class);
+    private final static Logger logger = LoggerFactory.getLogger(ExtensionBasedFileManager.class);
 
     /**
      * Saves the data managed by the {@code DataManager} to the specified file.

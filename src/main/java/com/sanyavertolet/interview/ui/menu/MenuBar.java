@@ -4,6 +4,7 @@ import com.sanyavertolet.interview.data.manager.DataManager;
 import com.sanyavertolet.interview.ui.menu.file.FileMenu;
 
 import javax.swing.*;
+import java.io.Serial;
 
 /**
  * A custom menu bar for the spreadsheet application, extending {@link JMenuBar}.
@@ -11,6 +12,8 @@ import javax.swing.*;
  * to the menu bar.
  */
 public class MenuBar extends JMenuBar {
+    @Serial
+    private static final long serialVersionUID = 42L;
 
     /**
      * Constructs a {@code MenuBar} with a file menu. The file menu is initialized using the provided

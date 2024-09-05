@@ -10,6 +10,7 @@ import com.sanyavertolet.interview.math.expressions.evaluator.ExpressionEvaluato
  * The {@code Data} class supports recalculating its value based on an expression and marking the cell
  * as erroneous if an evaluation fails.
  */
+@SuppressWarnings("PMD.NullAssignment")
 public class Data {
     private final String text;
     private Value value;

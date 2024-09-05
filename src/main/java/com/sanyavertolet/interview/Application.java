@@ -19,6 +19,7 @@ public class Application {
      * @param args command-line arguments
      * @return a {@link Configuration} object representing the application's configuration settings.
      */
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     public static Configuration getConfiguration(String[] args) {
         boolean isDebug = false;
         for (String arg : args) {

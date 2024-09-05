@@ -97,6 +97,7 @@ public class RangeExpression extends Expression {
      *
      * @return a list of cell references within the range.
      */
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
     @Override
     public List<CellReference> getCellReferences() {
         ArrayList<CellReference> cellReferences = new ArrayList<>();
@@ -107,7 +108,7 @@ public class RangeExpression extends Expression {
                 }
             }
         } catch (CellReferenceException e) {
-            return null;
+            return new ArrayList<>();
         }
         return cellReferences;
     }

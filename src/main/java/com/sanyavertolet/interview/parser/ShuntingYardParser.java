@@ -24,7 +24,7 @@ import java.util.*;
  * expression tree.
  */
 public class ShuntingYardParser implements ExpressionParser {
-    private final Logger logger = LoggerFactory.getLogger(ShuntingYardParser.class);
+    private final static Logger logger = LoggerFactory.getLogger(ShuntingYardParser.class);
     private final Tokenizer tokenizer = new SimpleTokenizer();
 
     /**
@@ -64,8 +64,8 @@ public class ShuntingYardParser implements ExpressionParser {
         }
         Operator topStackOperator = operators.peek();
         return topStackOperator instanceof NonFunctionOperator operator
-                && operator.type() != NonFunctionOperator.Type.OPEN_PARENTHESIS && operator.type() != NonFunctionOperator.Type.COMMA
-                && (operator.precedence() > currentOperator.precedence() || (operator.precedence() == currentOperator.precedence() && currentOperator.associativity() == NonFunctionOperator.Associativity.LEFT));
+                && operator.getType() != NonFunctionOperator.Type.OPEN_PARENTHESIS && operator.getType() != NonFunctionOperator.Type.COMMA
+                && (operator.getPrecedence() > currentOperator.getPrecedence() || (operator.getPrecedence() == currentOperator.getPrecedence() && currentOperator.getAssociativity() == NonFunctionOperator.Associativity.LEFT));
     }
 
     /**
@@ -76,7 +76,7 @@ public class ShuntingYardParser implements ExpressionParser {
      * @return {@code true} if the operator is a unary minus; {@code false} otherwise.
      */
     private boolean isUnaryMinus(NonFunctionOperator operator, Token previousToken) {
-        return operator.type() == NonFunctionOperator.Type.MINUS &&
+        return operator.getType() == NonFunctionOperator.Type.MINUS &&
                 (previousToken == null || previousToken.type() == Token.Type.OPEN_PARENTHESIS || previousToken.type() == Token.Type.OPERATOR);
     }
 
@@ -121,9 +121,9 @@ public class ShuntingYardParser implements ExpressionParser {
      * @throws ExpressionParsingException if the operator is invalid or the expression is incomplete.
      */
     private Expression getBinaryExpression(Stack<Expression> expressions, Stack<Operator> operators) throws ExpressionParsingException {
-        Expression right = expressions.pop();
         Operator operator = operators.pop();
         if (operator instanceof NonFunctionOperator nonFunctionOperator) {
+            Expression right = expressions.pop();
             return new BinaryExpression(expressions.pop(), right, nonFunctionOperator);
         }
         throw new ExpressionParsingException("Found insufficient operator: " + operator.getSymbol());
@@ -170,7 +170,7 @@ public class ShuntingYardParser implements ExpressionParser {
             return false;
         }
 
-        return operators.peek() instanceof NonFunctionOperator nonFunctionOperator && nonFunctionOperator.type() == NonFunctionOperator.Type.COLON;
+        return operators.peek() instanceof NonFunctionOperator nonFunctionOperator && nonFunctionOperator.getType() == NonFunctionOperator.Type.COLON;
     }
 
     /**
@@ -182,6 +182,7 @@ public class ShuntingYardParser implements ExpressionParser {
      * @throws FunctionArgumentException  if there is an error with function arguments.
      * @throws CellReferenceException     if there is an error with cell references.
      */
+    @SuppressWarnings({"PMD.AvoidLiteralsInIfCondition", "PMD.DataflowAnomalyAnalysis"})
     private Expression parse(List<Token> tokens) throws ExpressionParsingException, FunctionArgumentException, CellReferenceException {
         Stack<Expression> expressions = new Stack<>();
         Stack<Operator> operators = new Stack<>();
@@ -228,18 +229,18 @@ public class ShuntingYardParser implements ExpressionParser {
                 case OPEN_PARENTHESIS -> operators.add(new NonFunctionOperator("("));
                 case CLOSE_PARENTHESIS -> {
                     List<Expression> arguments = new ArrayList<>();
-                    while (operators.peek() instanceof NonFunctionOperator operator && operator.type() != NonFunctionOperator.Type.OPEN_PARENTHESIS) {
+                    while (operators.peek() instanceof NonFunctionOperator operator && operator.getType() != NonFunctionOperator.Type.OPEN_PARENTHESIS) {
                         if (operators.isEmpty()) {
                             throw new ExpressionParsingException("Closing parenthesis not found.");
                         }
                         operators.pop();
-                        if (operator.type() == NonFunctionOperator.Type.COMMA) {
+                        if (operator.getType() == NonFunctionOperator.Type.COMMA) {
                             arguments.add(0, expressions.pop());
                         } else {
                             expressions.add(getBinaryExpression(expressions, operator));
                         }
                     }
-                    if (operators.isEmpty() || operators.peek() instanceof NonFunctionOperator operator && operator.type() != NonFunctionOperator.Type.OPEN_PARENTHESIS) {
+                    if (operators.isEmpty() || operators.peek() instanceof NonFunctionOperator operator && operator.getType() != NonFunctionOperator.Type.OPEN_PARENTHESIS) {
                         throw new ExpressionParsingException("Failed parenthesis.");
                     }
                     operators.pop();
@@ -259,7 +260,7 @@ public class ShuntingYardParser implements ExpressionParser {
         }
 
         while (!operators.isEmpty()) {
-            if (operators.peek() instanceof NonFunctionOperator operator && operator.type() == NonFunctionOperator.Type.OPEN_PARENTHESIS) {
+            if (operators.peek() instanceof NonFunctionOperator operator && operator.getType() == NonFunctionOperator.Type.OPEN_PARENTHESIS) {
                 throw new ExpressionParsingException("Closing parenthesis not found.");
             }
 

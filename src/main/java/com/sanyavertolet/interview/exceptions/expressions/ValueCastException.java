@@ -2,10 +2,14 @@ package com.sanyavertolet.interview.exceptions.expressions;
 
 import com.sanyavertolet.interview.data.value.Value;
 
+import java.io.Serial;
+
 /**
  * Exception thrown when an invalid type cast operation is attempted on {@link Value} objects.
  */
 public class ValueCastException extends ExpressionEvaluationException {
+    @Serial
+    private static final long serialVersionUID = 42L;
 
     /**
      * Constructs a new {@code ValueCastException} with a detailed message about the unsupported operation.

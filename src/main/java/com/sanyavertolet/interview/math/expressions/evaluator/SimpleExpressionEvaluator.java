@@ -18,7 +18,7 @@ import java.util.List;
  * This class evaluates expressions using various strategies based on the type of expression.
  */
 public class SimpleExpressionEvaluator implements ExpressionEvaluator {
-    private final Logger logger = LoggerFactory.getLogger(SimpleExpressionEvaluator.class);
+    private final static Logger logger = LoggerFactory.getLogger(SimpleExpressionEvaluator.class);
     private final DataAccessor dataAccessor;
 
     /**
@@ -41,7 +41,7 @@ public class SimpleExpressionEvaluator implements ExpressionEvaluator {
         Value left = evaluate(expression.getLeft());
         Value right = evaluate(expression.getRight());
         NonFunctionOperator operator = expression.getOperator();
-        return switch (operator.type()) {
+        return switch (operator.getType()) {
             case PLUS -> left.plus(right);
             case MINUS -> left.minus(right);
             case MULTIPLY -> left.multiply(right);
@@ -53,7 +53,7 @@ public class SimpleExpressionEvaluator implements ExpressionEvaluator {
             case GT -> left.gt(right);
             case LEQ -> left.leq(right);
             case GEQ -> left.geq(right);
-            default -> throw new ExpressionEvaluationException("Unknown operator type: " + operator.type());
+            default -> throw new ExpressionEvaluationException("Unknown operator type: " + operator.getType());
         };
     }
 

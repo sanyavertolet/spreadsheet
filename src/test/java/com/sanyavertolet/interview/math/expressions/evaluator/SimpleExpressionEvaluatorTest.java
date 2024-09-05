@@ -22,6 +22,8 @@ import static com.sanyavertolet.interview.Expressions.Ranges.range;
 import static com.sanyavertolet.interview.Expressions.Values.*;
 import static com.sanyavertolet.interview.Expressions.Values.fortyTwo;
 
+
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.DataflowAnomalyAnalysis"})
 public class SimpleExpressionEvaluatorTest {
     private final Double a1Val = 1.0;
     private final Double a2Val = 2.0;

@@ -10,6 +10,7 @@ import com.sanyavertolet.interview.ui.table.SpreadsheetTable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serial;
 
 /**
  * The main window for the spreadsheet application, extending {@link JFrame}. The {@code MainFrame} class
@@ -17,6 +18,9 @@ import java.awt.*;
  * based on the provided {@link Configuration}.
  */
 public class MainFrame extends JFrame {
+    @Serial
+    private static final long serialVersionUID = 42L;
+
     /**
      * Main excel {@link SpreadsheetTable} component
      */

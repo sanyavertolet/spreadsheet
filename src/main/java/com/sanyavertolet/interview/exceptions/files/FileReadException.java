@@ -1,9 +1,13 @@
 package com.sanyavertolet.interview.exceptions.files;
 
+import java.io.Serial;
+
 /**
  * Exception thrown when there is an error reading data from a file.
  */
 public class FileReadException extends FileException {
+    @Serial
+    private static final long serialVersionUID = 42L;
 
     /**
      * Constructs a new {@code FileReadException} with the specified detail message.

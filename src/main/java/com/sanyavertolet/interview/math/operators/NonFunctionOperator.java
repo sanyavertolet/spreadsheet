@@ -124,7 +124,7 @@ public class NonFunctionOperator extends Operator {
          *
          * @return the symbol as a string.
          */
-        String symbol() {
+        String getSymbol() {
             return symbol;
         }
     }
@@ -157,7 +157,7 @@ public class NonFunctionOperator extends Operator {
      */
     public NonFunctionOperator(String symbol) {
         super(symbol);
-        Optional<Type> operator = Arrays.stream(Type.values()).filter(it -> it.symbol().equals(symbol)).findFirst();
+        Optional<Type> operator = Arrays.stream(Type.values()).filter(it -> it.getSymbol().equals(symbol)).findFirst();
         if (operator.isEmpty()) {
             throw new NoSuchElementException("Operator not found: " + symbol);
         }
@@ -169,7 +169,7 @@ public class NonFunctionOperator extends Operator {
      *
      * @return the {@link Type} of this operator.
      */
-    public Type type() {
+    public Type getType() {
         return type;
     }
 
@@ -179,7 +179,7 @@ public class NonFunctionOperator extends Operator {
      * @return the {@link Associativity} of this operator.
      * @throws IllegalStateException if the operator does not have a defined associativity.
      */
-    public Associativity associativity() {
+    public Associativity getAssociativity() {
         return switch (type) {
             case PLUS, MINUS, MULTIPLY, DIVIDE, EQ, NEQ, LT, GT, LEQ, GEQ -> Associativity.LEFT;
             case POWER -> Associativity.RIGHT;
@@ -194,7 +194,7 @@ public class NonFunctionOperator extends Operator {
      * @return the precedence level as an integer.
      * @throws IllegalStateException if the operator does not have a defined precedence.
      */
-    public int precedence() {
+    public int getPrecedence() {
         return switch (type) {
             case EQ, NEQ, LT, GT, LEQ, GEQ -> 1;
             case PLUS, MINUS -> 2;

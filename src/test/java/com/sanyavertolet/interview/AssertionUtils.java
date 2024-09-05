@@ -16,12 +16,12 @@ import static org.junit.jupiter.api.AssertionFailureBuilder.assertionFailure;
  * <p>
  * This class is not meant to be instantiated.
  */
-public class TestUtils {
+public class AssertionUtils {
 
     /**
      * Private constructor to prevent instantiation of this utility class.
      */
-    private TestUtils() { }
+    private AssertionUtils() { }
 
     /**
      * Asserts that a {@code CellReference} appears before another {@code CellReference} in a list.
@@ -32,15 +32,19 @@ public class TestUtils {
      * @throws AssertionError if {@code before} is not present in the list, or if {@code after} is not present,
      *                        or if {@code before} appears after {@code after}.
      */
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     public static void assertHappensBefore(CellReference before, CellReference after, List<CellReference> references) {
         int indexOfBefore = references.indexOf(before);
-        int indexOfAfter = references.indexOf(after);
-
         if (indexOfBefore == -1) {
             assertionFailure().message(before.identifier() + " is not present in list.").buildAndThrow();
-        } else if (indexOfAfter == -1) {
+        }
+
+        int indexOfAfter = references.indexOf(after);
+        if (indexOfAfter == -1) {
             assertionFailure().message(after.identifier() + " is not present in list.").buildAndThrow();
-        } else if (indexOfBefore > indexOfAfter) {
+        }
+
+        if (indexOfBefore > indexOfAfter) {
             assertionFailure()
                     .message(before.identifier() + " should go before " + after.identifier())
                     .expected("references.indexOf(" + before.identifier() + ") = " + indexOfBefore + " <= " + "references.indexOf(" + after.identifier() + ") = " + indexOfAfter)
@@ -78,7 +82,7 @@ public class TestUtils {
      * @param actual   the actual {@code BinaryExpression}.
      */
     private static void assertExpressionsEqual(BinaryExpression expected, BinaryExpression actual) {
-        Assertions.assertEquals(expected.getOperator().type(), actual.getOperator().type());
+        Assertions.assertEquals(expected.getOperator().getType(), actual.getOperator().getType());
         assertExpressionsEqual(expected.getLeft(), actual.getLeft());
         assertExpressionsEqual(expected.getRight(), actual.getRight());
     }
