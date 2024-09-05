@@ -6,7 +6,6 @@ plugins {
 }
 
 group = "com.sanyavertolet.interview"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -33,5 +32,4 @@ application {
 tasks.shadowJar {
     archiveBaseName.set("spreadsheet")
     archiveClassifier.set("")
-    archiveVersion.set("")
 }
