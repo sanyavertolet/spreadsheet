@@ -29,6 +29,7 @@ public class SimpleDataManager implements DataManager {
     private final DataAccessor accessor;
     private final DataFactory dataFactory;
     private final DataWatcher dataWatcher;
+    private final BiConsumer<Integer, Integer> fireTableCellUpdated;
 
     /**
      * Constructs a {@code SimpleDataManager} with the specified number of rows and columns.
@@ -39,6 +40,7 @@ public class SimpleDataManager implements DataManager {
      * @param fireTableCellUpdated callback that is used to update the table.
      */
     public SimpleDataManager(int rows, int columns, BiConsumer<Integer, Integer> fireTableCellUpdated) {
+        this.fireTableCellUpdated = fireTableCellUpdated;
         container = new DataContainer(rows, columns);
         accessor = new ContainerBasedDataAccessor(container);
 
@@ -68,6 +70,7 @@ public class SimpleDataManager implements DataManager {
             container.put(reference, data);
             dataWatcher.update(data, reference);
         }
+        fireTableCellUpdated.accept(row, column);
     }
 
     /**

@@ -90,7 +90,6 @@ public class SpreadsheetTableModel extends AbstractTableModel {
             return;
         }
         dataManager.setData(row, col, newValue);
-        fireTableCellUpdated(row, col);
     }
 
     /**
