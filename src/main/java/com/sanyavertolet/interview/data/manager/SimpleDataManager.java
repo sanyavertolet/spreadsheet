@@ -30,6 +30,7 @@ public class SimpleDataManager implements DataManager {
     private final DataFactory dataFactory;
     private final DataWatcher dataWatcher;
     private final BiConsumer<Integer, Integer> fireTableCellUpdated;
+    private final Runnable fireTableDataChanged;
 
     /**
      * Constructs a {@code SimpleDataManager} with the specified number of rows and columns.
@@ -37,10 +38,17 @@ public class SimpleDataManager implements DataManager {
      *
      * @param rows the number of rows in the data structure.
      * @param columns the number of columns in the data structure.
-     * @param fireTableCellUpdated callback that is used to update the table.
+     * @param fireTableCellUpdated callback that is used to notify the table that the cell data is updated.
+     * @param fireTableDataChanged callback that is used to notify the table that all the table data is updated.
      */
-    public SimpleDataManager(int rows, int columns, BiConsumer<Integer, Integer> fireTableCellUpdated) {
+    public SimpleDataManager(
+            int rows,
+            int columns,
+            BiConsumer<Integer, Integer> fireTableCellUpdated,
+            Runnable fireTableDataChanged
+    ) {
         this.fireTableCellUpdated = fireTableCellUpdated;
+        this.fireTableDataChanged = fireTableDataChanged;
         container = new DataContainer(rows, columns);
         accessor = new ContainerBasedDataAccessor(container);
 
@@ -126,6 +134,7 @@ public class SimpleDataManager implements DataManager {
         logger.info("Clearing data...");
         container.clearDataMap();
         dataWatcher.clearAll();
+        fireTableDataChanged.run();
     }
 
     /**

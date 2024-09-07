@@ -24,7 +24,7 @@ public class SpreadsheetTableModel extends AbstractTableModel {
      * @param columnCount the number of columns in the table.
      */
     public SpreadsheetTableModel(int rowCount, int columnCount) {
-        dataManager = new SimpleDataManager(rowCount, columnCount, this::fireTableCellUpdated);
+        dataManager = new SimpleDataManager(rowCount, columnCount, this::fireTableCellUpdated, this::fireTableDataChanged);
     }
 
     /**

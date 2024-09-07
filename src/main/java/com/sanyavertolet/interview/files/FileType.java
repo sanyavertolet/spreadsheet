@@ -10,11 +10,7 @@ public enum FileType {
      * Represents a Sheets file type.
      */
     SHEETS,
-
-    /**
-     * Represents an Excel XLSX file type.
-     */
-    XLSX;
+    ;
 
     /**
      * Determines the {@code FileType} based on the file name.
@@ -25,9 +21,9 @@ public enum FileType {
      */
     public static FileType of(String fileName) {
         String fileExtension = getExtension(fileName);
+        //noinspection SwitchStatementWithTooFewBranches
         return switch (fileExtension) {
             case "sheets" -> SHEETS;
-            case "xlsx" -> XLSX;
             default -> throw new IllegalArgumentException("Invalid file extension: " + fileExtension);
         };
     }

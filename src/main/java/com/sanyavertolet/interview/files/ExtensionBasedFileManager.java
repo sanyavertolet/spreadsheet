@@ -71,7 +71,6 @@ public class ExtensionBasedFileManager implements FileManager {
         // todo: support more FileAdapters
         return switch (fileType) {
             case SHEETS -> new JacksonSerializationFileAdapter();
-            case XLSX -> throw new IllegalStateException("Not implemented yet");
         };
     }
 }
