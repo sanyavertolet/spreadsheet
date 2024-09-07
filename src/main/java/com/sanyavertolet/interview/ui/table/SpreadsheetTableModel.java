@@ -70,7 +70,7 @@ public class SpreadsheetTableModel extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int row, int col) {
-        return true;
+        return col > 0;
     }
 
     /**
