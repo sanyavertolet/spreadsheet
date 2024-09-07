@@ -30,6 +30,7 @@ jobs:
           java-version: '17'
       - uses: pmd/pmd-github-action@v2
         with:
+          version: '6.55.0'
           rulesets: 'pmd.xml'
           analyzeModifiedFilesOnly: false
       - name: Upload SARIF file
