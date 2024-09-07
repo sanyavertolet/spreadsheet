@@ -135,6 +135,24 @@ public enum Function {
     MOD(2, args -> Value.of(args.get(0).asInteger() % args.get(1).asInteger())),
 
     /**
+     * Computes AND for two booleans.
+     * Requires two boolean arguments.
+     */
+    AND(2, args -> Value.of(args.get(0).asBoolean() && args.get(1).asBoolean())),
+
+    /**
+     * Computes OR for two booleans.
+     * Requires two boolean arguments.
+     */
+    OR(2, args -> Value.of(args.get(0).asBoolean() || args.get(1).asBoolean())),
+
+    /**
+     * Computes NOT for boolean.
+     * Requires a boolean arguments.
+     */
+    NOT(1, args -> Value.of(!args.get(0).asBoolean())),
+
+    /**
      * Checks if a string contains a specified substring.
      * Requires two arguments: the string and the substring to search for.
      */

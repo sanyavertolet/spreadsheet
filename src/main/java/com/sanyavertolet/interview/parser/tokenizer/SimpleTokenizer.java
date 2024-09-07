@@ -106,7 +106,6 @@ public class SimpleTokenizer implements Tokenizer {
             case '*':
             case '/':
             case '^':
-            case '%':
                 String operator = currentSym.toString();
                 advance();
                 return new Token(Token.Type.OPERATOR, operator);
