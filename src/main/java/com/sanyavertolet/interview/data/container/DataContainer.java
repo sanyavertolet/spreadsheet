@@ -104,6 +104,7 @@ public class DataContainer {
      *
      * @return a list of {@link CellReference.WithText} representing the exported data.
      */
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public List<CellReference.WithText> exportDataMap() {
         logger.debug("Exporting data map...");
         List<CellReference.WithText> dataList = new ArrayList<>();

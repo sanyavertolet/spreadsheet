@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ruleset name="Custom ruleset">
+    <description>Custom ruleset</description>
+
+    <exclude-pattern>.*/ant/java/EncodingTestClass.java</exclude-pattern>
+    <exclude-pattern>.*/net/sourceforge/pmd/cpd/badandgood/BadFile.java</exclude-pattern>
+    <exclude-pattern>.*/net/sourceforge/pmd/lang/java/ast/jdkversiontests/assert_test5.java</exclude-pattern>
+    <exclude-pattern>.*/net/sourceforge/pmd/lang/java/ast/jdkversiontests/assert_test5_a.java</exclude-pattern>
+    <exclude-pattern>.*/net/sourceforge/pmd/lang/java/ast/jdkversiontests/assert_test7.java</exclude-pattern>
+    <exclude-pattern>.*/net/sourceforge/pmd/lang/java/ast/jdkversiontests/jdk14_enum.java</exclude-pattern>
+    <exclude-pattern>.*/net/sourceforge/pmd/lang/java/ast/jdkversiontests/jdk9_invalid_identifier.java</exclude-pattern>
+    <exclude-pattern>.*/net/sourceforge/pmd/lang/java/ast/jdkversiontests/java10/LocalVariableTypeInference_varAsAnnotationName.java</exclude-pattern>
+    <exclude-pattern>.*/net/sourceforge/pmd/lang/java/ast/jdkversiontests/java10/LocalVariableTypeInference_varAsEnumName.java</exclude-pattern>
+    <exclude-pattern>.*/net/sourceforge/pmd/lang/java/ast/jdkversiontests/java10/LocalVariableTypeInference_varAsTypeIdentifier.java</exclude-pattern>
+
+    <!-- this file contains are parse error explicitly -->
+    <exclude-pattern>.*/net/sourceforge/pmd/lang/java/ast/InfiniteLoopInLookahead.java</exclude-pattern>
+
+    <rule ref="category/java/errorprone.xml" />
+    <rule ref="category/java/performance.xml" />
+    <rule ref="category/java/security.xml" />
+
+</ruleset>

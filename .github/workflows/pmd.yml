@@ -1,0 +1,38 @@
+name: 'PMD check'
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'master'
+  workflow_dispatch:
+
+env:
+  GRADLE_OPTS: -Dorg.gradle.daemon=true -Dorg.gradle.parallel=true -Dorg.gradle.welcome=never
+
+jobs:
+  build:
+    name: 'PMD check'
+    runs-on: ubuntu-latest
+
+    permissions:
+      checks: write
+      contents: write
+      pull-requests: write
+      statuses: write
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      - uses: pmd/pmd-github-action@v2
+        with:
+          rulesets: 'pmd.xml'
+          analyzeModifiedFilesOnly: false
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: pmd-report.sarif

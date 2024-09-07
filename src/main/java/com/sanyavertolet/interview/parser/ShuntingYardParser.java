@@ -182,7 +182,7 @@ public class ShuntingYardParser implements ExpressionParser {
      * @throws FunctionArgumentException  if there is an error with function arguments.
      * @throws CellReferenceException     if there is an error with cell references.
      */
-    @SuppressWarnings({"PMD.AvoidLiteralsInIfCondition", "PMD.DataflowAnomalyAnalysis"})
+    @SuppressWarnings({"PMD.AvoidLiteralsInIfCondition", "PMD.DataflowAnomalyAnalysis", "PMD.AvoidInstantiatingObjectsInLoops"})
     private Expression parse(List<Token> tokens) throws ExpressionParsingException, FunctionArgumentException, CellReferenceException {
         Stack<Expression> expressions = new Stack<>();
         Stack<Operator> operators = new Stack<>();

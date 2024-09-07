@@ -20,7 +20,7 @@ import java.io.IOException;
  *     <li><code>Ctrl+V</code> for pasting the content from the system clipboard into the selected cell.</li>
  * </ul>
  */
-public class KeyBindingsConfigurator {
+final public class KeyBindingsConfigurator {
     /**
      * Private constructor to prevent instantiation of this utility class.
      */

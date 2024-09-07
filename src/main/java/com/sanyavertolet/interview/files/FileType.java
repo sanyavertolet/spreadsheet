@@ -46,7 +46,7 @@ public enum FileType {
      * @return the file extension, or an empty string if the file name does not have an extension.
      */
     public static String getExtension(String fileName) {
-        int index = fileName.lastIndexOf(".");
+        int index = fileName.lastIndexOf('.');
         return index == -1 ? "" : fileName.substring(index + 1);
     }
 }

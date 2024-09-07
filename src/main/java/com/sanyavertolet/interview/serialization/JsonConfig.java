@@ -7,7 +7,7 @@ import com.sanyavertolet.interview.serialization.cellreference.CustomCellReferen
  * A utility class for configuring and providing an {@link ObjectMapper} instance for JSON processing.
  * The {@code JsonConfig} class is designed to create and configure an {@link ObjectMapper} with custom modules.
  */
-public class JsonConfig {
+final public class JsonConfig {
 
     /**
      * Private constructor to prevent instantiation of this utility class.

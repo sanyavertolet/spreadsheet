@@ -38,6 +38,7 @@ public class TopologicallySortedDependencyGraph implements DependencyGraph {
      *
      * @param reference the reference to the cell whose dependencies should be cleared.
      */
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     @Override
     public void clearDependencies(CellReference reference) {
         Set<CellReference> cellDependencies = previous.remove(reference);

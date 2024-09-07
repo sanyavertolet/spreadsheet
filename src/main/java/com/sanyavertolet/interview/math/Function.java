@@ -251,7 +251,7 @@ public enum Function {
         try {
             return functionEvaluator.invoke(arguments);
         } catch (NullPointerException exception) {
-            throw new ExpressionEvaluationException("Could not evaluate expression as one of the arguments is null");
+            throw new ExpressionEvaluationException("Could not evaluate expression as one of the arguments is null", exception);
         }
     }
 

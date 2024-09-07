@@ -9,7 +9,7 @@ import java.util.List;
  * Utility class that provides logic for evaluating common functions, such as sum, count, and average,
  * on a range of numeric values.
  */
-public class FunctionUtils {
+final public class FunctionUtils {
 
     /**
      * Private constructor to prevent instantiation of this utility class.

@@ -4,7 +4,7 @@ package com.sanyavertolet.interview.utils;
  * A utility class that holds constant values used throughout the application.
  * This class is not intended to be instantiated and only provides static final constants.
  */
-public class Constants {
+final public class Constants {
 
     /**
      * Private constructor to prevent instantiation of this utility class.

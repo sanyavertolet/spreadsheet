@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.AssertionFailureBuilder.assertionFailure;
  * <p>
  * This class is not meant to be instantiated.
  */
-public class AssertionUtils {
+final public class AssertionUtils {
 
     /**
      * Private constructor to prevent instantiation of this utility class.

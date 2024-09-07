@@ -56,7 +56,7 @@ public class FunctionExpression extends Expression {
     @Override
     public String prettyPrint(int shift) {
         StringBuilder builder = new StringBuilder();
-        builder.append(".".repeat(shift)).append(function.name()).append("\n");
+        builder.append(".".repeat(shift)).append(function.name()).append('\n');
         for (Expression argument : arguments) {
             builder.append(argument.prettyPrint(shift + 2));
         }
