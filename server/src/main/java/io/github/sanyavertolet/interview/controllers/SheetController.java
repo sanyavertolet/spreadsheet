@@ -1,9 +1,8 @@
 package io.github.sanyavertolet.interview.controllers;
 
+import io.github.sanyavertolet.interview.SheetData;
 import io.github.sanyavertolet.interview.services.SheetService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,5 +18,10 @@ public class SheetController {
     @GetMapping(value = "/list")
     public List<String> list() {
         return sheetService.getList();
+    }
+
+    @PostMapping(value = "/save")
+    public SheetData save(@RequestBody SheetData sheetData) {
+        return sheetService.save(sheetData);
     }
 }
