@@ -24,7 +24,7 @@ tasks.test {
 }
 
 application {
-    mainClass.set("com.sanyavertolet.interview.Application")
+    mainClass.set("io.github.sanyavertolet.interview.Application")
 }
 
 tasks.shadowJar {

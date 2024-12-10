@@ -15,3 +15,4 @@ extensions.configure<ReckonExtension> {
 }
 
 include("desktop-client")
+include("server")
