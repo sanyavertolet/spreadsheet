@@ -13,3 +13,5 @@ extensions.configure<ReckonExtension> {
     setScopeCalc(calcScopeFromProp())
     setStageCalc(calcStageFromProp())
 }
+
+include("desktop-client")
