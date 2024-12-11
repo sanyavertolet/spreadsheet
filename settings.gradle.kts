@@ -14,5 +14,8 @@ extensions.configure<ReckonExtension> {
     setStageCalc(calcStageFromProp())
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 include("desktop-client")
 include("server")
+include("common")

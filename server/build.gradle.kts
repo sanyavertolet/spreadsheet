@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    implementation(projects.common)
+
     implementation(platform("org.springframework.boot:spring-boot-dependencies:3.1.0"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
