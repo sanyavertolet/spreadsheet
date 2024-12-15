@@ -1,73 +1,112 @@
 package io.github.sanyavertolet.interview.ui.menu.file;
 
 import io.github.sanyavertolet.interview.data.manager.DataManager;
-import io.github.sanyavertolet.interview.exceptions.files.FileReadException;
-import io.github.sanyavertolet.interview.exceptions.files.FileWriteException;
-import io.github.sanyavertolet.interview.files.ExtensionBasedFileManager;
-import io.github.sanyavertolet.interview.files.FileManager;
-import io.github.sanyavertolet.interview.ui.files.SpreadsheetFileChooser;
+import io.github.sanyavertolet.interview.exceptions.io.ExportException;
+import io.github.sanyavertolet.interview.exceptions.io.ImportException;
+import io.github.sanyavertolet.interview.exim.ExImManager;
+import io.github.sanyavertolet.interview.exim.FileChooserBasedExImManager;
+import io.github.sanyavertolet.interview.exim.MongoCloudExImManager;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.Serial;
 
 /**
- * A custom file menu for the spreadsheet application, extending {@link JMenu}.
- * The {@code FileMenu} class provides options to save, open, and clear spreadsheet data using a {@link DataManager}.
+ * A custom file menu for managing export and import operations in a spreadsheet application.
+ *
+ * <p>This {@link JMenu} subclass provides menu items for saving and loading data either locally or
+ * in the cloud. It uses {@link ExImManager} implementations to handle the operations and shows
+ * appropriate error messages if an exception occurs during the process.</p>
  */
 public class FileMenu extends JMenu {
     @Serial
     private static final long serialVersionUID = 42L;
 
-    private final FileManager fileManager = new ExtensionBasedFileManager();
-    private final JFileChooser fileChooser = new SpreadsheetFileChooser();
+    private final ExImManager fileChooserBasedExImManager = new FileChooserBasedExImManager();
+    private final ExImManager mongoCloudExImManager = new MongoCloudExImManager();
 
     /**
-     * Constructs a {@code FileMenu} with the provided {@link DataManager} for managing file operations.
-     * The menu includes options to save the current spreadsheet, open a saved spreadsheet, and clear the current data.
+     * Constructs a new {@code FileMenu} with menu items for file operations.
      *
-     * @param dataManager the data manager used to manage the spreadsheet's data, passed to file operations.
+     * <p>The menu includes options to save and load data either locally or in the cloud, as well
+     * as an option to clear all current data without saving. The provided {@link DataManager}
+     * is used to manage the application's data during these operations.</p>
+     *
+     * @param dataManager the {@link DataManager} that manages the application's data.
      */
     public FileMenu(DataManager dataManager) {
         super("File");
 
-        ActionListener clearActionListener = e -> dataManager.clearData();
+        JMenuItem saveCloudMenuItem = new JMenuItem("Save to cloud");
+        JMenuItem openCloudMenuItem = new JMenuItem("Load from cloud");
+        JMenuItem saveLocallyMenuItem = new JMenuItem("Save to device");
+        JMenuItem openLocallyMenuItem = new JMenuItem("Load from device");
+        JMenuItem clearMenuItem = new JMenuItem("Close without saving");
 
-        ActionListener saveActionListener = e -> {
-            int result = fileChooser.showSaveDialog(null);
-            if (result == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.getSelectedFile();
-                try {
-                    fileManager.save(file, dataManager);
-                } catch (FileWriteException exception) {
-                    JOptionPane.showMessageDialog(new JFrame(), exception.getMessage(), "Export error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        };
+        saveLocallyMenuItem.addActionListener(getExportActionListener(dataManager, true));
+        openLocallyMenuItem.addActionListener(getImportActionListener(dataManager, true));
+        saveCloudMenuItem.addActionListener(getExportActionListener(dataManager, false));
+        openCloudMenuItem.addActionListener(getImportActionListener(dataManager, false));
+        clearMenuItem.addActionListener(e -> dataManager.clearData());
 
-        ActionListener loadActionListener = e -> {
-            int result = fileChooser.showOpenDialog(null);
-            if (result == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.getSelectedFile();
-                try {
-                    fileManager.load(file, dataManager);
-                } catch (FileReadException exception) {
-                    JOptionPane.showMessageDialog(new JFrame(), exception.getMessage(), "Import error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        };
-
-        JMenuItem saveMenuItem = new JMenuItem("Save");
-        JMenuItem openMenuItem = new JMenuItem("Open");
-        JMenuItem clearMenuItem = new JMenuItem("Clear");
-
-        saveMenuItem.addActionListener(saveActionListener);
-        openMenuItem.addActionListener(loadActionListener);
-        clearMenuItem.addActionListener(clearActionListener);
-
-        add(saveMenuItem);
-        add(openMenuItem);
+        add(saveLocallyMenuItem);
+        add(openLocallyMenuItem);
+        add(saveCloudMenuItem);
+        add(openCloudMenuItem);
         add(clearMenuItem);
+    }
+
+    /**
+     * Creates an {@link ActionListener} for exporting data.
+     *
+     * <p>The action listener uses the appropriate {@link ExImManager} (local or cloud) to handle
+     * the export operation. If an {@link ExportException} occurs, an error message is displayed
+     * using a {@link JOptionPane} dialog.</p>
+     *
+     * @param dataManager the {@link DataManager} managing the application's data.
+     * @param isLocal     {@code true} to use local export, {@code false} for cloud export.
+     * @return an {@link ActionListener} for the export operation.
+     */
+    private ActionListener getExportActionListener(DataManager dataManager, boolean isLocal) {
+        ExImManager exImManager = isLocal ? fileChooserBasedExImManager : mongoCloudExImManager;
+        return (e) -> {
+            try {
+                exImManager.exportData(dataManager);
+            } catch (ExportException exception) {
+                JOptionPane.showMessageDialog(
+                        new JFrame(),
+                        exception.getMessage(),
+                        "Export error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        };
+    }
+
+    /**
+     * Creates an {@link ActionListener} for importing data.
+     *
+     * <p>The action listener uses the appropriate {@link ExImManager} (local or cloud) to handle
+     * the import operation. If an {@link ImportException} occurs, an error message is displayed
+     * using a {@link JOptionPane} dialog.</p>
+     *
+     * @param dataManager the {@link DataManager} managing the application's data.
+     * @param isLocal     {@code true} to use local import, {@code false} for cloud import.
+     * @return an {@link ActionListener} for the import operation.
+     */
+    private ActionListener getImportActionListener(DataManager dataManager, boolean isLocal) {
+        ExImManager exImManager = isLocal ? fileChooserBasedExImManager : mongoCloudExImManager;
+        return (e) -> {
+            try {
+                exImManager.importData(dataManager);
+            } catch (ImportException exception) {
+                JOptionPane.showMessageDialog(
+                        new JFrame(),
+                        exception.getMessage(),
+                        "Import error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        };
     }
 }

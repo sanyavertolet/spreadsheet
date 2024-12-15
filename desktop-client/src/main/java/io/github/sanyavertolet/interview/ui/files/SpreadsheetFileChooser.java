@@ -1,6 +1,6 @@
 package io.github.sanyavertolet.interview.ui.files;
 
-import io.github.sanyavertolet.interview.files.FileType;
+import io.github.sanyavertolet.interview.exim.FileType;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;

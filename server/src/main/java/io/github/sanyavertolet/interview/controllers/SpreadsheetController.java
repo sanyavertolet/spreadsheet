@@ -47,7 +47,7 @@ public class SpreadsheetController {
         }
     }
 
-    @PostMapping(value = "/new")
+    @PostMapping
     public SpreadsheetDto save(@RequestBody SpreadsheetDto spreadsheetDto) {
         return spreadsheetService.save(spreadsheetDto).toDto();
     }

@@ -1,4 +1,4 @@
-package io.github.sanyavertolet.interview.files;
+package io.github.sanyavertolet.interview.exim;
 
 import java.io.File;
 
